@@ -103,9 +103,9 @@
     /* Split hero: PP mark left, text right */
     .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center}
 
-    /* >>> CHANGED: size the PP logo by height so it fits nicely */
+    /* >>> CHANGED: Size the PP logo to fill the area you marked */
     .hero-logo{
-      height: clamp(160px, 42vh, 320px);
+      height: clamp(220px, 50vh, 420px);
       width: auto;
       display: block;
       margin: 0 auto;
@@ -113,7 +113,7 @@
     }
     @media (max-width: 960px){
       .hero-grid{grid-template-columns:1fr;gap:18px}
-      .hero-logo{height: clamp(120px, 36vh, 240px)}
+      .hero-logo{height: clamp(160px, 46vh, 320px)}
       .hero-right{text-align:center}
       .hero-right .lead{margin-left:auto;margin-right:auto}
     }
