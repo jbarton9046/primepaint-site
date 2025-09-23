@@ -44,15 +44,17 @@
       --header-pad-x:24px;
 
       /* hero layout */
-      --hero-gutter-left:14px;      /* tight left gutter so PP can sit further left */
+      --hero-gutter-left:14px;
       --hero-gutter-right:28px;
       --hero-gap:18px;
       --hero-text-max:60rem;
       --hero-right-extra: min(6vw, 64px);
 
-      /* vertical nudge: we shift content down AND reduce height by same amount
-         so it's perfectly centered between bottom of navbar and bottom of viewport */
-      --hero-nudge: 14px;           /* adjust +/– a few px if you want micro-tuning */
+      /* vertical nudge for perfect symmetry in the viewport band */
+      --hero-nudge: 14px;
+
+      /* tiny left shift for the PP mark (visual balance) */
+      --pp-shift: -34px; /* was -28px */
     }
 
     *{box-sizing:border-box}
@@ -106,7 +108,6 @@
       grid-template-columns: 0.95fr 1.45fr;
       gap:var(--hero-gap);
       align-items:center;
-      /* center band calc with a small downward nudge for perfect symmetry */
       height:calc(100vh - var(--header-h) - var(--hero-nudge));
       position:relative;
       top:var(--hero-nudge);
@@ -114,7 +115,7 @@
 
     .hero-left{
       display:flex;align-items:center;justify-content:flex-start;
-      transform: translateX(-28px); /* keeps the PP a bit closer to the edge */
+      transform: translateX(var(--pp-shift));
     }
     .hero-logo{
       height:clamp(360px,58vh,620px);
@@ -133,7 +134,7 @@
 
     .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
 
-    /* Two-line headline, no dot */
+    /* Two-line headline */
     .hero-title{
       margin:.45rem 0 0;
       font-weight:700;
@@ -161,6 +162,7 @@
         --header-h:70px; --brand-h:46px;
         --hero-gutter-left:18px; --hero-gutter-right:18px;
         --hero-gap:14px; --hero-nudge: 8px;
+        --pp-shift: 0px;
       }
       .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h) - var(--hero-nudge))}
       .hero-left{justify-content:center;transform:none}
@@ -252,7 +254,6 @@
           <div class="hero-right-inner">
             <div class="eyebrow">Top of the line</div>
 
-            <!-- Two lines, no dot -->
             <h1 class="hero-title">
               <span class="line">Transforming Walls</span>
               <span class="line">Elevating Spaces</span>
@@ -260,7 +261,6 @@
 
             <p class="lead">Interior &amp; exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
 
-            <!-- pill is back -->
             <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
               <a href="#contact" class="pill">Get a Free Quote</a>
             </div>
