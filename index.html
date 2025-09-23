@@ -7,6 +7,7 @@
 
   <!-- Primary SEO -->
   <meta name="description" content="Prime Paint SRQ by Ty Christian delivers top-of-the-line interior & exterior painting, cabinet refinishing, and wall murals in Sarasota, FL. Free quotes: (615) 589-7044."/>
+  <!-- After you deploy, replace YOUR-SITE with your Netlify/Vercel domain -->
   <link rel="canonical" href="https://YOUR-SITE.netlify.app/"/>
 
   <!-- Open Graph / Twitter -->
@@ -14,7 +15,7 @@
   <meta property="og:title" content="Prime Paint SRQ – Ty Christian | Sarasota Painting"/>
   <meta property="og:description" content="Interior/exterior painting, cabinet finishing, and murals. Professional, clean, on-time. Free quotes."/>
   <meta property="og:url" content="https://YOUR-SITE.netlify.app/"/>
-  <!-- Use a nice project photo you add to the repo; fallback uses the headshot -->
+  <!-- Optional: upload og-cover.jpg to your repo and point to it -->
   <meta property="og:image" content="https://YOUR-SITE.netlify.app/og-cover.jpg"/>
   <meta property="og:image:alt" content="Prime Paint SRQ project by Ty Christian"/>
   <meta name="twitter:card" content="summary_large_image"/>
@@ -22,8 +23,8 @@
   <meta name="twitter:description" content="Top-of-the-line painting & cabinets in Sarasota. Free quotes."/>
   <meta name="twitter:image" content="https://YOUR-SITE.netlify.app/og-cover.jpg"/>
 
-  <!-- Favicons (optional: reuse your logo) -->
-  <link rel="icon" href="/ty-logo.jpg"/>
+  <!-- Favicon -->
+  <link rel="icon" href="ty-logo.jpg"/>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +48,7 @@
       "addressCountry": "US"
     },
     "telephone": "+1-615-589-7044",
-    "email": "tychristianartwork@gmail.com",
+    "email": "primepaintsrq@gmail.com",
     "sameAs": []
   }
   </script>
@@ -105,7 +106,7 @@
     /* reveal-on-scroll */
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
-    /* Make images efficient on mobile */
+    /* responsive media */
     img{max-width:100%;height:auto}
   </style>
 </head>
@@ -121,6 +122,7 @@
         <a href="#services">Services</a>
         <a href="#work">Projects</a>
         <a href="#why">Why Us</a>
+        <a href="#mission">Mission</a>
         <a href="#process">Process</a>
         <a href="#contact" class="btn">Contact</a>
         <a href="tel:+16155897044" class="btn primary">(615) 589-7044</a>
@@ -194,7 +196,7 @@
         <a href="#contact">Book a walkthrough →</a>
       </div>
       <div class="gallery reveal">
-        <!-- Replace these with your real photos; add loading="lazy" to each -->
+        <!-- Replace with real project photos and keep loading="lazy" -->
         <figure>
           <img src="https://picsum.photos/seed/pp1/900/600" alt="Interior finish sample" loading="lazy" width="900" height="600">
           <figcaption class="cap">Modern interior — satin walls, enamel trim</figcaption>
@@ -211,6 +213,22 @@
           <img src="https://picsum.photos/seed/pp4/900/600" alt="Feature wall" loading="lazy" width="900" height="600">
           <figcaption class="cap">Feature wall — premium matte finish</figcaption>
         </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section id="mission">
+    <div class="container reveal">
+      <h2>Mission Statement</h2>
+      <p class="sub" style="max-width:70ch;margin-top:.6rem">
+        At Prime Paint, we are more than painters. Our mission is to deliver exceptional interior and exterior painting services built on hard work, professionalism, and a commitment to excellence. We foster open and honest communication so every client feels heard and respected throughout the process. With positivity, genuine hospitality, and a relentless dedication to detail, we create lasting results that reflect pride in our craft and care for our community—ensuring you’re left with a prime experience you’ll never forget.
+      </p>
+      <div class="card" style="margin-top:14px">
+        <strong>Pricing & Free Estimates</strong>
+        <p class="sub" style="margin:6px 0 0">
+          Submit the contact form and we’ll reach out to schedule a free, no-obligation estimate at your home.
+        </p>
       </div>
     </div>
   </section>
@@ -256,7 +274,7 @@
       <p class="sub">Call or email for a fast, friendly quote.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px">
         <a href="tel:+16155897044" class="btn primary">(615) 589-7044</a>
-        <a href="mailto:tychristianartwork@gmail.com?subject=Quote%20Request" class="btn">tychristianartwork@gmail.com</a>
+        <a href="mailto:primepaintsrq@gmail.com?subject=Quote%20Request" class="btn">primepaintsrq@gmail.com</a>
       </div>
     </div>
   </section>
@@ -269,7 +287,7 @@
         <p class="sub">Proudly serving Sarasota and surrounding areas.</p>
         <p class="sub" aria-label="Contact details">
           Phone: <a href="tel:+16155897044">(615) 589-7044</a> •
-          Email: <a href="mailto:tychristianartwork@gmail.com">tychristianartwork@gmail.com</a>
+          Email: <a href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
         </p>
       </div>
       <form id="form" class="card" aria-label="Quote request form">
@@ -300,7 +318,7 @@
   </footer>
 
   <script>
-    // small helper: reveal-on-scroll
+    // reveal-on-scroll
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('show'); } });
     }, {threshold:0.2});
@@ -314,7 +332,7 @@
       var phone = document.getElementById('phone').value || '';
       var message = document.getElementById('message').value || '';
       var body = encodeURIComponent('Name: ' + name + '\\nPhone: ' + phone + '\\n\\n' + message);
-      window.location.href = 'mailto:tychristianartwork@gmail.com?subject=Quote%20Request&body=' + body;
+      window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + body;
     });
   </script>
 </body>
