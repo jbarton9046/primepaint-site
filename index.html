@@ -55,15 +55,6 @@
 
       /* left shift for the PP mark (visual balance) */
       --pp-shift: -42px; /* adjust a hair if you need 1–2px more */
-
-      /* form */
-      --field-bg:#131318;
-      --field-border:#292a31;
-      --field-border-focus:#3b3c46;
-      --field-placeholder:#8f9097;
-      --focus-ring:0 0 0 3px rgba(255,255,255,.06);
-      --btn-bg:#15151a;
-      --btn-bg-hover:#191a20;
     }
 
     *{box-sizing:border-box}
@@ -159,10 +150,10 @@
     .pill{
       display:inline-flex;align-items:center;gap:.5rem;
       border:1px solid var(--line);border-radius:999px;
-      padding:.55rem 1rem;background:var(--btn-bg);color:#e8e8ec;
+      padding:.55rem 1rem;background:#15151a;color:#e8e8ec;
       font-size:.95rem;text-decoration:none;transition:.25s;
     }
-    .pill:hover{transform:translateY(-1px);background:var(--btn-bg-hover)}
+    .pill:hover{transform:translateY(-1px);background:#191a20}
 
     @media (max-width: 960px){
       :root{
@@ -205,6 +196,7 @@
     @media (min-width: 960px){ .why{grid-template-columns:1.05fr .95fr} }
 
     .list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:16px 0 0;padding:0}
+    .list li{list-style:none;display:flex;align-items:center;gap:8px}
     .dot{width:7px;height:7px;border-radius:50%;background:#fff;display:inline-block}
 
     .footer{border-top:1px solid var(--line);padding:28px 0;color:#bdbdc3;font-size:.95rem}
@@ -223,71 +215,46 @@
     }
 
     /* ===== Promise split layout (Left | Right) ===== */
-    .promise-grid{ display:grid; gap:20px; align-items:start; }
-    @media (min-width: 960px){ .promise-grid{ grid-template-columns:1.1fr .9fr; } }
+    .promise-grid{
+      display:grid; gap:20px; align-items:start;
+    }
+    @media (min-width: 960px){
+      .promise-grid{ grid-template-columns:1.1fr .9fr; }
+    }
 
-    /* Right column: photo + quote */
-    .founder-split{ display:flex; align-items:center; gap:20px; }
+    /* Right column: larger photo with text to the right */
+    .founder-split{
+      display:flex; align-items:center; gap:20px;
+    }
     .founder-photo-lg{
-      width:min(340px,34vw); height:min(340px,34vw);
+      width:min(360px,36vw); height:min(360px,36vw);
       border-radius:16px; object-fit:cover; border:1px solid var(--line); flex:0 0 auto;
     }
-    .founder-meta{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+    .founder-meta{
+      display:flex; flex-direction:column; gap:6px; min-width:0;
+    }
     .founder-name{font-weight:700;font-size:1.1rem}
     .founder-quote{max-width:44ch}
+
     .founder-quote-block{margin:0}
-    .founder-quote-block p{margin:0 0 .35rem 0; max-width:44ch}
+    .founder-quote-block p{margin:0 0 .35rem 0; max-width:44ch; font-style:italic}
     .founder-quote-block footer{font-weight:600}
     .founder-role{margin-top:2px}
+
     @media (max-width: 720px){
       .founder-split{flex-direction:column; align-items:flex-start}
       .founder-photo-lg{width:240px;height:240px}
       .founder-quote-block p{max-width:60ch}
     }
 
-    /* ===== Contact form — chic, condensed, professional ===== */
-    #contact .container{max-width:900px}
-    .contact-card{
-      background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:18px;
+    /* ===== Contact section link color (only here) ===== */
+    #contact a{
+      color:#eaeaf0;
+      text-decoration:none;
+      border-bottom:1px dotted rgba(255,255,255,.25);
     }
-    .form-grid{
-      display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;
-    }
-    .form-grid .full{grid-column:1 / -1}
-    label{
-      display:block;font-weight:600;font-size:.95rem;margin:2px 2px 6px;color:#eaeaf0;
-    }
-    input[type="text"], input[type="tel"], input[type="email"], textarea{
-      width:100%;
-      background:var(--field-bg);
-      border:1px solid var(--field-border);
-      color:var(--text);
-      border-radius:12px;
-      padding:12px 12px;
-      font-size:1rem;
-      outline:none;
-      transition:border-color .2s, box-shadow .2s, background .2s;
-    }
-    input::placeholder, textarea::placeholder{ color:var(--field-placeholder) }
-    input:focus-visible, textarea:focus-visible{
-      border-color:var(--field-border-focus);
-      box-shadow:var(--focus-ring);
-      background:#15161c;
-    }
-    .submit-row{
-      display:flex;gap:10px;align-items:center;margin-top:8px;
-    }
-    .btn-primary{
-      display:inline-flex;align-items:center;justify-content:center;
-      border:1px solid var(--line);border-radius:999px;
-      padding:.7rem 1.1rem;background:var(--btn-bg);color:#e8e8ec;
-      font-weight:700;text-decoration:none;transition:.25s;cursor:pointer;
-    }
-    .btn-primary:hover{transform:translateY(-1px);background:var(--btn-bg-hover)}
-    .disclaimer{color:var(--muted);font-size:.85rem;margin:6px 0 0}
-
-    @media (max-width:720px){
-      .form-grid{grid-template-columns:1fr}
+    #contact a:hover{
+      border-bottom-color:rgba(255,255,255,.55);
     }
   </style>
 </head>
@@ -332,7 +299,8 @@
             </h1>
             <p class="lead">Interior &amp; exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
             <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
-              <a href="tel:+19412221890" class="pill">(Tap to Call)</a>
+              <!-- This is the ONLY CTA changed per your request -->
+              <a href="#contact" class="pill">Request a Quote</a>
             </div>
           </div>
         </div>
@@ -413,15 +381,15 @@
           </div>
         </div>
 
-        <!-- RIGHT: photo + quote -->
+        <!-- RIGHT: larger Tylor + quote first, proper attribution -->
         <div>
           <div class="card founder-split">
             <img class="founder-photo-lg" src="assets/ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500">
             <div class="founder-meta">
               <blockquote class="founder-quote-block">
-                <p><em>“As with a canvas, the details are respect made visible—for the home, and for the people living in it.”</em></p>
+                <p>“Details are how you show respect—for the home, and for the people living in it. As with a canvas, the care shows in every line.”</p>
                 <footer>— <span class="founder-name">Ty Christian</span>
-                  <div class="sub founder-role">Founder • Prime Paint</div>
+                  <div class="sub founder-role">Founder • Prime Paint SRQ</div>
                 </footer>
               </blockquote>
             </div>
@@ -437,6 +405,7 @@
       <h2>Ready to elevate your space?</h2>
       <p class="sub">Call or email for a fast, friendly quote.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px">
+        <!-- Reverted to Tap to Call (as before) -->
         <a href="tel:+19412221890" class="pill">(Tap to Call)</a>
         <a href="mailto:primepaintsrq@gmail.com?subject=Quote%20Request" class="pill">primepaintsrq@gmail.com</a>
       </div>
@@ -454,32 +423,18 @@
           Email: <a href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
         </p>
       </div>
-
-      <!-- Refined, chic, condensed form -->
-      <form id="form" class="contact-card" aria-label="Quote request form">
-        <div class="form-grid">
-          <div>
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" placeholder="Your name" required>
-          </div>
-          <div>
-            <label for="phone">Phone</label>
-            <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="(941) 222-1890">
-          </div>
-          <div class="full">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="you@example.com">
-          </div>
-          <div class="full">
-            <label for="message">Project details</label>
-            <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…"></textarea>
-          </div>
-        </div>
-
-        <div class="submit-row">
-          <button class="btn-primary" type="submit">Send Request</button>
-          <span class="disclaimer">By submitting, you agree to be contacted about your project.</span>
-        </div>
+      <form id="form" class="card" aria-label="Quote request form">
+        <label for="name">Name</label>
+        <input id="name" name="name" placeholder="Your name" required>
+        <div style="height:8px"></div>
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" placeholder="(941) 222-1890">
+        <div style="height:8px"></div>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…"></textarea>
+        <div style="height:12px"></div>
+        <button class="pill" type="submit" style="width:100%;justify-content:center">Send Request</button>
+        <p class="sub" style="font-size:.85rem;margin-top:8px">By submitting, you agree to be contacted about your project.</p>
       </form>
     </div>
   </section>
@@ -511,14 +466,9 @@
       e.preventDefault();
       var name = document.getElementById('name').value || '';
       var phone = document.getElementById('phone').value || '';
-      var email = document.getElementById('email').value || '';
       var message = document.getElementById('message').value || '';
-      var body =
-        'Name: ' + name + '\n' +
-        'Phone: ' + phone + '\n' +
-        (email ? ('Email: ' + email + '\n') : '') +
-        '\n' + message;
-      window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + encodeURIComponent(body);
+      var body = encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\n\n' + message);
+      window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + body;
     });
 
     // Mobile nav toggle
