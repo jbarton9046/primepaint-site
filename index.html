@@ -23,7 +23,7 @@
   <meta name="twitter:description" content="Top-of-the-line painting & cabinets in Sarasota. Free quotes."/>
   <meta name="twitter:image" content="https://aesthetic-licorice-7a4bfc.netlify.app/assets/ty-logo-tight.png"/>
 
-  <!-- Favicons / tab icon -->
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/ty-logo-tight.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/ty-logo-tight.png">
   <link rel="apple-touch-icon" href="assets/ty-logo-tight.png">
@@ -54,19 +54,23 @@
       backdrop-filter:blur(10px);
       border-bottom:1px solid var(--line);
     }
-    .h-inner{height:86px;display:flex;align-items:center;gap:16px}
+    .h-inner{height:92px;display:flex;align-items:center;gap:16px}
     .left{display:flex;align-items:center;gap:22px;flex:1}
     .brand{font-weight:700;letter-spacing:.03em;white-space:nowrap;color:#eaeaf0;text-decoration:none}
     .mainnav{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
     .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.95rem;line-height:1;padding:0.4rem 0}
 
-    /* Floating logo (no background tile) */
+    /* Floating logo (larger, no background tile) */
     .logo-link{ display:flex; align-items:center; }
     .logo-nav{
-      height:48px; width:auto; display:block; object-fit:contain;
+      height:64px; width:auto; display:block; object-fit:contain;
       background:transparent; border:0; box-shadow:none; padding:0;
     }
-    @media (max-width: 840px){ .h-inner{height:78px} .logo-nav{height:42px} }
+
+    @media (max-width: 840px){
+      .h-inner{height:86px}
+      .logo-nav{height:54px}
+    }
 
     /* Pills / badges / buttons */
     .pill{
@@ -145,7 +149,7 @@
           <a href="#contact">Contact</a>
         </nav>
       </div>
-      <!-- Floating logo (no tile background) -->
+      <!-- Floating, larger logo -->
       <a href="#top" class="logo-link" aria-label="Prime Paint SRQ home">
         <img class="logo-nav" src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo">
       </a>
@@ -203,25 +207,21 @@
       </div>
 
       <div class="gallery reveal">
-        <!-- Real: Ty laser -->
         <figure>
           <img src="assets/featured/ty-hat-laser.jpg" alt="Precision layout — laser-guided prep" loading="lazy" width="1600" height="1100">
           <figcaption class="cap">Precision layout — laser-guided prep</figcaption>
         </figure>
 
-        <!-- Real: Mural hands -->
         <figure>
           <img src="assets/featured/hands-mural.jpg" alt="Exterior mural — statement artwork" loading="lazy" width="1600" height="1100">
           <figcaption class="cap">Exterior mural — statement artwork</figcaption>
         </figure>
 
-        <!-- Stock: Interior repaint -->
         <figure>
           <img src="assets/featured/interior-painted.jpg" alt="Interior repaint — premium matte walls" loading="lazy" width="1600" height="1100">
           <figcaption class="cap">Interior repaint — premium matte walls</figcaption>
         </figure>
 
-        <!-- Stock: Kitchen cabinets -->
         <figure>
           <img src="assets/featured/kitchen-cabinets.jpg" alt="Kitchen cabinets — factory-smooth enamel" loading="lazy" width="1600" height="1100">
           <figcaption class="cap">Kitchen cabinets — factory-smooth enamel</figcaption>
