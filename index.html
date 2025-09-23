@@ -6,7 +6,7 @@
   <title>Prime Paint SRQ – Ty Christian | Interior, Exterior & Cabinet Painting in Sarasota, FL</title>
 
   <!-- SEO -->
-  <meta name="description" content="Prime Paint SRQ by Ty Christian delivers top-of-the-line interior & exterior painting, cabinet refinishing, and wall murals in Sarasota, FL. Free quotes."/>
+  <meta name="description" content="Prime Paint SRQ by Ty Christian delivers top-of-the-line interior & exterior painting, cabinet refinishing, and statement wall murals in Sarasota, FL. Free quotes."/>
   <link rel="canonical" href="https://aesthetic-licorice-7a4bfc.netlify.app/"/>
 
   <!-- Open Graph / Twitter -->
@@ -50,18 +50,20 @@
     .h-inner{height:86px;display:flex;align-items:center;gap:16px}
     .left{display:flex;align-items:center;gap:22px;flex:1}
     .brand{font-weight:700;letter-spacing:.03em;white-space:nowrap;color:#eaeaf0;text-decoration:none}
-    .mainnav{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-    .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.95rem;line-height:1;padding:.4rem 0}
-    .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:16px;padding:.4rem .9rem;font-weight:600;border:1px solid var(--line);transition:.25s;line-height:1}
-    .btn:hover{transform:translateY(-1px)}
+    .mainnav{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+    .mainnav a{
+      color:#eaeaf0;text-decoration:none;font-size:.95rem;line-height:1;
+      padding:.45rem 0; border-bottom:2px solid transparent; transition:border-color .2s ease;
+    }
+    .mainnav a:hover{ border-color:#fff; }
+    /* removed button style from nav; Contact now matches other links */
 
-    /* FLOATING LOGO (no tile) */
+    /* Floating logo (no tile) */
     .logo-badge{
-      height:76px;width:auto;object-fit:contain;
-      background:transparent; /* now “floating” */
-      display:block;
+      height:76px;width:auto;object-fit:contain;background:transparent;display:block;
     }
 
+    /* Pills (badges + CTAs elsewhere) */
     .pill{
       display:inline-flex;align-items:center;gap:.5rem;
       border:1px solid var(--line);border-radius:999px;
@@ -91,12 +93,10 @@
 
     /* Featured Projects gallery */
     .gallery{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:16px}
-    .gallery figure{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#0e0e12}
-    /* Reserve space & stop layout shift; hide alt text overlay look */
-    .gallery figure{aspect-ratio:4/3}
+    .gallery figure{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#0e0e12;aspect-ratio:4/3}
     .gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
     .gallery figure:hover img{transform:scale(1.06)}
-    .cap{position:absolute;inset-inline:0;bottom:0;padding:.55rem .8rem;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));font-size:.82rem}
+    .cap{position:absolute;inset-inline:0;bottom:0;padding:.55rem .8rem;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));font-size:.9rem}
 
     .why{display:grid;gap:2rem;align-items:center}
     @media (min-width:960px){ .why{grid-template-columns:1.05fr .95fr} }
@@ -110,12 +110,8 @@
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
 
-    @media (max-width:840px){
-      .h-inner{height:78px}
-      .logo-badge{height:68px}
-    }
+    @media (max-width:840px){ .h-inner{height:78px}.logo-badge{height:68px} }
     @media (max-width:640px){
-      .btn{display:none}
       .call-fab{
         position:fixed; right:16px; bottom:18px; z-index:40;
         display:flex; align-items:center; justify-content:center;
@@ -143,10 +139,9 @@
           <a href="#why">Why Us</a>
           <a href="#promise">Promise</a>
           <a href="#process">Process</a>
-          <a href="#contact" class="btn">Contact</a>
+          <a href="#contact">Contact</a>
         </nav>
       </div>
-      <!-- Floating logo (no tile) -->
       <img class="logo-badge" src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo">
     </div>
   </header>
@@ -193,7 +188,7 @@
     </div>
   </section>
 
-  <!-- Featured Projects (stable stock images) -->
+  <!-- Featured Projects (painting-related stock) -->
   <section id="work">
     <div class="container">
       <div style="display:flex;align-items:end;justify-content:space-between">
@@ -202,37 +197,115 @@
       </div>
 
       <div class="gallery reveal" id="stock-gallery">
-        <!-- Each uses deterministic Picsum IDs (always available) -->
+        <!-- Interior – residential living room (painted) -->
         <figure>
-          <img src="https://picsum.photos/id/1067/1600/1200" alt="Freshly painted modern living room" loading="lazy" width="1600" height="1200">
-          <figcaption class="cap">Modern interior — premium matte walls</figcaption>
+          <img
+            src="https://source.unsplash.com/1600x1200/?interior,living-room,painted,walls,modern"
+            srcset="
+              https://source.unsplash.com/800x600/?interior,living-room,painted,walls,modern 800w,
+              https://source.unsplash.com/1200x900/?interior,living-room,painted,walls,modern 1200w,
+              https://source.unsplash.com/1600x1200/?interior,living-room,painted,walls,modern 1600w"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            alt="Freshly painted modern living room with crisp edges"
+            loading="lazy" width="1600" height="1200">
+          <figcaption class="cap">Interior repaint — premium matte finish</figcaption>
         </figure>
+
+        <!-- Exterior – residential home (painted facade) -->
         <figure>
-          <img src="https://picsum.photos/id/1018/1600/1200" alt="Exterior home repaint with crisp trim" loading="lazy" width="1600" height="1200">
-          <figcaption class="cap">Exterior repaint — crisp trim & clean lines</figcaption>
+          <img
+            src="https://source.unsplash.com/1600x1200/?house,exterior,painted,home,facade"
+            srcset="
+              https://source.unsplash.com/800x600/?house,exterior,painted,home,facade 800w,
+              https://source.unsplash.com/1200x900/?house,exterior,painted,home,facade 1200w,
+              https://source.unsplash.com/1600x1200/?house,exterior,painted,home,facade 1600w"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            alt="Crisp residential exterior repaint with clean trim"
+            loading="lazy" width="1600" height="1200">
+          <figcaption class="cap">Exterior repaint — crisp trim & siding</figcaption>
         </figure>
+
+        <!-- Cabinets -->
         <figure>
-          <img src="https://picsum.photos/id/1084/1600/1200" alt="Refinished kitchen cabinets with enamel finish" loading="lazy" width="1600" height="1200">
+          <img
+            src="https://source.unsplash.com/1600x1200/?kitchen,cabinets,painted,enamel,modern"
+            srcset="
+              https://source.unsplash.com/800x600/?kitchen,cabinets,painted,enamel,modern 800w,
+              https://source.unsplash.com/1200x900/?kitchen,cabinets,painted,enamel,modern 1200w,
+              https://source.unsplash.com/1600x1200/?kitchen,cabinets,painted,enamel,modern 1600w"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            alt="Refinished kitchen cabinets with smooth enamel finish"
+            loading="lazy" width="1600" height="1200">
           <figcaption class="cap">Kitchen cabinets — factory-smooth enamel</figcaption>
         </figure>
+
+        <!-- Exterior – commercial building -->
         <figure>
-          <img src="https://picsum.photos/id/103/1600/1200" alt="Surface prep with masking and protection" loading="lazy" width="1600" height="1200">
-          <figcaption class="cap">Meticulous prep — protection & masking</figcaption>
+          <img
+            src="https://source.unsplash.com/1600x1200/?commercial,building,painted,exterior,facade"
+            srcset="
+              https://source.unsplash.com/800x600/?commercial,building,painted,exterior,facade 800w,
+              https://source.unsplash.com/1200x900/?commercial,building,painted,exterior,facade 1200w,
+              https://source.unsplash.com/1600x1200/?commercial,building,painted,exterior,facade 1600w"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            alt="Fresh commercial exterior repaint with uniform finish"
+            loading="lazy" width="1600" height="1200">
+          <figcaption class="cap">Commercial exterior — uniform, durable finish</figcaption>
         </figure>
+
+        <!-- Accent/feature wall -->
         <figure>
-          <img src="https://picsum.photos/id/1050/1600/1200" alt="Feature wall in a contemporary space" loading="lazy" width="1600" height="1200">
+          <img
+            src="https://source.unsplash.com/1600x1200/?feature-wall,interior,paint,design"
+            srcset="
+              https://source.unsplash.com/800x600/?feature-wall,interior,paint,design 800w,
+              https://source.unsplash.com/1200x900/?feature-wall,interior,paint,design 1200w,
+              https://source.unsplash.com/1600x1200/?feature-wall,interior,paint,design 1600w"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            alt="Bold painted feature wall in a contemporary space"
+            loading="lazy" width="1600" height="1200">
           <figcaption class="cap">Feature wall — bold, clean finish</figcaption>
         </figure>
+
+        <!-- Mural (in progress) -->
         <figure>
-          <img src="https://picsum.photos/id/1011/1600/1200" alt="Mural in progress by artist" loading="lazy" width="1600" height="1200">
+          <img
+            src="https://source.unsplash.com/1600x1200/?mural,artist,painting,wall"
+            srcset="
+              https://source.unsplash.com/800x600/?mural,artist,painting,wall 800w,
+              https://source.unsplash.com/1200x900/?mural,artist,painting,wall 1200w,
+              https://source.unsplash.com/1600x1200/?mural,artist,painting,wall 1600w"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            alt="Artist painting a mural on a prepared wall"
+            loading="lazy" width="1600" height="1200">
           <figcaption class="cap">Custom mural — in progress</figcaption>
         </figure>
+
+        <!-- Mural (finished) -->
         <figure>
-          <img src="https://picsum.photos/id/1003/1600/1200" alt="Completed large-scale exterior mural" loading="lazy" width="1600" height="1200">
+          <img
+            src="https://source.unsplash.com/1600x1200/?mural,wall-art,finished,exterior"
+            srcset="
+              https://source.unsplash.com/800x600/?mural,wall-art,finished,exterior 800w,
+              https://source.unsplash.com/1200x900/?mural,wall-art,finished,exterior 1200w,
+              https://source.unsplash.com/1600x1200/?mural,wall-art,finished,exterior 1600w"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            alt="Completed exterior mural with clean lines"
+            loading="lazy" width="1600" height="1200">
           <figcaption class="cap">Large-scale mural — finished piece</figcaption>
         </figure>
+
+        <!-- Tools / premium materials -->
         <figure>
-          <img src="https://picsum.photos/id/1021/1600/1200" alt="Premium paint and pro tools" loading="lazy" width="1600" height="1200">
+          <img
+            src="https://source.unsplash.com/1600x1200/?paint,brush,roller,prep"
+            srcset="
+              https://source.unsplash.com/800x600/?paint,brush,roller,prep 800w,
+              https://source.unsplash.com/1200x900/?paint,brush,roller,prep 1200w,
+              https://source.unsplash.com/1600x1200/?paint,brush,roller,prep 1600w"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            alt="Premium paint and professional tools ready for prep"
+            loading="lazy" width="1600" height="1200">
           <figcaption class="cap">Premium materials & pro tools</figcaption>
         </figure>
       </div>
