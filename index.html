@@ -107,6 +107,12 @@
     .gallery figure:hover img{transform:scale(1.06)}
     .cap{position:absolute;inset-inline:0;bottom:0;padding:.55rem .8rem;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));font-size:.9rem}
 
+    /* smaller gallery option */
+    .gallery figure.small img{height:160px;}
+    @media (max-width:640px){
+      .gallery figure.small img{height:140px;}
+    }
+
     .why{display:grid;gap:2rem;align-items:center}
     @media (min-width: 960px){ .why{grid-template-columns:1.05fr .95fr} }
 
@@ -212,9 +218,13 @@
           <figcaption class="cap">Precision layout — laser-guided prep</figcaption>
         </figure>
 
-        <figure>
-          <img src="assets/featured/hands-mural.jpg" alt="Exterior mural — statement artwork" loading="lazy" width="1600" height="1100">
-          <figcaption class="cap">Exterior mural — statement artwork</figcaption>
+        <!-- REPLACED IMAGE: stock exterior painting photo + smaller size -->
+        <figure class="small">
+          <img
+            src="https://images.unsplash.com/photo-1598550476439-6847785fcea1?q=80&w=1600&auto=format&fit=crop"
+            alt="Exterior painting — pro applying fresh coat to house siding (stock)"
+            loading="lazy" width="1600" height="1100">
+          <figcaption class="cap">Exterior repaint — fresh coat on siding (stock)</figcaption>
         </figure>
 
         <figure>
