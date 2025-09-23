@@ -7,7 +7,6 @@
 
   <!-- Primary SEO -->
   <meta name="description" content="Prime Paint SRQ by Ty Christian delivers top-of-the-line interior & exterior painting, cabinet refinishing, and wall murals in Sarasota, FL. Free quotes: (615) 589-7044."/>
-  <!-- After deploy, replace YOUR-SITE with your real domain/Netlify URL -->
   <link rel="canonical" href="https://YOUR-SITE.netlify.app/"/>
 
   <!-- Open Graph / Twitter -->
@@ -66,10 +65,9 @@
     .left{display:flex;align-items:center;gap:22px;flex:1}
     .brand{font-weight:800;letter-spacing:.03em;white-space:nowrap;color:#eaeaf0;text-decoration:none}
     .mainnav{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-    .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.95rem;line-height:1;padding:0.4rem 0} /* consistent baseline */
+    .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.95rem;line-height:1;padding:0.4rem 0}
     .nav-phone{border:0;padding:0.4rem 0;font-weight:600}
 
-    /* Contact button (still a pill, now aligned to baseline) */
     .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:16px;padding:.4rem .9rem;font-weight:600;border:1px solid var(--line);transition:.25s;line-height:1}
     .btn:hover{transform:translateY(-1px)}
     .btn.primary{background:var(--accent);color:#0d0d0f;border-color:transparent}
@@ -80,14 +78,16 @@
       box-shadow:0 0 0 1px rgba(0,0,0,0.4) inset;
     }
 
-    /* Buttons system for hero/CTA */
-    .btn-solid{background:var(--accent);color:#0d0d0f;border:1px solid transparent}
-    .btn-outline{background:transparent;color:#eaeaf0;border:1px solid var(--line)}
-    .btn-inline{font-weight:600;text-decoration:none;color:#eaeaf0}
+    /* ===== Pill system (used for badges AND buttons) ===== */
+    .pill{
+      display:inline-flex; align-items:center; gap:.5rem;
+      border:1px solid var(--line); border-radius:999px;
+      padding:.55rem 1rem; background:#15151a; color:#e8e8ec;
+      font-size:.95rem; text-decoration:none; transition:.25s;
+    }
+    .pill:hover{ transform:translateY(-1px); background:#191a20; }
 
-    /* General UI */
-    .pill{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);border-radius:999px;padding:.4rem .75rem;background:#15151a;color:#e8e8ec;font-size:.82rem}
-
+    /* Lists & general UI */
     .hero{position:relative;isolation:isolate;overflow:hidden}
     .hero::before{content:"";position:absolute;inset:0;background:
       linear-gradient(120deg,rgba(255,255,255,.06),transparent 30%),
@@ -157,7 +157,7 @@
           <a href="#promise">Promise</a>
           <a href="#process">Process</a>
           <a href="#contact" class="btn">Contact</a>
-          <a href="tel:+16155897044" class="nav-phone">(615) 589-7044</a>
+          <a href="tel:+16155897044" class="nav-phone">Call</a>
         </nav>
       </div>
 
@@ -188,15 +188,11 @@
         <span class="pill">Clean Job Sites</span>
       </div>
 
-      <!-- Consistent buttons -->
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
-        <a href="#contact" class="btn btn-solid">Get a Free Quote</a>
-        <a href="#work" class="btn btn-outline">See Our Work</a>
-      </div>
-
-      <!-- Subtle phone link under buttons -->
-      <div style="margin-top:8px">
-        <a class="btn-inline" href="tel:+16155897044">or call (615) 589-7044</a>
+      <!-- NEW: three matching dark pill buttons -->
+      <div class="hero-cta" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
+        <a href="#contact" class="pill">Get a Free Quote</a>
+        <a href="#work" class="pill">See Our Work</a>
+        <a href="tel:+16155897044" class="pill" aria-label="Call Prime Paint SRQ">Call Us</a>
       </div>
     </div>
   </section>
@@ -209,7 +205,7 @@
           <h2>Top-of-the-Line Services</h2>
           <div class="sub">Premium results with clear communication and a spotless finish.</div>
         </div>
-        <a href="#contact" class="btn btn-solid">Request a Quote</a>
+        <a href="#contact" class="pill">Request a Quote</a>
       </div>
       <div class="grid g-4 reveal" style="margin-top:16px">
         <article class="card"><h3>Interior Painting</h3><p class="sub">Walls, ceilings, trim, feature walls, staircases. Low-VOC options available.</p></article>
@@ -290,8 +286,8 @@
       <h2>Ready to elevate your space?</h2>
       <p class="sub">Call or email for a fast, friendly quote.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px">
-        <a href="tel:+16155897044" class="btn btn-solid">(615) 589-7044</a>
-        <a href="mailto:primepaintsrq@gmail.com?subject=Quote%20Request" class="btn btn-outline">primepaintsrq@gmail.com</a>
+        <a href="tel:+16155897044" class="pill">(Tap to Call)</a>
+        <a href="mailto:primepaintsrq@gmail.com?subject=Quote%20Request" class="pill">primepaintsrq@gmail.com</a>
       </div>
     </div>
   </section>
@@ -317,7 +313,7 @@
         <label for="message">Message</label>
         <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…"></textarea>
         <div style="height:12px"></div>
-        <button class="btn btn-solid" type="submit" style="width:100%">Send Request</button>
+        <button class="pill" type="submit" style="width:100%;justify-content:center">Send Request</button>
         <p class="sub" style="font-size:.85rem;margin-top:8px">By submitting, you agree to be contacted about your project.</p>
       </form>
     </div>
