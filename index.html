@@ -54,7 +54,7 @@
       --hero-nudge: 14px;
 
       /* left shift for the PP mark (visual balance) */
-      --pp-shift: -42px; /* adjust a hair if you need 1–2px more */
+      --pp-shift: -42px;
     }
 
     *{box-sizing:border-box}
@@ -196,7 +196,6 @@
     @media (min-width: 960px){ .why{grid-template-columns:1.05fr .95fr} }
 
     .list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:16px 0 0;padding:0}
-    .list li{list-style:none;display:flex;align-items:center;gap:8px}
     .dot{width:7px;height:7px;border-radius:50%;background:#fff;display:inline-block}
 
     .footer{border-top:1px solid var(--line);padding:28px 0;color:#bdbdc3;font-size:.95rem}
@@ -233,13 +232,14 @@
     .founder-meta{
       display:flex; flex-direction:column; gap:6px; min-width:0;
     }
-    .founder-name{font-weight:700;font-size:1.1rem}
+    .founder-name{font-weight:700;font-size:1.12rem}
     .founder-quote{max-width:44ch}
 
     /* clean blockquote styles for attribution */
     .founder-quote-block{margin:0}
-    .founder-quote-block p{margin:0 0 .35rem 0; max-width:44ch}
+    .founder-quote-block p{margin:0 0 .5rem 0; max-width:44ch}
     .founder-quote-block footer{font-weight:600}
+    .founder-quote-block cite{font-style:normal;font-weight:700}
     .founder-role{margin-top:2px}
 
     @media (max-width: 720px){
@@ -248,74 +248,39 @@
       .founder-quote-block p{max-width:60ch}
     }
 
-    /* ===================== CONTACT — new chic form ===================== */
-    #contact .contact-wrap{
-      max-width:860px;
-      margin:0 auto;
-    }
+    /* ===================== CONTACT — chic form ===================== */
+    #contact .contact-wrap{ max-width:860px; margin:0 auto; }
     #contact .contact-links a{
-      color:#eaeaf0;
-      text-decoration:none;
-      border-bottom:1px dashed rgba(234,234,240,.28);
+      color:#eaeaf0; text-decoration:none; border-bottom:1px dashed rgba(234,234,240,.28);
       transition:border-color .2s ease, color .2s ease;
     }
     #contact .contact-links a:hover{ border-bottom-color:#eaeaf0; }
 
-    .form-card{
-      background:var(--bg2);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:22px;
-    }
-    .form-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:16px;
-    }
-    .field{position:relative; display:flex; flex-direction:column; gap:6px}
-    .label{font-weight:600; color:#eaeaf0; font-size:.95rem}
+    .form-card{ background:var(--bg2); border:1px solid var(--line); border-radius:18px; padding:22px; }
+    .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .field{ position:relative; display:flex; flex-direction:column; gap:6px }
+    .label{ font-weight:600; color:#eaeaf0; font-size:.95rem }
 
     .input, .select, .textarea{
-      width:100%;
-      background:#111114;
-      color:#eaeaf0;
-      border:1px solid #2a2a31;
-      border-radius:12px;
-      padding:12px 14px;
-      font-size:1rem;
-      outline:none;
+      width:100%; background:#111114; color:#eaeaf0; border:1px solid #2a2a31; border-radius:12px;
+      padding:12px 14px; font-size:1rem; outline:none;
       transition:border-color .15s ease, box-shadow .15s ease, background .15s ease, transform .05s ease;
     }
     .input:focus, .select:focus, .textarea:focus{
-      border-color:#3a3a44;
-      box-shadow:0 0 0 3px rgba(255,255,255,.06);
-      background:#121218;
+      border-color:#3a3a44; box-shadow:0 0 0 3px rgba(255,255,255,.06); background:#121218;
     }
     .input:active{ transform:scale(0.998); }
 
-    .textarea{min-height:130px; resize:vertical}
-    .meta-row{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px; margin-top:6px; color:var(--muted); font-size:.9rem;
-    }
-    .progress{
-      position:relative; flex:1; height:6px; background:#17171c; border-radius:999px; overflow:hidden;
-    }
-    .progress > span{
-      position:absolute; left:0; top:0; bottom:0; width:0%;
-      background:linear-gradient(90deg, #cfcfd6, #ffffff); border-radius:999px; transition:width .2s ease;
-    }
+    .textarea{ min-height:130px; resize:vertical }
+    .meta-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:6px; color:var(--muted); font-size:.9rem; }
+    .progress{ position:relative; flex:1; height:6px; background:#17171c; border-radius:999px; overflow:hidden; }
+    .progress > span{ position:absolute; left:0; top:0; bottom:0; width:0%; background:linear-gradient(90deg,#cfcfd6,#ffffff); border-radius:999px; transition:width .2s ease; }
 
-    .submit-pill{
-      width:100%; justify-content:center; padding:.85rem 1.25rem; font-weight:700;
-      background:#15151a; border:1px solid var(--line);
-    }
+    .submit-pill{ width:100%; justify-content:center; padding:.85rem 1.25rem; font-weight:700; background:#15151a; border:1px solid var(--line); }
     .submit-pill:hover{ background:#191a20 }
     .submit-pill:active{ transform:translateY(1px) }
 
-    @media (max-width:760px){
-      .form-grid{ grid-template-columns:1fr; }
-    }
+    @media (max-width:760px){ .form-grid{ grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -440,15 +405,15 @@
           </div>
         </div>
 
-        <!-- RIGHT: larger Tylor + quote first, proper attribution -->
+        <!-- RIGHT: larger Ty + quote (refined formatting) -->
         <div>
           <div class="card founder-split">
             <img class="founder-photo-lg" src="assets/ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500">
             <div class="founder-meta">
               <blockquote class="founder-quote-block">
-                <p>“We treat each home like our own—clear communication, meticulous prep, and finishes that last.”</p>
-                <footer>— <span class="founder-name">Ty Christian</span>
-                  <div class="sub founder-role">Founder • Prime Paint SRQ</div>
+                <p><em>“As a fine artist, I approach every project with the same respect I give a canvas. We treat each home like a canvas—with clear communication, meticulous prep, and finishes that last.”</em></p>
+                <footer>— <cite>Ty Christian</cite>
+                  <div class="sub founder-role">Founder &amp; Lead Painter, Fine Artist • Prime Paint SRQ</div>
                 </footer>
               </blockquote>
             </div>
@@ -464,13 +429,13 @@
       <h2>Ready to elevate your space?</h2>
       <p class="sub">Call or email for a fast, friendly quote.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px">
-        <a href="tel:+16155897044" class="pill">(Tap to Call)</a>
+        <a href="tel:+19412221890" class="pill">(Tap to Call)</a>
         <a href="mailto:primepaintsrq@gmail.com?subject=Quote%20Request" class="pill">primepaintsrq@gmail.com</a>
       </div>
     </div>
   </section>
 
-  <!-- Contact (CHIC + FUN) -->
+  <!-- Contact -->
   <section id="contact">
     <div class="container">
       <div class="contact-wrap" style="display:grid;gap:1.2rem">
@@ -478,7 +443,7 @@
           <h2>Contact Us</h2>
           <p class="sub">Proudly serving Sarasota and surrounding areas.</p>
           <p class="sub contact-links" aria-label="Contact details">
-            Phone: <a href="tel:+16155897044">(615) 589-7044</a> ·
+            Phone: <a href="tel:+19412221890">(941) 222-1890</a> ·
             Email: <a href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
           </p>
         </div>
@@ -492,7 +457,7 @@
 
             <div class="field">
               <label class="label" for="phone">Phone</label>
-              <input class="input" id="phone" name="phone" inputmode="tel" placeholder="(615) 555-1234">
+              <input class="input" id="phone" name="phone" inputmode="tel" placeholder="(941) 222-1890">
             </div>
 
             <div class="field" style="grid-column:1 / -1">
@@ -540,7 +505,7 @@
   </footer>
 
   <!-- Mobile floating call button -->
-  <a class="call-fab" href="tel:+16155897044" aria-label="Call Prime Paint SRQ">☎</a>
+  <a class="call-fab" href="tel:+19412221890" aria-label="Call Prime Paint SRQ">☎</a>
 
   <script>
     // reveal-on-scroll
@@ -549,73 +514,40 @@
     }, {threshold:0.2});
     document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 
-    // year + mailto form
+    // year
     document.getElementById('yr').textContent = new Date().getFullYear();
 
-    // Phone formatter ( (###) ###-#### )
-    (function(){
-      var phone = document.getElementById('phone');
-      if(!phone) return;
-      function format(v){
-        v = v.replace(/\D/g,'').slice(0,10);
-        var p1 = v.slice(0,3), p2 = v.slice(3,6), p3 = v.slice(6,10);
-        if(v.length > 6) return '('+p1+') '+p2+'-'+p3;
-        if(v.length > 3) return '('+p1+') '+p2;
-        if(v.length > 0) return '('+p1;
-        return '';
-      }
-      phone.addEventListener('input', function(e){
-        var start = phone.selectionStart;
-        phone.value = format(phone.value);
-        // best-effort caret keeping
-        phone.selectionStart = phone.selectionEnd = start;
-      });
-    })();
-
-    // Message character count + progress + auto-resize
+    // Character counter + progress bar
     (function(){
       var ta = document.getElementById('message');
       var count = document.getElementById('char-count');
       var bar = document.getElementById('char-bar');
-      if(!ta) return;
+      if(!ta || !count || !bar) return;
       function update(){
+        var max = parseInt(ta.getAttribute('maxlength')||'600',10);
         var len = ta.value.length;
-        var max = ta.getAttribute('maxlength') ? parseInt(ta.getAttribute('maxlength'),10) : 600;
         count.textContent = len + ' / ' + max;
         bar.style.width = Math.min(100, (len/max)*100) + '%';
-        // auto-resize
-        ta.style.height = 'auto';
-        ta.style.height = Math.min(320, ta.scrollHeight) + 'px';
       }
       ta.addEventListener('input', update);
       update();
     })();
 
-    // mailto submit with extra fields
+    // Form -> mailto
     document.getElementById('form').addEventListener('submit', function(e){
       e.preventDefault();
       var name = document.getElementById('name').value || '';
       var phone = document.getElementById('phone').value || '';
       var service = document.getElementById('service').value || '';
       var message = document.getElementById('message').value || '';
-      var body = 'Name: ' + name +
-                 '\nPhone: ' + phone +
-                 (service ? '\nService: ' + service : '') +
-                 '\n\n' + message;
-      window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + encodeURIComponent(body);
+      var body = encodeURIComponent(
+        'Name: ' + name + '\n' +
+        'Phone: ' + phone + '\n' +
+        (service ? ('Project Type: ' + service + '\n') : '') +
+        '\n' + message
+      );
+      window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + body;
     });
-
-    // Mobile nav toggle
-    (function(){
-      var btn = document.querySelector('.menu-btn');
-      var nav = document.getElementById('primary-nav');
-      if(btn && nav){
-        btn.addEventListener('click', function(){
-          var open = nav.classList.toggle('show');
-          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-      }
-    })();
   </script>
 </body>
 </html>
