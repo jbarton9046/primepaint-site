@@ -54,11 +54,14 @@
       backdrop-filter:blur(10px);
       border-bottom:1px solid var(--line);
     }
+    /* Make header text flush-left while keeping logo on the right */
+    .header .container { max-width: none; padding-left: 16px; padding-right: 16px; }
+
     .h-inner{height:100px;display:flex;align-items:center;gap:16px}
     .left{display:flex;align-items:center;gap:22px;flex:1}
     .brand{
       font-weight:700;letter-spacing:.03em;white-space:nowrap;color:#eaeaf0;text-decoration:none;
-      font-size:1.75rem; /* 75% larger */
+      font-size:1.75rem; /* previously set to be 75% larger */
     }
     .mainnav{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
     .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.95rem;line-height:1;padding:0.4rem 0}
