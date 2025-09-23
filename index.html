@@ -101,18 +101,32 @@
     .hero-inner{padding:96px 0 110px}
 
     /* Split hero: PP mark left, text right */
-    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center}
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:26px;              /* tighter gap so text hugs the logo */
+      align-items:center;
+    }
 
-    /* >>> CHANGED: Size the PP logo to fill the area you marked */
+    /* Keep left & top margins visually equal for the logo block */
+    .hero-left{
+      justify-self:start;    /* pin to the left edge of the grid */
+      align-self:start;      /* pin to the top of the grid row */
+      padding-top:28px;      /* ≈ header/container left padding for equal feel */
+    }
+
+    /* Logo size (same as last version) */
     .hero-logo{
       height: clamp(220px, 50vh, 420px);
       width: auto;
       display: block;
-      margin: 0 auto;
+      margin: 0;             /* no extra centering; aligns to left/top via .hero-left */
       filter: drop-shadow(0 6px 22px rgba(0,0,0,.35));
     }
+
     @media (max-width: 960px){
-      .hero-grid{grid-template-columns:1fr;gap:18px}
+      .hero-grid{grid-template-columns:1fr;gap:14px}
+      .hero-left{padding-top:18px}
       .hero-logo{height: clamp(160px, 46vh, 320px)}
       .hero-right{text-align:center}
       .hero-right .lead{margin-left:auto;margin-right:auto}
