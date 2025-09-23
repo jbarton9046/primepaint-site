@@ -1,433 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Prime Paint SRQ – Ty Christian | Interior, Exterior & Cabinet Painting in Sarasota, FL</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- SEO -->
-  <meta name="description" content="Prime Paint SRQ by Ty Christian delivers top-of-the-line interior & exterior painting, cabinet refinishing, and statement wall murals in Sarasota, FL. Free quotes."/>
-  <link rel="canonical" href="https://aesthetic-licorice-7a4bfc.netlify.app/"/>
+  <title>Prime Paint SRQ — Ty Christian | Sarasota Painting</title>
+  <meta name="description" content="Top-of-the-line interior & exterior painting, cabinet refinishing, and statement wall murals by Ty Christian. Clean lines, premium materials, and jobsite cleanliness. Sarasota & surrounding areas." />
+  <meta name="author" content="Ty Christian" />
+  <meta name="theme-color" content="#0b0b0c" />
 
-  <!-- Open Graph / Twitter -->
-  <meta property="og:type" content="website"/>
-  <meta property="og:title" content="Prime Paint SRQ – Ty Christian | Sarasota Painting"/>
-  <meta property="og:description" content="Interior/exterior painting, cabinet finishing, and murals. Professional, clean, on-time. Free quotes."/>
-  <meta property="og:url" content="https://aesthetic-licorice-7a4bfc.netlify.app/"/>
-  <meta property="og:image" content="assets/ty-logo-tight.png"/>
-  <meta name="twitter:card" content="summary_large_image"/>
+  <!-- Open Graph -->
+  <meta property="og:title" content="Prime Paint SRQ — Ty Christian | Sarasota Painting" />
+  <meta property="og:description" content="Interior & exterior painting, cabinet refinishing, and murals. Professionalism • Integrity • Cleanliness." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/ty-logo.jpg" />
+  <meta property="og:image:alt" content="Prime Paint SRQ logo" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/ty-logo-tight.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/ty-logo-tight.png">
-  <link rel="apple-touch-icon" href="assets/ty-logo-tight.png">
-  <meta name="theme-color" content="#0a0a0b"/>
+  <link rel="icon" sizes="32x32" href="assets/ty-logo.jpg" />
 
   <!-- Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    :root{ --bg:#0a0a0b; --bg2:#0f0f12; --text:#f2f2f3; --muted:#bdbdc2; --line:#232329; }
+    :root{
+      --bg:#0b0b0c; --card:#121214; --muted:#b7b7c2; --text:#f2f2f5; --brand:#ffffff;
+      --pill:#17171a; --pillBorder:rgba(255,255,255,.08);
+      --accent:#b9b9ff; /* subtle link tint */
+      --radius:16px;
+    }
     *{box-sizing:border-box}
-    html,body{margin:0}
+    html,body{height:100%}
     body{
-      font-family:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-      color:var(--text);
-      background:radial-gradient(1100px 500px at 50% -10%,rgba(255,255,255,.06),transparent),var(--bg);
-      line-height:1.6; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      margin:0; font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:var(--bg); color:var(--text); line-height:1.55;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
-    .container{max-width:1180px;margin:0 auto;padding:0 1rem}
+    a{color:var(--text); text-decoration:none}
+    a:hover{opacity:.9}
 
-    /* ===== Header / Navbar ===== */
-    .header{
-      position:sticky;top:0;z-index:30;
-      background:rgba(10,10,11,.72);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid var(--line);
+    /* Container */
+    .container{width:min(1200px,90vw); margin:0 auto}
+
+    /* NAV */
+    .nav{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(6px);
+      background:rgba(11,11,12,.85); border-bottom:1px solid rgba(255,255,255,.06);
     }
-    .h-inner{height:86px;display:flex;align-items:center;gap:16px}
-    .left{display:flex;align-items:center;gap:22px;flex:1}
-    .brand{font-weight:700;letter-spacing:.03em;white-space:nowrap;color:#eaeaf0;text-decoration:none}
-    .mainnav{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
-    .mainnav a{
-      color:#eaeaf0;text-decoration:none;font-size:.95rem;line-height:1;
-      padding:.45rem 0; border-bottom:2px solid transparent; transition:border-color .2s ease;
+    .nav-inner{
+      display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+      gap:12px; height:74px;
     }
-    .mainnav a:hover{ border-color:#fff; }
+    .brand{
+      display:flex; align-items:center; gap:14px; font-weight:700; letter-spacing:.2px;
+    }
+    .brand img.icon{width:30px; height:30px; border-radius:6px; object-fit:contain}
+    .nav-links{
+      display:flex; gap:26px; justify-content:center; align-items:center;
+    }
+    .nav-links a{font-weight:600}
+    .right-slot{display:flex; justify-content:flex-end; align-items:center; gap:16px}
+    .logo-wrap{
+      display:flex; align-items:center; justify-content:center;
+      width:168px; padding:10px 12px; border-radius:18px;
+      background:transparent; border:1px solid rgba(255,255,255,.12);
+    }
+    .logo-wrap img{display:block; width:100%; height:40px; object-fit:contain}
 
-    /* Floating logo */
-    .logo-badge{
-      height:76px;width:auto;object-fit:contain;background:transparent;display:block;
+    .btn-pill{
+      padding:10px 16px; background:var(--pill); border:1px solid var(--pillBorder);
+      border-radius:999px; font-weight:600;
+    }
+    .btn-cta{
+      padding:10px 16px; background:#fff; color:#0b0b0c; border-radius:999px;
+      font-weight:700;
     }
 
-    /* Pills (badges + CTAs) */
-    .pill{
-      display:inline-flex;align-items:center;gap:.5rem;
-      border:1px solid var(--line);border-radius:999px;
-      padding:.55rem 1rem;background:#15151a;color:#e8e8ec;
-      font-size:.95rem;text-decoration:none;transition:.25s;
+    /* HERO */
+    .hero{
+      padding:clamp(42px,6vw,72px) 0 24px;
+      background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.7)), url('assets/featured/interior-painted.jpg') center/cover no-repeat;
     }
-    .pill:hover{transform:translateY(-1px);background:#191a20}
-
-    /* Hero */
-    .hero{position:relative;isolation:isolate;overflow:hidden}
-    .hero::before{content:"";position:absolute;inset:0;background:
-      linear-gradient(120deg,rgba(255,255,255,.06),transparent 30%),
-      url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
-      opacity:.45;z-index:-2}
-    .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.65));z-index:-1}
-    .hero-inner{padding:96px 0 110px}
-    .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
-    h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.05;margin:.5rem 0 0}
-    .lead{color:#ececf1;max-width:60ch;margin-top:.9rem}
-
-    section{padding:72px 0;border-top:1px solid var(--line)}
-    h2{font-size:1.95rem;margin:0}
-    .sub{color:var(--muted);margin-top:.35rem}
-    .grid{display:grid;gap:1rem}
-    .g-4{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-    .card{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:18px}
-
-    /* ===== Featured Projects gallery =====
-       Use CSS backgrounds so failed fetches never show <img> alt text. */
-    .gallery{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:16px}
-    .tile{
-      position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);
-      background:#0e0e12; aspect-ratio:4/3;
-      /* background image slot */
-      background-image:var(--img);
-      background-size:cover; background-position:center; background-repeat:no-repeat;
-      transition:transform .35s ease;
+    .hero h1{
+      font-size:clamp(36px,5.2vw,64px); line-height:1.05; margin:10px 0 16px;
+      letter-spacing:.2px;
     }
-    .tile::after{
-      content:""; position:absolute; inset:0;
-      background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));
+    .eyebrow{font-size:.9rem; letter-spacing:.28em; color:var(--muted)}
+    .hero p{max-width:720px; color:rgba(242,242,245,.9)}
+
+    .hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
+    .badges{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .badge{padding:8px 14px; background:var(--pill); border:1px solid var(--pillBorder); border-radius:999px; font-weight:600; color:#e9e9ee}
+
+    /* Sections */
+    .section{padding:clamp(48px,6vw,84px) 0}
+    .section-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px}
+    .section-head h2{margin:0; font-size:clamp(26px,3.4vw,38px)}
+    .inline-cta{color:#cfcff9}
+
+    /* Featured grid */
+    .projects-grid{
+      display:grid; grid-template-columns:repeat(12,1fr); gap:clamp(14px,2vw,24px);
     }
-    .tile:hover{transform:scale(1.02)}
-    .cap{position:absolute;inset-inline:0;bottom:0;padding:.55rem .8rem;font-size:.9rem;z-index:1}
-
-    .why{display:grid;gap:2rem;align-items:center}
-    @media (min-width:960px){ .why{grid-template-columns:1.05fr .95fr} }
-
-    .list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:16px 0 0;padding:0}
-    .list li{list-style:none;display:flex;align-items:center;gap:8px}
-    .dot{width:7px;height:7px;border-radius:50%;background:#fff;display:inline-block}
-
-    .footer{border-top:1px solid var(--line);padding:28px 0;color:#bdbdc3;font-size:.95rem}
-
-    .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
-    .reveal.show{opacity:1;transform:none}
-
-    @media (max-width:840px){ .h-inner{height:78px}.logo-badge{height:68px} }
-    @media (max-width:640px){
-      .call-fab{
-        position:fixed; right:16px; bottom:18px; z-index:40;
-        display:flex; align-items:center; justify-content:center;
-        width:56px; height:56px; border-radius:50%;
-        background:#0df; color:#000; text-decoration:none; font-weight:800;
-        border:1px solid rgba(255,255,255,.25); box-shadow:0 10px 25px rgba(0,0,0,.35);
-      }
+    .project-card{grid-column:span 6; position:relative; overflow:hidden; border-radius:var(--radius); background:#111}
+    @media (max-width:900px){.project-card{grid-column:span 12}}
+    .project-card img{
+      width:100%; height:clamp(220px,30vw,320px);
+      object-fit:cover; object-position:center; display:block;
+      filter:brightness(.94) contrast(1.02); transition:transform .5s ease, filter .3s ease;
     }
-    /* basic inputs */
-    input,textarea{width:100%;background:#121217;border:1px solid var(--line);color:#e8e8ec;border-radius:12px;padding:.7rem .9rem;font:inherit}
-    label{display:block;font-weight:600;margin-bottom:.4rem}
+    .project-card:hover img{transform:scale(1.02); filter:brightness(1)}
+    .project-copy{
+      position:absolute; left:12px; bottom:12px; max-width:82%;
+      background:rgba(0,0,0,.55); backdrop-filter:blur(4px);
+      padding:14px 16px; border-radius:14px; border:1px solid rgba(255,255,255,.12);
+    }
+    .project-copy h3{margin:0 0 6px; font-size:1.05rem}
+    .project-copy p{margin:0; font-size:.95rem; color:rgba(255,255,255,.9)}
+
+    /* Promise */
+    .split{display:grid; grid-template-columns:1.1fr .9fr; gap:32px}
+    @media (max-width:900px){.split{grid-template-columns:1fr}}
+    .card{background:var(--card); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); padding:clamp(18px,2.4vw,22px)}
+    .media{display:flex; gap:14px; align-items:center}
+    .media img{width:58px; height:58px; border-radius:50%; object-fit:cover}
+    .list{display:grid; gap:10px; margin:14px 0 0}
+    .list li{background:var(--pill); border:1px solid var(--pillBorder); border-radius:12px; padding:10px 12px}
+
+    /* Footer */
+    footer{padding:40px 0; border-top:1px solid rgba(255,255,255,.08); color:var(--muted)}
+    .foot-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+    @media (max-width:800px){.foot-grid{grid-template-columns:1fr}}
+    .foot-cta{display:flex; gap:10px; flex-wrap:wrap}
+    small, .muted{color:var(--muted)}
   </style>
 </head>
-<body>
-  <div id="top"></div>
 
-  <!-- ===== Header ===== -->
-  <header class="header">
-    <div class="container h-inner">
-      <div class="left">
-        <a class="brand" href="#top">Prime Paint SRQ</a>
-        <nav class="mainnav" aria-label="Primary">
-          <a href="#services">Services</a>
-          <a href="#work">Projects</a>
-          <a href="#why">Why Us</a>
-          <a href="#promise">Promise</a>
-          <a href="#process">Process</a>
-          <a href="#contact">Contact</a>
-        </nav>
+<body>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" id="brandLink" aria-label="Prime Paint SRQ home">
+        <img class="icon" src="assets/ty-logo.jpg" alt="Prime Paint SRQ logo small">
+        <span>Prime Paint SRQ</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#featured">Projects</a>
+        <a href="#why">Why Us</a>
+        <a href="#promise">Promise</a>
+        <a href="#process">Process</a>
+        <a href="#contact" class="btn-pill">Contact</a>
       </div>
-      <img class="logo-badge" src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo">
+
+      <div class="right-slot">
+        <!-- Larger logo floater -->
+        <div class="logo-wrap" aria-hidden="true">
+          <img src="assets/ty-logo.jpg" alt="Prime Paint SRQ" />
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="top" class="hero">
+    <div class="container">
+      <div class="eyebrow">TOP OF THE LINE</div>
+      <h1>Transforming Walls • Elevating Spaces</h1>
+      <p>
+        Interior &amp; exterior painting, cabinet refinishing, and statement wall murals—
+        crafted with professionalism, integrity, and cleanliness.
+      </p>
+
+      <div class="badges">
+        <span class="badge">Licensed &amp; Insured</span>
+        <span class="badge">Cabinet Specialists</span>
+        <span class="badge">Premium Materials</span>
+        <span class="badge">Clean Job Sites</span>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn-cta" href="#contact">Get a Free Quote</a>
+        <a class="btn-pill" href="#featured">See Our Work</a>
+        <a class="btn-pill" href="tel:+16155897044" aria-label="Call Prime Paint SRQ">(615) 589-7044</a>
+      </div>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="shade"></div>
-    <div class="container hero-inner">
-      <div class="eyebrow">Top of the line</div>
-      <h1>Transforming Walls • Elevating Spaces</h1>
-      <p class="lead">Interior & exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
-
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
-        <span class="pill">Licensed & Insured</span>
-        <span class="pill">Cabinet Specialists</span>
-        <span class="pill">Premium Materials</span>
-        <span class="pill">Clean Job Sites</span>
-      </div>
-
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
-        <a href="#contact" class="pill">Get a Free Quote</a>
-        <a href="#work" class="pill">See Our Work</a>
-        <a href="tel:+16155897044" class="pill" aria-label="Call Prime Paint SRQ">Call Us</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services -->
-  <section id="services">
+  <!-- SERVICES (anchor only for nav continuity) -->
+  <div id="services" class="section">
     <div class="container">
-      <div style="display:flex;align-items:end;justify-content:space-between;gap:1rem;flex-wrap:wrap">
-        <div>
-          <h2>Top-of-the-Line Services</h2>
-          <div class="sub">Premium results with clear communication and a spotless finish.</div>
+      <div class="section-head">
+        <h2>Services</h2>
+      </div>
+      <div class="split">
+        <div class="card">
+          <h3>Interior &amp; Exterior Painting</h3>
+          <p>Meticulous prep, crisp lines, durable finishes—residential or commercial.</p>
         </div>
-        <a href="#contact" class="pill">Request a Quote</a>
-      </div>
-      <div class="grid g-4 reveal" style="margin-top:16px">
-        <article class="card"><h3>Interior Painting</h3><p class="sub">Walls, ceilings, trim, feature walls, staircases. Low-VOC options available.</p></article>
-        <article class="card"><h3>Exterior Painting</h3><p class="sub">Stucco/wood exteriors, entry doors, shutters, pool decks, lanai ceilings.</p></article>
-        <article class="card"><h3>Cabinet Painting</h3><p class="sub">Factory-smooth finishes for kitchens & baths with durable 2K coatings.</p></article>
-        <article class="card"><h3>Wall Murals</h3><p class="sub">Custom murals and decorative finishes that make a statement.</p></article>
+        <div class="card">
+          <h3>Cabinet Refinishing</h3>
+          <p>Factory-smooth enamel cabinet finishes that transform kitchens.</p>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Featured Projects (reliable + relevant, alt-proof) -->
-  <section id="work">
+  <!-- FEATURED PROJECTS -->
+  <section id="featured" class="section">
     <div class="container">
-      <div style="display:flex;align-items:end;justify-content:space-between">
+      <div class="section-head">
         <h2>Featured Projects</h2>
-        <a href="#contact">Book a walkthrough →</a>
+        <a class="inline-cta" href="#contact">Book a walkthrough →</a>
       </div>
 
-      <div class="gallery reveal" id="stock-gallery">
-        <!-- Interior – residential living room -->
-        <figure class="tile" style="--img:url('https://source.unsplash.com/1600x1200/?interior,living-room,painted,walls,modern&sig=11')">
-          <figcaption class="cap">
-            <strong>Freshly painted modern living room with crisp edges</strong><br>
-            Interior repaint — premium matte finish
-          </figcaption>
-        </figure>
+      <div class="projects-grid">
+        <!-- 1) Ty with hat / laser -->
+        <article class="project-card">
+          <img src="assets/featured/ty-hat-laser.jpg"
+               alt="Ty Christian using a laser level to layout perfectly straight lines" loading="lazy" width="1600" height="1200">
+          <div class="project-copy">
+            <h3>Precision Layout</h3>
+            <p>Laser-guided prep for crisp, clean lines.</p>
+          </div>
+        </article>
 
-        <!-- Exterior – residential home -->
-        <figure class="tile" style="--img:url('https://source.unsplash.com/1600x1200/?house,exterior,painted,home,facade&sig=12')">
-          <figcaption class="cap">
-            <strong>Crisp residential exterior repaint with clean trim</strong><br>
-            Exterior repaint — crisp trim & siding
-          </figcaption>
-        </figure>
+        <!-- 2) Exterior hands mural -->
+        <article class="project-card">
+          <img src="assets/featured/hands-mural.jpg"
+               alt="Large-scale exterior hands mural by Ty Christian" loading="lazy" width="1600" height="1200">
+          <div class="project-copy">
+            <h3>Exterior Mural</h3>
+            <p>Statement artwork with durable exterior coatings.</p>
+          </div>
+        </article>
 
-        <!-- Cabinets -->
-        <figure class="tile" style="--img:url('https://source.unsplash.com/1600x1200/?kitchen,cabinets,painted,enamel,modern&sig=13')">
-          <figcaption class="cap">
-            <strong>Refinished kitchen cabinets with smooth enamel finish</strong><br>
-            Kitchen cabinets — factory-smooth enamel
-          </figcaption>
-        </figure>
+        <!-- 3) Interior repaint (stock) -->
+        <article class="project-card">
+          <img src="assets/featured/interior-painted.jpg"
+               alt="Freshly painted modern living room — premium matte walls" loading="lazy" width="1600" height="1200">
+          <div class="project-copy">
+            <h3>Interior Repaint</h3>
+            <p>Premium matte walls for a refined, modern look.</p>
+          </div>
+        </article>
 
-        <!-- Exterior – commercial building -->
-        <figure class="tile" style="--img:url('https://source.unsplash.com/1600x1200/?commercial,building,painted,exterior,facade&sig=14')">
-          <figcaption class="cap">
-            <strong>Fresh commercial exterior repaint with uniform finish</strong><br>
-            Commercial exterior — uniform, durable finish
-          </figcaption>
-        </figure>
-
-        <!-- Feature wall -->
-        <figure class="tile" style="--img:url('https://source.unsplash.com/1600x1200/?feature-wall,interior,paint,design&sig=15')">
-          <figcaption class="cap">
-            <strong>Bold painted feature wall in a contemporary space</strong><br>
-            Feature wall — bold, clean finish
-          </figcaption>
-        </figure>
-
-        <!-- Mural (in progress) -->
-        <figure class="tile" style="--img:url('https://source.unsplash.com/1600x1200/?mural,artist,painting,wall&sig=16')">
-          <figcaption class="cap">
-            <strong>Artist painting a mural on a prepared wall</strong><br>
-            Custom mural — in progress
-          </figcaption>
-        </figure>
-
-        <!-- Mural (finished) -->
-        <figure class="tile" style="--img:url('https://source.unsplash.com/1600x1200/?mural,wall-art,finished,exterior&sig=17')">
-          <figcaption class="cap">
-            <strong>Completed exterior mural with clean lines</strong><br>
-            Large-scale mural — finished piece
-          </figcaption>
-        </figure>
-
-        <!-- Tools / premium materials -->
-        <figure class="tile" style="--img:url('https://source.unsplash.com/1600x1200/?paint,brush,roller,prep&sig=18')">
-          <figcaption class="cap">
-            <strong>Premium paint and professional tools ready for prep</strong><br>
-            Premium materials & pro tools
-          </figcaption>
-        </figure>
+        <!-- 4) Cabinet refinish (stock) -->
+        <article class="project-card">
+          <img src="assets/featured/kitchen-cabinets.jpg"
+               alt="Refinished kitchen cabinets with a factory-smooth enamel finish" loading="lazy" width="1600" height="1200">
+          <div class="project-copy">
+            <h3>Cabinet Refinishing</h3>
+            <p>Factory-smooth enamel finish built to last.</p>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- Promise + Founder -->
-  <section id="promise">
-    <div class="container reveal">
-      <h2>The Prime Paint Promise</h2>
-      <div class="sub" style="max-width:70ch;margin-top:.6rem">
-        At Prime Paint, we are more than painters. Our mission is to deliver exceptional interior and exterior painting services built on hard work, professionalism, and a commitment to excellence. We foster open and honest communication so every client feels heard and respected throughout the process. With positivity, genuine hospitality, and a relentless dedication to detail, we create lasting results that reflect pride in our craft and care for our community—ensuring you’re left with a prime experience you’ll never forget.
-      </div>
-
-      <div class="card" style="margin-top:16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
-        <img src="assets/ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500"
-             style="width:180px;height:180px;object-fit:cover;border-radius:18px;border:1px solid var(--line)">
-        <div>
-          <div style="font-weight:700;font-size:1.25rem">Ty Christian</div>
-          <div class="sub" style="margin-top:2px">Founder • Prime Paint SRQ</div>
-          <p class="sub" style="margin-top:10px;max-width:60ch">“We treat each home like our own—clear communication, meticulous prep, and finishes that last.”</p>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:14px">
-        <strong>Pricing & Free Estimates</strong>
-        <p class="sub" style="margin:6px 0 0">Submit the contact form and we’ll reach out to schedule a free, no-obligation estimate at your home.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Why Us -->
-  <section id="why">
-    <div class="container why reveal">
-      <div>
+  <!-- WHY -->
+  <section id="why" class="section">
+    <div class="container split">
+      <div class="card">
         <h2>Why Choose Prime Paint SRQ?</h2>
-        <p class="sub">We’re craftsmen who take pride in the details—surface prep to final walk-through.</p>
-        <ul class="list" aria-label="Reasons to choose us">
-          <li><span class="dot"></span> Professionalism</li>
-          <li><span class="dot"></span> Communication</li>
-          <li><span class="dot"></span> Honesty</li>
-          <li><span class="dot"></span> Integrity</li>
-          <li><span class="dot"></span> Cleanliness</li>
-          <li><span class="dot"></span> Quality That Lasts</li>
+        <ul class="list">
+          <li>Professionalism—clear communication &amp; punctuality.</li>
+          <li>Integrity—transparent estimates &amp; honest timelines.</li>
+          <li>Cleanliness—job sites protected and spotless daily.</li>
+          <li>Quality that lasts—premium prep and materials.</li>
         </ul>
       </div>
       <div class="card">
-        <img src="https://picsum.photos/id/1043/1200/900" alt="Cabinet refinishing sample" loading="lazy" width="1200" height="900" style="border-radius:12px;object-fit:cover">
+        <h3>About Ty Christian</h3>
+        <div class="media">
+          <img src="assets/ty-headshot.jpg" alt="Ty Christian headshot">
+          <div>
+            <strong>Ty Christian</strong><br><span class="muted">Founder • Prime Paint SRQ</span>
+          </div>
+        </div>
+        <p style="margin-top:12px">Ty blends fine-art mural experience with high-end residential painting—bringing sharp lines, clean finishes, and a client-first approach to every project.</p>
       </div>
     </div>
   </section>
 
-  <!-- Process -->
-  <section id="process">
+  <!-- PROMISE -->
+  <section id="promise" class="section">
     <div class="container">
-      <h2>Our Process</h2>
-      <div class="grid g-4 reveal" style="margin-top:16px">
-        <div class="card"><div class="sub">Step 1</div><h3>Consultation</h3><p class="sub">We review your space, discuss goals, and provide a detailed written quote.</p></div>
-        <div class="card"><div class="sub">Step 2</div><h3>Prep</h3><p class="sub">Protection, patching, caulking, sanding, and priming.</p></div>
-        <div class="card"><div class="sub">Step 3</div><h3>Paint</h3><p class="sub">Premium coatings applied with precision for a flawless finish.</p></div>
-        <div class="card"><div class="sub">Step 4</div><h3>Clean & Inspect</h3><p class="sub">Thorough cleanup and final walkthrough to ensure perfection.</p></div>
+      <div class="section-head"><h2>Our Promise</h2></div>
+      <div class="split">
+        <div class="card">
+          <h3>Craftsmanship</h3>
+          <p>We prepare surfaces the right way—masking, patching, sanding, priming—so the finish looks flawless and lasts.</p>
+        </div>
+        <div class="card">
+          <h3>Care &amp; Respect</h3>
+          <p>We treat your home or business like our own: tidy sites, daily cleanups, and clear updates.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Instagram (Widget) -->
-  <section id="instagram">
+  <!-- PROCESS -->
+  <section id="process" class="section">
     <div class="container">
-      <h2>Latest on Instagram</h2>
-      <p class="sub">Real projects, real finishes — updated as we post.</p>
-
-      <!-- Replace the src with your SnapWidget/LightWidget iframe URL -->
-      <div class="card" style="overflow:hidden;padding:0">
-        <iframe
-          src="https://snapwidget.com/embed/REPLACE_WIDGET_ID"
-          title="Prime Paint SRQ Instagram feed"
-          width="100%" height="600"
-          style="border:0; overflow:hidden; display:block"
-          scrolling="no" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-
-      <div style="margin-top:12px">
-        <a class="pill" href="https://instagram.com/REPLACE_HANDLE" target="_blank" rel="noopener">
-          Follow on Instagram
-        </a>
+      <div class="section-head"><h2>The Process</h2></div>
+      <div class="split">
+        <div class="card"><h3>1. Walkthrough &amp; Quote</h3><p>We review goals, surfaces, colors, and timeline, then deliver a clear estimate.</p></div>
+        <div class="card"><h3>2. Prep</h3><p>Protection, repairs, sanding, priming—professional prep for a durable finish.</p></div>
+        <div class="card"><h3>3. Paint</h3><p>Premium products, crisp edges, even coverage.</p></div>
+        <div class="card"><h3>4. Clean &amp; Final Check</h3><p>Site is spotless; we walk the project with you to ensure everything’s perfect.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section>
-    <div class="container" style="text-align:center">
-      <h2>Ready to elevate your space?</h2>
-      <p class="sub">Call or email for a fast, friendly quote.</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px">
-        <a href="tel:+16155897044" class="pill">(Tap to Call)</a>
-        <a href="mailto:primepaintsrq@gmail.com?subject=Quote%20Request" class="pill">primepaintsrq@gmail.com</a>
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-head"><h2>Contact</h2></div>
+      <div class="split">
+        <div class="card">
+          <h3>Request a Free Quote</h3>
+          <p>Send a note with your project details and preferred timing. We’ll get back quickly.</p>
+          <div class="foot-cta" style="margin-top:10px">
+            <a class="btn-cta" href="tel:+16155897044">Call (615) 589-7044</a>
+            <a class="btn-pill" href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Service Area</h3>
+          <p>Sarasota &amp; surrounding communities.</p>
+          <p class="muted">Licensed &amp; Insured • References available upon request.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact">
-    <div class="container" style="display:grid;gap:2rem">
+  <footer>
+    <div class="container foot-grid">
       <div>
-        <h2>Contact Us</h2>
-        <p class="sub">Proudly serving Sarasota and surrounding areas.</p>
-        <p class="sub" aria-label="Contact details">
-          Phone: <a href="tel:+16155897044">(615) 589-7044</a> •
-          Email: <a href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
-        </p>
+        <strong>Prime Paint SRQ</strong><br/>
+        <span class="muted">Transforming Walls • Elevating Spaces</span>
       </div>
-      <form id="form" class="card" aria-label="Quote request form">
-        <label for="name">Name</label>
-        <input id="name" name="name" placeholder="Your name" required>
-        <div style="height:8px"></div>
-        <label for="phone">Phone</label>
-        <input id="phone" name="phone" placeholder="(615) 555-1234">
-        <div style="height:8px"></div>
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…"></textarea>
-        <div style="height:12px"></div>
-        <button class="pill" type="submit" style="width:100%;justify-content:center">Send Request</button>
-        <p class="sub" style="font-size:.85rem;margin-top:8px">By submitting, you agree to be contacted about your project.</p>
-      </form>
+      <div class="foot-cta" style="justify-content:flex-end">
+        <a class="btn-pill" href="#top">Back to top</a>
+      </div>
     </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
-      <div style="display:flex;align-items:center;gap:10px">
-        <img src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo small" width="56" height="56" style="border-radius:8px;background:#15151a;padding:4px;object-fit:contain">
-        <span>© <span id="yr"></span> Prime Paint SRQ. All rights reserved.</span>
-      </div>
-      <div>Licensed & Insured • Sarasota, FL</div>
+    <div class="container" style="margin-top:14px">
+      <small>© <span id="y"></span> Prime Paint SRQ. All rights reserved.</small>
     </div>
   </footer>
 
-  <!-- Mobile floating call button -->
-  <a class="call-fab" href="tel:+16155897044" aria-label="Call Prime Paint SRQ">☎</a>
-
   <script>
-    // reveal-on-scroll
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('show'); } });
-    }, {threshold:0.2});
-    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-
-    // year + mailto form
-    document.getElementById('yr').textContent = new Date().getFullYear();
-    document.getElementById('form').addEventListener('submit', function(e){
-      e.preventDefault();
-      var name = document.getElementById('name').value || '';
-      var phone = document.getElementById('phone').value || '';
-      var message = document.getElementById('message').value || '';
-      var body = encodeURIComponent('Name: ' + name + '\\nPhone: ' + phone + '\\n\\n' + message);
-      window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + body;
+    // Back to top when clicking brand
+    document.getElementById('brandLink').addEventListener('click', (e)=>{
+      e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'});
     });
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
