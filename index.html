@@ -100,41 +100,50 @@
     .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.65));z-index:-1}
     .hero-inner{padding:96px 0 110px}
 
-    /* Split hero: PP mark left, text right */
+    /* ======= HERO LAYOUT (matches your blue boxes) ======= */
     .hero-grid{
       display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:26px;              /* tighter gap so text hugs the logo */
-      align-items:center;
+      /* Left column for LOGO, right for text; mirrors your proportions */
+      grid-template-columns: 40% 60%;
+      gap:16px;            /* tighter than default so text sits closer to the logo */
+      align-items:center;  /* vertically center the right column to the logo's height */
     }
 
-    /* Keep left & top margins visually equal for the logo block */
+    /* Give the logo block the same top feel as the page's left padding */
     .hero-left{
-      justify-self:start;    /* pin to the left edge of the grid */
-      align-self:start;      /* pin to the top of the grid row */
-      padding-top:28px;      /* ≈ header/container left padding for equal feel */
+      padding-top:28px;    /* ≈ left page padding for balanced margins */
+      justify-self:start;
+      align-self:start;
     }
 
-    /* Logo size (same as last version) */
+    /* The logo takes up the left blue zone cleanly (large but with breathing room) */
     .hero-logo{
-      height: clamp(220px, 50vh, 420px);
+      height: clamp(320px, 56vh, 560px);
       width: auto;
-      display: block;
-      margin: 0;             /* no extra centering; aligns to left/top via .hero-left */
+      display:block;
+      margin: 0;           /* no extra margins; grid controls placement */
       filter: drop-shadow(0 6px 22px rgba(0,0,0,.35));
     }
 
-    @media (max-width: 960px){
-      .hero-grid{grid-template-columns:1fr;gap:14px}
-      .hero-left{padding-top:18px}
-      .hero-logo{height: clamp(160px, 46vh, 320px)}
-      .hero-right{text-align:center}
-      .hero-right .lead{margin-left:auto;margin-right:auto}
+    /* Text column: give it space to breathe but keep it hugging the logo */
+    .hero-right{
+      align-self:center;                /* centered between logo top/bottom */
+      padding-left:10px;                /* subtle nudge towards logo */
+      max-width: 48ch;                  /* tidy measure for copy */
     }
 
     .hero-right .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
-    .hero-right h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.05;margin:.5rem 0 0}
+    .hero-right h1{font-size:clamp(2.25rem,5.4vw,3.8rem);line-height:1.05;margin:.5rem 0 0}
     .hero-right .lead{color:#ececf1;max-width:60ch;margin-top:.9rem}
+
+    /* Phone / small screens: stack and scale */
+    @media (max-width: 960px){
+      .hero-grid{grid-template-columns:1fr;gap:14px}
+      .hero-left{padding-top:18px}
+      .hero-logo{height: clamp(180px, 46vh, 360px)}
+      .hero-right{padding-left:0;text-align:center;max-width:none}
+      .hero-right .lead{margin-left:auto;margin-right:auto}
+    }
 
     section{padding:72px 0;border-top:1px solid var(--line)}
     h2{font-size:1.95rem;margin:0}
