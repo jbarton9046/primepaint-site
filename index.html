@@ -9,7 +9,7 @@
   <meta name="description" content="Prime Paint SRQ by Ty Christian delivers top-of-the-line interior & exterior painting, cabinet refinishing, and wall murals in Sarasota, FL. Free quotes."/>
   <link rel="canonical" href="https://aesthetic-licorice-7a4bfc.netlify.app/"/>
 
-  <!-- Open Graph / Twitter (PP monogram for previews) -->
+  <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website"/>
   <meta property="og:title" content="Prime Paint SRQ – Ty Christian | Sarasota Painting"/>
   <meta property="og:description" content="Interior/exterior painting, cabinet finishing, and murals. Professional, clean, on-time. Free quotes."/>
@@ -23,7 +23,7 @@
   <meta name="twitter:description" content="Top-of-the-line painting & cabinets in Sarasota. Free quotes."/>
   <meta name="twitter:image" content="assets/prime-paint-og-1200.png"/>
 
-  <!-- Favicons (PP monogram) -->
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/prime-paint-favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/prime-paint-favicon-16.png">
   <link rel="apple-touch-icon" href="assets/prime-paint-apple-180.png">
@@ -37,9 +37,10 @@
   <style>
     :root{
       --bg:#0a0a0b; --bg2:#0f0f12; --text:#f2f2f3; --muted:#bdbdc2; --line:#232329;
-      --hero-gutter:28px;                 /* left/right page gutter for hero */
-      --hero-gap:10px;                    /* space between logo and text */
-      --hero-text-max:48rem;              /* rectangular text block width */
+      --header-h:100px;           /* sticky header height (desktop) */
+      --hero-gutter:28px;         /* left/right gutters that must match */
+      --hero-gap:10px;            /* gap between logo and text */
+      --hero-text-max:48rem;      /* rectangular text block width */
     }
     *{box-sizing:border-box}
     html,body{margin:0}
@@ -59,9 +60,8 @@
       backdrop-filter:blur(10px);
       border-bottom:1px solid var(--line);
     }
-    /* keep your “brand on the left, wordmark on the right” layout + left alignment tweak */
     .header .container{max-width:none;padding-left:var(--hero-gutter);padding-right:16px;position:relative}
-    .h-inner{height:100px;display:flex;align-items:center;gap:16px}
+    .h-inner{height:var(--header-h);display:flex;align-items:center;gap:16px}
     .left{display:flex;align-items:center;gap:22px;flex:1}
     .brand{font-weight:700;letter-spacing:.03em;white-space:nowrap;color:#eaeaf0;text-decoration:none;font-size:1.75rem}
     .mainnav{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
@@ -71,7 +71,7 @@
     .logo-nav{height:72px;width:auto;display:block;object-fit:contain;background:transparent;border:0;padding:0}
 
     @media (max-width: 840px){
-      .h-inner{height:70px}
+      :root{ --header-h:70px }
       .logo-nav{height:54px}
       .mainnav{
         position:absolute;left:0;right:0;top:100%;
@@ -84,63 +84,43 @@
       .left{gap:12px}
     }
 
-    /* Pills */
     .pill{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);border-radius:999px;padding:.55rem 1rem;background:#15151a;color:#e8e8ec;font-size:.95rem;text-decoration:none;transition:.25s}
     .pill:hover{transform:translateY(-1px);background:#191a20}
 
-    /* ===== Hero ===== */
-    .hero{position:relative;isolation:isolate;overflow:hidden}
-    .hero::before{content:"";position:absolute;inset:0;background:
-      linear-gradient(120deg,rgba(255,255,255,.06),transparent 30%),
-      url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
-      opacity:.45;z-index:-2}
+    /* ===== Hero =====
+       EXACT FIT (no crop) on first load: image "contains" inside hero,
+       hero height = viewport - header. */
+    .hero{position:relative;isolation:isolate;overflow:hidden;min-height:calc(100vh - var(--header-h));}
+    .hero::before{
+      content:"";position:absolute;inset:0;
+      /* changed from cover -> contain to prevent cropping */
+      background:
+        linear-gradient(120deg,rgba(255,255,255,.06),transparent 30%),
+        url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center center / contain no-repeat;
+      /* fill remaining area with a subtle dark to avoid harsh bars */
+      background-color:#0c0c10;
+      opacity:.45;z-index:-2;
+    }
     .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.65));z-index:-1}
-    .hero-inner{padding:96px 0 110px}
-
-    /* === New: hero layout that matches your blue-box spec === */
-    .hero-wrap{
-      /* exact symmetric gutters so left-of-logo == right-of-text */
-      padding-inline:var(--hero-gutter);
-      max-width:1180px; margin:0 auto;
-    }
+    .hero-inner{padding:0} /* we control vertical centering via grid height */
+    .hero-wrap{padding-inline:var(--hero-gutter);max-width:1180px;margin:0 auto;height:100%}
     .hero-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;      /* equal columns for perfect symmetry */
-      gap:var(--hero-gap);
-      align-items:center;                  /* text vertically centers to logo height */
-      min-height: 72vh;                    /* generous hero height at top */
+      display:grid;grid-template-columns:1fr 1fr;gap:var(--hero-gap);
+      align-items:center;height:calc(100vh - var(--header-h)); /* center to the background frame */
     }
-    /* Left column (logo) */
-    .hero-left{
-      display:flex;align-items:center;     /* vertical centering */
-      justify-content:flex-start;          /* keep logo anchored left */
-    }
-    .hero-logo{
-      height: clamp(380px, 64vh, 680px);   /* bigger logo at top */
-      width:auto;display:block;
-      filter: drop-shadow(0 6px 22px rgba(0,0,0,.35));
-    }
-    /* Right column (text) */
-    .hero-right{
-      display:flex;justify-content:flex-end; /* push text toward the right edge */
-      padding-right:0;                       /* gutters handled by hero-wrap */
-    }
-    /* Rectangular, elegant text block */
-    .hero-right-inner{
-      width:min(var(--hero-text-max), 100%);
-      /* bring text closer to the logo while keeping a clean rectangle */
-      margin-left:0; margin-right:var(--hero-gutter);
-    }
+    .hero-left{display:flex;align-items:center;justify-content:flex-start}
+    .hero-logo{height:clamp(380px,64vh,680px);width:auto;display:block;filter:drop-shadow(0 6px 22px rgba(0,0,0,.35))}
+    .hero-right{display:flex;justify-content:flex-end}
+    .hero-right-inner{width:min(var(--hero-text-max),100%);margin-left:0;margin-right:var(--hero-gutter)}
     .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
     h1{font-size:clamp(2.4rem,5.6vw,4rem);line-height:1.05;margin:.5rem 0 0}
     .lead{color:#ececf1;margin-top:.9rem}
 
-    /* Small screens: stack and keep proportions nice */
     @media (max-width: 960px){
       :root{ --hero-gutter:20px; --hero-gap:14px }
-      .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);min-height:auto}
+      .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h))}
       .hero-left{justify-content:center}
-      .hero-logo{height: clamp(200px, 46vh, 380px)}
+      .hero-logo{height:clamp(200px,46vh,380px)}
       .hero-right{justify-content:center}
       .hero-right-inner{margin:0;width:100%;text-align:center}
       .lead{margin-left:auto;margin-right:auto}
@@ -194,23 +174,19 @@
         </nav>
       </div>
       <a href="#top" class="logo-link" aria-label="Prime Paint SRQ home">
-        <!-- top-right wordmark (unchanged source path) -->
         <img class="logo-nav" src="assets/prime-paint-logo.png" alt="PRIME PAINT logo">
       </a>
     </div>
   </header>
 
-  <!-- ===== Hero (PP left, text right, symmetric gutters) ===== -->
+  <!-- ===== Hero ===== -->
   <section class="hero">
     <div class="shade"></div>
     <div class="hero-wrap hero-inner">
       <div class="hero-grid">
-        <!-- Left: big PP logo -->
         <div class="hero-left">
           <img class="hero-logo" src="assets/prime-paint-mark.png" alt="Prime Paint SRQ monogram">
         </div>
-
-        <!-- Right: rectangular text block, closer to logo -->
         <div class="hero-right">
           <div class="hero-right-inner">
             <div class="eyebrow">Top of the line</div>
