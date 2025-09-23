@@ -7,7 +7,6 @@
 
   <!-- Primary SEO -->
   <meta name="description" content="Prime Paint SRQ by Ty Christian delivers top-of-the-line interior & exterior painting, cabinet refinishing, and wall murals in Sarasota, FL. Free quotes: (615) 589-7044."/>
-  <!-- After deploy, replace YOUR-SITE with your real domain/Netlify URL -->
   <link rel="canonical" href="https://YOUR-SITE.netlify.app/"/>
 
   <!-- Open Graph / Twitter -->
@@ -59,24 +58,32 @@
       line-height:1.6;
     }
     .container{max-width:1180px;margin:0 auto;padding:0 1rem}
-    .header{position:sticky;top:0;z-index:20;background:rgba(10,10,11,.7);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-    .h-inner{height:88px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:0.9rem;font-weight:800;letter-spacing:.03em}
-    /* BIG floating logo, tightly cropped graphic */
-    .brand img{
-      height: calc(88px - 16px);      /* fill navbar height (less padding) */
-      width: auto;                     /* keep aspect ratio */
-      padding: 6px 10px;               /* slim frame */
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 14px;
-      background: rgba(17,18,23,0.85);
-      object-fit: contain;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.4) inset;
-    }
-    nav a{color:#eaeaf0;text-decoration:none;margin-left:1rem;font-size:.95rem}
+
+    /* ===== Header: left-aligned layout, logo badge on FAR RIGHT ===== */
+    .header{position:sticky;top:0;z-index:20;background:rgba(10,10,11,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .h-inner{height:86px;display:flex;align-items:center;gap:18px}
+    .brand{font-weight:800;letter-spacing:.03em;white-space:nowrap}
+    nav{display:flex;gap:18px;flex-wrap:wrap}
+    nav a{color:#eaeaf0;text-decoration:none;font-size:.95rem}
+    .spacer{flex:1}  /* pushes right group all the way to the right */
+
+    .right{display:flex;align-items:center;gap:12px}
     .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:16px;padding:.6rem 1.1rem;font-weight:600;border:1px solid var(--line);transition:.25s}
     .btn:hover{transform:translateY(-1px)}
     .btn.primary{background:var(--accent);color:#0d0d0f;border-color:transparent}
+
+    /* Logo badge (tight transparent PNG), big, floating at far right */
+    .logo-badge{
+      height:64px; width:auto;
+      padding:6px 10px;
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:14px;
+      background:rgba(17,18,23,.85);
+      object-fit:contain;
+      box-shadow:0 0 0 1px rgba(0,0,0,.4) inset;
+    }
+
+    /* General UI */
     .pill{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);border-radius:999px;padding:.4rem .75rem;background:#15151a;color:#e8e8ec;font-size:.82rem}
 
     .hero{position:relative;isolation:isolate;overflow:hidden}
@@ -114,30 +121,38 @@
     .reveal.show{opacity:1;transform:none}
     img{max-width:100%;height:auto}
 
-    /* Mobile adjustments for navbar logo */
-    @media (max-width: 640px){
+    /* Mobile adjustments */
+    @media (max-width: 840px){
       .h-inner{height:78px}
-      .brand img{height: calc(78px - 14px); padding: 5px 8px;}
+      nav{gap:12px}
+      .logo-badge{height:56px;padding:5px 8px}
+    }
+    @media (max-width: 640px){
+      .right .btn{display:none}   /* keep right side clean on phones; phone link stays in hero/CTA */
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
+  <!-- ===== Header (left-aligned; logo far right) ===== -->
   <header class="header">
     <div class="container h-inner">
-      <div class="brand">
-        <img src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo" width="200" height="200" loading="eager" fetchpriority="high"/>
-        <span>Prime Paint SRQ</span>
-      </div>
-      <nav class="hide-mobile">
+      <div class="brand">Prime Paint SRQ</div>
+
+      <nav aria-label="Primary">
         <a href="#services">Services</a>
         <a href="#work">Projects</a>
         <a href="#why">Why Us</a>
         <a href="#promise">Promise</a>
         <a href="#process">Process</a>
         <a href="#contact" class="btn">Contact</a>
-        <a href="tel:+16155897044" class="btn primary">(615) 589-7044</a>
       </nav>
+
+      <div class="spacer"></div>
+
+      <div class="right">
+        <a href="tel:+16155897044" class="btn primary">(615) 589-7044</a>
+        <img class="logo-badge" src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo">
+      </div>
     </div>
   </header>
 
@@ -260,7 +275,7 @@
       <p class="sub">Call or email for a fast, friendly quote.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px">
         <a href="tel:+16155897044" class="btn primary">(615) 589-7044</a>
-        <a href="mailto:primepaintsrq@gmail.com?subject=Quote%20Request" class="btn">primepaintsrq@gmail.com</a>
+      <a href="mailto:primepaintsrq@gmail.com?subject=Quote%20Request" class="btn">primepaintsrq@gmail.com</a>
       </div>
     </div>
   </section>
