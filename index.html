@@ -23,9 +23,10 @@
   <meta name="twitter:description" content="Top-of-the-line painting & cabinets in Sarasota. Free quotes."/>
   <meta name="twitter:image" content="https://aesthetic-licorice-7a4bfc.netlify.app/assets/ty-logo-tight.png"/>
 
-  <!-- Favicons / tab icon (uses your files) -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <!-- Favicons / tab icon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/ty-logo-tight.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/ty-logo-tight.png">
+  <link rel="apple-touch-icon" href="assets/ty-logo-tight.png">
   <meta name="theme-color" content="#0a0a0b"/>
 
   <!-- Fonts -->
@@ -34,25 +35,47 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root{ --bg:#0a0a0b; --bg2:#0f0f12; --text:#f2f2f3; --muted:#bdbdc2; --line:#232329; }
+    :root{
+      --bg:#0a0a0b; --bg2:#0f0f12; --text:#f2f2f3; --muted:#bdbdc2;
+      --line:#232329; --accent:#ffffff;
+    }
     *{box-sizing:border-box}
     html,body{margin:0}
     body{
       font-family:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
       color:var(--text);
       background:radial-gradient(1100px 500px at 50% -10%,rgba(255,255,255,.06),transparent),var(--bg);
-      line-height:1.6;
-      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+      line-height:1.6; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
+    img{max-width:100%;display:block}
+
     .container{max-width:1180px;margin:0 auto;padding:0 1rem}
 
-    /* Header */
-    .header{position:sticky;top:0;z-index:30;background:rgba(10,10,11,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    /* ===== Header ===== */
+    .header{
+      position:sticky; top:0; z-index:30;
+      background:rgba(10,10,11,.72);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+    }
     .h-inner{height:86px;display:flex;align-items:center;gap:16px}
     .left{display:flex;align-items:center;gap:22px;flex:1}
     .brand{font-weight:700;letter-spacing:.03em;white-space:nowrap;color:#eaeaf0;text-decoration:none}
     .mainnav{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-    .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.95rem;line-height:1;padding:.4rem 0}
+    .mainnav a{
+      color:#eaeaf0;text-decoration:none;font-size:.95rem;line-height:1;padding:0.4rem 0;border-radius:10px;
+    }
+    .mainnav a:hover{background:#15151a;border:1px solid var(--line);padding:.4rem .6rem}
+
+    /* Floating logo badge on the right (over the navbar) */
+    .logo-float{
+      position:fixed; right:24px; top:12px; z-index:40;
+      height:76px; padding:8px 12px; border-radius:14px;
+      background:#0a0a0b; border:1px solid var(--line);
+      object-fit:contain; box-shadow:0 8px 30px rgba(0,0,0,.35);
+    }
+
+    /* Pills (badges + hero buttons) */
     .pill{
       display:inline-flex;align-items:center;gap:.5rem;
       border:1px solid var(--line);border-radius:999px;
@@ -60,7 +83,6 @@
       font-size:.95rem;text-decoration:none;transition:.25s;
     }
     .pill:hover{transform:translateY(-1px);background:#191a20}
-    .logo-badge{height:76px;width:auto;padding:8px 12px;border-radius:14px;background:#0a0a0b;object-fit:contain}
 
     /* Hero */
     .hero{position:relative;isolation:isolate;overflow:hidden}
@@ -77,17 +99,20 @@
     section{padding:72px 0;border-top:1px solid var(--line)}
     h2{font-size:1.95rem;margin:0}
     .sub{color:var(--muted);margin-top:.35rem}
+
+    /* Cards + grids */
     .grid{display:grid;gap:1rem}
     .g-4{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
     .card{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:18px}
 
-    /* Featured gallery (fixed height, cover, no overflow) */
-    .gallery{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:16px}
-    .gallery figure{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#111}
-    .gallery img{width:100%;height:240px;object-fit:cover;display:block;transition:transform .35s ease}
+    /* Featured gallery */
+    .gallery{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:16px}
+    .gallery figure{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#0d0d10}
+    .gallery img{width:100%;height:220px;object-fit:cover;transition:transform .35s ease; display:block}
     .gallery figure:hover img{transform:scale(1.06)}
-    .cap{position:absolute;inset-inline:0;bottom:0;padding:.55rem .8rem;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));font-size:.82rem}
+    .cap{position:absolute;inset-inline:0;bottom:0;padding:.55rem .8rem;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));font-size:.9rem}
 
+    /* Why grid */
     .why{display:grid;gap:2rem;align-items:center}
     @media (min-width: 960px){ .why{grid-template-columns:1.05fr .95fr} }
 
@@ -97,15 +122,22 @@
 
     .footer{border-top:1px solid var(--line);padding:28px 0;color:#bdbdc3;font-size:.95rem}
 
+    /* reveal-on-scroll */
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
 
+    /* Links (no purple underline) */
+    a { color: #cfd0ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .link-quiet{color:#e8e8ec;text-decoration:none}
+    .link-quiet:hover{text-decoration:underline}
+
+    /* Mobile tweaks + floating call button */
     @media (max-width: 840px){
       .h-inner{ height: 78px; }
-      .logo-badge{ height: 68px; padding: 6px 10px; }
+      .logo-float{ height: 66px; padding: 6px 10px; right: 14px; top: 10px; }
     }
     @media (max-width: 640px){
-      .mainnav .pill{display:none} /* hide Contact pill in nav on very small screens */
       .call-fab{
         position: fixed; right: 16px; bottom: 18px; z-index: 40;
         display:flex; align-items:center; justify-content:center;
@@ -119,7 +151,10 @@
 <body>
   <div id="top"></div>
 
-  <!-- Header -->
+  <!-- Floating logo (over the navbar) -->
+  <img class="logo-float" src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo">
+
+  <!-- ===== Header ===== -->
   <header class="header">
     <div class="container h-inner">
       <div class="left">
@@ -130,11 +165,11 @@
           <a href="#why">Why Us</a>
           <a href="#promise">Promise</a>
           <a href="#process">Process</a>
-          <!-- Contact now matches the pill design -->
-          <a href="#contact" class="pill">Contact</a>
+          <!-- Contact now matches the other links -->
+          <a href="#contact">Contact</a>
         </nav>
       </div>
-      <img class="logo-badge" src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo">
+      <!-- (no inline logo here—using the floating one) -->
     </div>
   </header>
 
@@ -180,41 +215,37 @@
     </div>
   </section>
 
-  <!-- Featured Projects (your four images; alternates stock/real/stock/real) -->
+  <!-- Featured Projects (your 4 images, alternating real/stock) -->
   <section id="work">
     <div class="container">
-      <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div style="display:flex;align-items:end;justify-content:space-between;gap:1rem;flex-wrap:wrap">
         <h2>Featured Projects</h2>
-        <a href="#contact" class="pill">Book a walkthrough →</a>
+        <a class="link-quiet" href="#contact">Book a walkthrough →</a>
       </div>
 
       <div class="gallery reveal">
-        <!-- 1. Stock: Interior repaint -->
+        <!-- REAL: Ty measuring (hat/laser) -->
         <figure>
-          <img src="assets/featured/interior-painted.jpg"
-               alt="Modern interior repaint with premium matte walls" loading="lazy" width="1200" height="900">
+          <img src="assets/featured/ty-hat-laser.jpg" alt="Precision layout — laser-guided prep" width="1200" height="900" loading="lazy">
+          <figcaption class="cap">Precision layout — laser-guided prep</figcaption>
+        </figure>
+
+        <!-- STOCK: interior painted -->
+        <figure>
+          <img src="assets/featured/interior-painted.jpg" alt="Interior repaint — premium matte walls" width="1200" height="900" loading="lazy">
           <figcaption class="cap">Interior repaint — premium matte walls</figcaption>
         </figure>
 
-        <!-- 2. Real: Exterior mural (hands) -->
+        <!-- REAL: hands mural exterior -->
         <figure>
-          <img src="assets/featured/hands-mural.jpg"
-               alt="Exterior mural artwork in progress" loading="lazy" width="1200" height="900">
+          <img src="assets/featured/hands-mural.jpg" alt="Exterior mural — statement artwork" width="1200" height="900" loading="lazy">
           <figcaption class="cap">Exterior mural — statement artwork</figcaption>
         </figure>
 
-        <!-- 3. Stock: Refinished kitchen cabinets -->
+        <!-- STOCK: kitchen cabinets -->
         <figure>
-          <img src="assets/featured/kitchen-cabinets.jpg"
-               alt="Refinished kitchen cabinets with factory-smooth enamel" loading="lazy" width="1200" height="900">
+          <img src="assets/featured/kitchen-cabinets.jpg" alt="Kitchen cabinets — factory-smooth enamel" width="1200" height="900" loading="lazy">
           <figcaption class="cap">Kitchen cabinets — factory-smooth enamel</figcaption>
-        </figure>
-
-        <!-- 4. Real: Precision layout / laser -->
-        <figure>
-          <img src="assets/ty-hat-laser.jpg"
-               alt="Precision layout with laser-guided prep" loading="lazy" width="1200" height="900">
-          <figcaption class="cap">Precision layout — laser-guided prep</figcaption>
         </figure>
       </div>
     </div>
@@ -274,16 +305,17 @@
         <div class="card"><div class="sub">Step 1</div><h3>Consultation</h3><p class="sub">We review your space, discuss goals, and provide a detailed written quote.</p></div>
         <div class="card"><div class="sub">Step 2</div><h3>Prep</h3><p class="sub">Protection, patching, caulking, sanding, and priming.</p></div>
         <div class="card"><div class="sub">Step 3</div><h3>Paint</h3><p class="sub">Premium coatings applied with precision for a flawless finish.</p></div>
-        <div class="card"><div class="sub">Step 4</div><h3>Clean & Inspect</h3><p class="sub">Thorough cleanup and final walkthrough to ensure perfection.</p></div>
+        <div class="card"><div class="sub">Step 4</div><h3>Clean & Inspect</h3><p class="sub">Thorough cleanup and final walk-through to ensure perfection.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- Instagram (placeholder widget) -->
+  <!-- Instagram (Widget placeholder) -->
   <section id="instagram">
     <div class="container">
       <h2>Latest on Instagram</h2>
       <p class="sub">Real projects, real finishes — updated as we post.</p>
+
       <div class="card" style="overflow:hidden;padding:0">
         <iframe
           src="https://snapwidget.com/embed/REPLACE_WIDGET_ID"
@@ -293,8 +325,11 @@
           scrolling="no" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
+
       <div style="margin-top:12px">
-        <a class="pill" href="https://instagram.com/REPLACE_HANDLE" target="_blank" rel="noopener">Follow on Instagram</a>
+        <a class="pill" href="https://instagram.com/REPLACE_HANDLE" target="_blank" rel="noopener">
+          Follow on Instagram
+        </a>
       </div>
     </div>
   </section>
@@ -318,8 +353,8 @@
         <h2>Contact Us</h2>
         <p class="sub">Proudly serving Sarasota and surrounding areas.</p>
         <p class="sub" aria-label="Contact details">
-          Phone: <a href="tel:+16155897044">(615) 589-7044</a> •
-          Email: <a href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
+          Phone: <a class="link-quiet" href="tel:+16155897044">(615) 589-7044</a> ·
+          Email: <a class="link-quiet" href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
         </p>
       </div>
       <form id="form" class="card" aria-label="Quote request form">
@@ -366,7 +401,7 @@
       var name = document.getElementById('name').value || '';
       var phone = document.getElementById('phone').value || '';
       var message = document.getElementById('message').value || '';
-      var body = encodeURIComponent('Name: ' + name + '\\nPhone: ' + phone + '\\n\\n' + message);
+      var body = encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\n\n' + message);
       window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + body;
     });
   </script>
