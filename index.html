@@ -54,7 +54,7 @@
       --hero-nudge: 14px;
 
       /* left shift for the PP mark (visual balance) */
-      --pp-shift: -42px; /* adjust a hair if you need 1–2px more */
+      --pp-shift: -42px;
     }
 
     *{box-sizing:border-box}
@@ -113,66 +113,37 @@
       top:var(--hero-nudge);
     }
 
-    .hero-left{
-      display:flex;align-items:center;justify-content:flex-start;
-      transform: translateX(var(--pp-shift));
-    }
-    .hero-logo{
-      height:clamp(360px,58vh,620px);
-      width:auto;display:block;
-      filter:drop-shadow(0 6px 22px rgba(0,0,0,.35));
-    }
+    .hero-left{display:flex;align-items:center;justify-content:flex-start;transform: translateX(var(--pp-shift));}
+    .hero-logo{height:clamp(360px,58vh,620px);width:auto;display:block;filter:drop-shadow(0 6px 22px rgba(0,0,0,.35));}
 
-    .hero-right{
-      display:flex;align-items:center;justify-content:flex-start;
-      padding-right:var(--hero-right-extra);
-    }
-    .hero-right-inner{
-      width:min(var(--hero-text-max),100%);
-      margin-left:0;
-    }
+    .hero-right{display:flex;align-items:center;justify-content:flex-start;padding-right:var(--hero-right-extra);}
+    .hero-right-inner{width:min(var(--hero-text-max),100%);margin-left:0;}
 
     .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
 
     .hero-title{
-      margin:.45rem 0 0;
-      font-weight:700;
-      line-height:1.04;
-      font-size: clamp(2rem, 4.2vw, 3.2rem);
-      max-width: 48rem;
-      letter-spacing:.01em;
-      text-wrap: balance;
+      margin:.45rem 0 0;font-weight:700;line-height:1.04;
+      font-size: clamp(2rem, 4.2vw, 3.2rem);max-width:48rem;letter-spacing:.01em;text-wrap:balance;
     }
     .hero-title .line{display:block; white-space:nowrap;}
 
     .lead{color:#ececf1;margin-top:.75rem;max-width:60ch}
 
     .pill{
-      display:inline-flex;align-items:center;gap:.5rem;
-      border:1px solid var(--line);border-radius:999px;
-      padding:.55rem 1rem;background:#15151a;color:#e8e8ec;
-      font-size:.95rem;text-decoration:none;transition:.25s;
+      display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);border-radius:999px;
+      padding:.55rem 1rem;background:#15151a;color:#e8e8ec;font-size:.95rem;text-decoration:none;transition:.25s;
     }
     .pill:hover{transform:translateY(-1px);background:#191a20}
 
     @media (max-width: 960px){
-      :root{
-        --header-h:70px; --brand-h:46px;
-        --hero-gutter-left:18px; --hero-gutter-right:18px;
-        --hero-gap:14px; --hero-nudge: 8px;
-        --pp-shift: 0px;
-      }
+      :root{--header-h:70px; --brand-h:46px; --hero-gutter-left:18px; --hero-gutter-right:18px; --hero-gap:14px; --hero-nudge: 8px; --pp-shift: 0px;}
       .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h) - var(--hero-nudge))}
       .hero-left{justify-content:center;transform:none}
       .hero-logo{height:clamp(200px,44vh,360px)}
       .hero-right{justify-content:center;padding-right:0}
       .hero-right-inner{margin:0;width:100%;text-align:center}
       .lead{margin-left:auto;margin-right:auto}
-      .mainnav{
-        position:absolute;left:0;right:0;top:100%;
-        background:#0f0f12;border-bottom:1px solid var(--line);
-        display:none;flex-direction:column;gap:0;padding:10px 22px;
-      }
+      .mainnav{position:absolute;left:0;right:0;top:100%;background:#0f0f12;border-bottom:1px solid var(--line);display:none;flex-direction:column;gap:0;padding:10px 22px;}
       .mainnav a{padding:12px 2px;font-size:1rem}
       .mainnav.show{display:flex}
       .left{gap:12px}
@@ -205,33 +176,22 @@
     .reveal.show{opacity:1;transform:none}
 
     @media (max-width: 640px){
-      .call-fab{
-        position: fixed; right: 16px; bottom: 18px; z-index: 40;
-        display:flex; align-items:center; justify-content:center;
-        width:56px; height:56px; border-radius:50%;
-        background:#0df; color:#000; text-decoration:none; font-weight:800;
-        border:1px solid rgba(255,255,255,.25); box-shadow:0 10px 25px rgba(0,0,0,.35);
-      }
+      .call-fab{position: fixed; right: 16px; bottom: 18px; z-index: 40;display:flex; align-items:center; justify-content:center;
+        width:56px; height:56px; border-radius:50%;background:#0df; color:#000; text-decoration:none; font-weight:800;
+        border:1px solid rgba(255,255,255,.25); box-shadow:0 10px 25px rgba(0,0,0,.35);}
     }
 
     /* ===== Promise split layout (Left | Right) ===== */
-    .promise-grid{
-      display:grid; gap:20px; align-items:start;
-    }
-    @media (min-width: 960px){
-      .promise-grid{ grid-template-columns:1.1fr .9fr; }
-    }
+    .promise-grid{display:grid; gap:20px; align-items:start;}
+    @media (min-width: 960px){ .promise-grid{ grid-template-columns:1.1fr .9fr; } }
 
-    .founder-split{
-      display:flex; align-items:center; gap:20px;
-    }
+    .founder-split{display:flex; align-items:center; gap:20px;}
     .founder-photo-lg{
       width:min(360px,36vw); height:min(360px,36vw);
       border-radius:16px; object-fit:cover; border:1px solid var(--line); flex:0 0 auto;
     }
     .founder-meta{ display:flex; flex-direction:column; gap:6px; min-width:0; }
     .founder-name{font-weight:700;font-size:1.1rem}
-    .founder-quote{max-width:44ch}
     .founder-quote-block{margin:0}
     .founder-quote-block p{margin:0 0 .35rem 0; max-width:44ch; font-style:italic}
     .founder-quote-block footer{font-weight:600}
@@ -244,72 +204,40 @@
     }
 
     /* ===== Contact section link color (only here) ===== */
-    #contact a{
-      color:#eaeaf0;
-      text-decoration:none;
-      border-bottom:1px dotted rgba(255,255,255,.25);
-    }
-    #contact a:hover{
-      border-bottom-color:rgba(255,255,255,.55);
-    }
+    #contact a{color:#eaeaf0;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.25);}
+    #contact a:hover{border-bottom-color:rgba(255,255,255,.55);}
 
     /* ===== Contact form polish (only this card) ===== */
-    #contact .contact-card{
-      border-radius:20px;
-      padding:20px;
-    }
-    #contact .contact-grid{
-      display:grid; gap:14px;
-      grid-template-columns:1fr;
-    }
+    #contact .contact-card{border-radius:20px;padding:20px;}
+    #contact .contact-grid{display:grid; gap:14px; grid-template-columns:1fr;}
     #contact .contact-grid .full{ grid-column:1 / -1; }
-
     @media (min-width: 800px){
-      #contact .contact-grid{
-        grid-template-columns:1fr 1fr;
-      }
+      #contact .contact-grid{grid-template-columns:1fr 1fr;}
       #contact .contact-grid textarea{ grid-column:1 / -1; }
     }
-
-    #contact label{
-      font-size:.9rem;
-      color:var(--muted);
-      margin-bottom:6px;
-      display:block;
+    #contact label{font-size:.9rem;color:var(--muted);margin-bottom:6px;display:block;}
+    #contact input,#contact textarea,#contact select{
+      width:100%; border:1px solid var(--line); background:#121216; color:var(--text);
+      border-radius:14px; padding:12px 14px; outline:none; transition:border-color .2s, box-shadow .2s;
     }
-    #contact input,
-    #contact textarea{
-      width:100%;
-      border:1px solid var(--line);
-      background:#121216;       /* dark field — no white */
-      color:var(--text);
-      border-radius:14px;
-      padding:12px 14px;
-      outline:none;
-      transition:border-color .2s, box-shadow .2s;
+    #contact input::placeholder,#contact textarea::placeholder{ color:#9b9ba2; }
+    #contact input:focus,#contact textarea:focus,#contact select:focus{
+      border-color:#3a3a45; box-shadow:0 0 0 3px rgba(255,255,255,.04);
     }
-    #contact input::placeholder,
-    #contact textarea::placeholder{ color:#9b9ba2; }
-    #contact input:focus,
-    #contact textarea:focus{
-      border-color:#3a3a45;
-      box-shadow:0 0 0 3px rgba(255,255,255,.04);
-    }
-    #contact .contact-actions{
-      display:flex; justify-content:flex-end; gap:10px; margin-top:6px;
-    }
+    #contact .contact-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:6px;}
     #contact .btn-submit{
-      border:1px solid var(--line);
-      background:#1a1a20;
-      color:#eaeaf0;
-      border-radius:999px;
-      padding:.6rem 1.1rem;
-      font-size:.95rem;
-      cursor:pointer;
-      transition:transform .2s, background .2s;
+      border:1px solid var(--line); background:#1a1a20; color:#eaeaf0; border-radius:999px;
+      padding:.6rem 1.1rem; font-size:.95rem; cursor:pointer; transition:transform .2s, background .2s;
     }
     #contact .btn-submit:hover{ transform:translateY(-1px); background:#202028; }
     #contact .legal{ font-size:.85rem; color:#9e9ea4; margin-top:10px; }
+
+    /* More info block */
+    .more-info{margin-top:8px; padding:14px; border:1px solid var(--line); border-radius:14px; background:#101015;}
+    .more-info legend{padding:0 .4rem; color:#cfcfd6; font-size:.95rem;}
+    .more-grid{display:grid; gap:12px; grid-template-columns:1fr;}
+    @media (min-width:800px){ .more-grid{grid-template-columns:1fr 1fr 1fr;} }
+    .more-grid .span-2{grid-column:1 / -1;}
   </style>
 </head>
 <body>
@@ -440,7 +368,7 @@
             <img class="founder-photo-lg" src="assets/ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500">
             <div class="founder-meta">
               <blockquote class="founder-quote-block">
-                <p>“Details are how you show respect—for the home, and for the people living in it. As with a canvas, the care shows in every line.”</p>
+                <p>“As with a canvas, the details are respect made visible—for the home, and for the people living in it.”</p>
                 <footer>— <span class="founder-name">Ty Christian</span>
                   <div class="sub founder-role">Founder • Prime Paint SRQ</div>
                 </footer>
@@ -476,7 +404,7 @@
         </p>
       </div>
 
-      <!-- Polished contact card (only this changed) -->
+      <!-- Upgraded contact card -->
       <form id="form" class="card contact-card" aria-label="Quote request form">
         <div class="contact-grid">
           <div>
@@ -488,10 +416,59 @@
             <input id="phone" name="phone" placeholder="(941) 222-1890">
           </div>
           <div class="full">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required>
+          </div>
+
+          <div class="full">
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…"></textarea>
           </div>
         </div>
+
+        <fieldset class="more-info">
+          <legend>More Info (optional)</legend>
+          <div class="more-grid">
+            <div>
+              <label for="address">Address</label>
+              <input id="address" name="address" placeholder="Street address">
+            </div>
+            <div>
+              <label for="city">City</label>
+              <input id="city" name="city" placeholder="City">
+            </div>
+            <div>
+              <label for="zip">ZIP</label>
+              <input id="zip" name="zip" placeholder="ZIP code">
+            </div>
+
+            <div>
+              <label for="projectType">Project Type</label>
+              <select id="projectType" name="projectType">
+                <option value="">Select…</option>
+                <option>Interior</option>
+                <option>Exterior</option>
+                <option>Cabinets</option>
+                <option>Wall Mural</option>
+                <option>Multiple / Whole Home</option>
+              </select>
+            </div>
+            <div>
+              <label for="timeframe">Preferred Timeframe</label>
+              <select id="timeframe" name="timeframe">
+                <option value="">Select…</option>
+                <option>ASAP</option>
+                <option>Next 1–2 weeks</option>
+                <option>Next 1–2 months</option>
+                <option>Flexible</option>
+              </select>
+            </div>
+            <div class="span-2">
+              <label for="extra">Additional Details</label>
+              <textarea id="extra" name="extra" rows="4" placeholder="Room counts, colors, paint condition, scheduling notes…"></textarea>
+            </div>
+          </div>
+        </fieldset>
 
         <div class="contact-actions">
           <button class="btn-submit" type="submit">Send Request</button>
@@ -526,10 +503,41 @@
     document.getElementById('yr').textContent = new Date().getFullYear();
     document.getElementById('form').addEventListener('submit', function(e){
       e.preventDefault();
-      var name = document.getElementById('name').value || '';
-      var phone = document.getElementById('phone').value || '';
-      var message = document.getElementById('message').value || '';
-      var body = encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\n\n' + message);
+      function val(id){ return (document.getElementById(id)?.value || '').trim(); }
+      var name = val('name');
+      var phone = val('phone');
+      var email = val('email');
+      var message = val('message');
+
+      var address = val('address');
+      var city = val('city');
+      var zip = val('zip');
+      var projectType = val('projectType');
+      var timeframe = val('timeframe');
+      var extra = val('extra');
+
+      var lines = [
+        'Name: ' + name,
+        'Phone: ' + phone,
+        'Email: ' + email,
+        '',
+        'Message:',
+        message
+      ];
+
+      var more = [];
+      if(address) more.push('Address: ' + address);
+      if(city) more.push('City: ' + city);
+      if(zip) more.push('ZIP: ' + zip);
+      if(projectType) more.push('Project Type: ' + projectType);
+      if(timeframe) more.push('Preferred Timeframe: ' + timeframe);
+      if(extra) more.push('', 'Additional Details:', extra);
+
+      if(more.length){
+        lines.push('', '—— More Info ——', ...more);
+      }
+
+      var body = encodeURIComponent(lines.join('\n'));
       window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + body;
     });
 
