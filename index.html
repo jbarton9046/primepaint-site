@@ -37,7 +37,9 @@
   <style>
     :root{
       --bg:#0a0a0b; --bg2:#0f0f12; --text:#f2f2f3; --muted:#bdbdc2; --line:#232329;
-      --header-h:100px;           /* sticky header height (desktop) */
+
+      /* Layout knobs */
+      --header-h:100px;           /* fixed header height (desktop) */
       --hero-gutter:28px;         /* left/right gutters that must match */
       --hero-gap:10px;            /* gap between logo and text */
       --hero-text-max:48rem;      /* rectangular text block width */
@@ -53,9 +55,9 @@
     }
     .container{max-width:1180px;margin:0 auto;padding:0 1rem}
 
-    /* ===== Header ===== */
+    /* ===== Header (now FIXED so it overlays the hero) ===== */
     .header{
-      position:sticky;top:0;z-index:30;
+      position:fixed; left:0; right:0; top:0; z-index:30;
       background:rgba(10,10,11,.72);
       backdrop-filter:blur(10px);
       border-bottom:1px solid var(--line);
@@ -84,29 +86,26 @@
       .left{gap:12px}
     }
 
+    /* Pills */
     .pill{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);border-radius:999px;padding:.55rem 1rem;background:#15151a;color:#e8e8ec;font-size:.95rem;text-decoration:none;transition:.25s}
     .pill:hover{transform:translateY(-1px);background:#191a20}
 
-    /* ===== Hero =====
-       EXACT FIT (no crop) on first load: image "contains" inside hero,
-       hero height = viewport - header. */
-    .hero{position:relative;isolation:isolate;overflow:hidden;min-height:calc(100vh - var(--header-h));}
+    /* ===== Hero (exactly one full screen; header overlays it) ===== */
+    .hero{position:relative;isolation:isolate;overflow:hidden;min-height:100vh}
     .hero::before{
       content:"";position:absolute;inset:0;
-      /* changed from cover -> contain to prevent cropping */
+      /* Fill the screen perfectly */
       background:
         linear-gradient(120deg,rgba(255,255,255,.06),transparent 30%),
-        url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center center / contain no-repeat;
-      /* fill remaining area with a subtle dark to avoid harsh bars */
-      background-color:#0c0c10;
+        url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center center / cover no-repeat;
       opacity:.45;z-index:-2;
     }
     .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.65));z-index:-1}
-    .hero-inner{padding:0} /* we control vertical centering via grid height */
+    .hero-inner{padding:0}
     .hero-wrap{padding-inline:var(--hero-gutter);max-width:1180px;margin:0 auto;height:100%}
     .hero-grid{
       display:grid;grid-template-columns:1fr 1fr;gap:var(--hero-gap);
-      align-items:center;height:calc(100vh - var(--header-h)); /* center to the background frame */
+      align-items:center;height:100vh;   /* center within the full-screen frame */
     }
     .hero-left{display:flex;align-items:center;justify-content:flex-start}
     .hero-logo{height:clamp(380px,64vh,680px);width:auto;display:block;filter:drop-shadow(0 6px 22px rgba(0,0,0,.35))}
@@ -118,7 +117,7 @@
 
     @media (max-width: 960px){
       :root{ --hero-gutter:20px; --hero-gap:14px }
-      .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h))}
+      .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:100vh}
       .hero-left{justify-content:center}
       .hero-logo{height:clamp(200px,46vh,380px)}
       .hero-right{justify-content:center}
@@ -126,13 +125,15 @@
       .lead{margin-left:auto;margin-right:auto}
     }
 
-    section{padding:72px 0;border-top:1px solid var(--line)}
+    /* Sections (ensure anchor scroll doesn’t hide under fixed header) */
+    section{padding:72px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
     h2{font-size:1.95rem;margin:0}
     .sub{color:var(--muted);margin-top:.35rem}
     .grid{display:grid;gap:1rem}
     .g-4{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
     .card{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:18px}
 
+    /* Gallery */
     .gallery{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:18px}
     .gallery figure{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line)}
     .gallery img{width:100%;height:220px;object-fit:cover;transition:transform .35s ease}
@@ -148,18 +149,26 @@
 
     .footer{border-top:1px solid var(--line);padding:28px 0;color:#bdbdc3;font-size:.95rem}
 
+    /* reveal-on-scroll */
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
 
+    /* Mobile floating call btn (optional) */
     @media (max-width: 640px){
-      .call-fab{position: fixed; right: 16px; bottom: 18px; z-index: 40; display:flex; align-items:center; justify-content:center; width:56px; height:56px; border-radius:50%; background:#0df; color:#000; text-decoration:none; font-weight:800; border:1px solid rgba(255,255,255,.25); box-shadow:0 10px 25px rgba(0,0,0,.35)}
+      .call-fab{
+        position: fixed; right: 16px; bottom: 18px; z-index: 40;
+        display:flex; align-items:center; justify-content:center;
+        width:56px; height:56px; border-radius:50%;
+        background:#0df; color:#000; text-decoration:none; font-weight:800;
+        border:1px solid rgba(255,255,255,.25); box-shadow:0 10px 25px rgba(0,0,0,.35);
+      }
     }
   </style>
 </head>
 <body>
   <div id="top"></div>
 
-  <!-- ===== Header ===== -->
+  <!-- ===== Header (fixed, overlays hero) ===== -->
   <header class="header">
     <div class="container h-inner">
       <div class="left">
@@ -179,7 +188,7 @@
     </div>
   </header>
 
-  <!-- ===== Hero ===== -->
+  <!-- ===== Hero (full-screen at startup) ===== -->
   <section class="hero">
     <div class="shade"></div>
     <div class="hero-wrap hero-inner">
