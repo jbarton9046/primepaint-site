@@ -210,13 +210,12 @@
     /* ===== Contact form polish (only this card) ===== */
     #contact .contact-card{border-radius:20px;padding:20px;}
     #contact .contact-grid{display:grid; gap:14px; grid-template-columns:1fr;}
-    #contact .contact-grid .full{ grid-column:1 / -1; }
     @media (min-width: 800px){
       #contact .contact-grid{grid-template-columns:1fr 1fr;}
-      #contact .contact-grid textarea{ grid-column:1 / -1; }
       #contact .contact-grid .span-2{ grid-column:1 / -1; }
     }
     #contact label{font-size:.9rem;color:var(--muted);margin-bottom:6px;display:block;}
+    #contact .req{color:#eaeaf0;margin-left:4px}
     #contact input,#contact textarea,#contact select{
       width:100%; border:1px solid var(--line); background:#121216; color:var(--text);
       border-radius:14px; padding:12px 14px; outline:none; transition:border-color .2s, box-shadow .2s;
@@ -232,13 +231,6 @@
     }
     #contact .btn-submit:hover{ transform:translateY(-1px); background:#202028; }
     #contact .legal{ font-size:.85rem; color:#9e9ea4; margin-top:10px; }
-
-    /* More info block */
-    .more-info{margin-top:8px; padding:14px; border:1px solid var(--line); border-radius:14px; background:#101015;}
-    .more-info legend{padding:0 .4rem; color:#cfcfd6; font-size:.95rem;}
-    .more-grid{display:grid; gap:12px; grid-template-columns:1fr;}
-    @media (min-width:800px){ .more-grid{grid-template-columns:1fr 1fr;} }
-    .more-grid .span-2{grid-column:1 / -1;}
   </style>
 </head>
 <body>
@@ -405,21 +397,26 @@
         </p>
       </div>
 
-      <!-- Upgraded contact card -->
+      <!-- Updated contact card -->
       <form id="form" class="card contact-card" aria-label="Quote request form">
         <div class="contact-grid">
           <div>
-            <label for="name">Name</label>
-            <input id="name" name="name" placeholder="Your name" required>
+            <label for="name">Name <span class="req">*</span></label>
+            <input id="name" name="name" placeholder="Your name" required aria-required="true">
           </div>
           <div>
-            <label for="phone">Phone</label>
-            <input id="phone" name="phone" placeholder="(941) 222-1890">
+            <label for="phone">Phone <span class="req">*</span></label>
+            <input id="phone" name="phone" placeholder="(941) 222-1890" required aria-required="true">
           </div>
 
-          <div class="full">
+          <!-- Email + City on the same row -->
+          <div>
             <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="you@example.com" required>
+            <input id="email" name="email" type="email" placeholder="you@example.com">
+          </div>
+          <div>
+            <label for="city">City</label>
+            <input id="city" name="city" placeholder="City">
           </div>
 
           <div>
@@ -444,25 +441,11 @@
             </select>
           </div>
 
-          <div class="full">
+          <div class="span-2">
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…"></textarea>
           </div>
         </div>
-
-        <fieldset class="more-info">
-          <legend>More Info (optional)</legend>
-          <div class="more-grid">
-            <div>
-              <label for="city">City</label>
-              <input id="city" name="city" placeholder="City">
-            </div>
-            <div class="span-2">
-              <label for="extra">Additional Details</label>
-              <textarea id="extra" name="extra" rows="4" placeholder="Room counts, colors, paint condition, scheduling notes…"></textarea>
-            </div>
-          </div>
-        </fieldset>
 
         <div class="contact-actions">
           <button class="btn-submit" type="submit">Send Request</button>
@@ -501,31 +484,22 @@
       var name = val('name');
       var phone = val('phone');
       var email = val('email');
+      var city = val('city');
       var projectType = val('projectType');
       var timeframe = val('timeframe');
       var message = val('message');
 
-      var city = val('city');
-      var extra = val('extra');
-
       var lines = [
         'Name: ' + name,
         'Phone: ' + phone,
-        'Email: ' + email,
+        email ? ('Email: ' + email) : '',
+        city ? ('City: ' + city) : '',
         projectType ? ('Project Type: ' + projectType) : '',
         timeframe ? ('Preferred Timeframe: ' + timeframe) : '',
         '',
         'Message:',
         message
       ].filter(Boolean);
-
-      var more = [];
-      if(city) more.push('City: ' + city);
-      if(extra) more.push('', 'Additional Details:', extra);
-
-      if(more.length){
-        lines.push('', '—— More Info ——', ...more);
-      }
 
       var body = encodeURIComponent(lines.join('\n'));
       window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + body;
