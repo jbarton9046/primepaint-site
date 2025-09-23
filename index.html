@@ -37,26 +37,15 @@
   <style>
     :root{
       --bg:#0a0a0b; --bg2:#0f0f12; --text:#f2f2f3; --muted:#bdbdc2; --line:#232329;
-
-      /* header */
-      --header-h:86px;
-      --brand-h:50px;
-      --header-pad-x:24px;
-
-      /* hero layout */
-      --hero-gutter-left:14px;
-      --hero-gutter-right:28px;
+      /* Header sizing tuned for perfectly even spacing with the left logo */
+      --header-h:86px;          /* total header height */
+      --brand-h:50px;           /* left wordmark height (smaller than before) */
+      --header-pad-x:24px;      /* equal left padding */
+      --hero-gutter:28px;       /* side padding for hero content */
       --hero-gap:18px;
-      --hero-text-max:60rem;
-      --hero-right-extra: min(6vw, 64px);
-
-      /* vertical nudge to center band between navbar bottom and viewport bottom */
-      --hero-nudge: 14px;
-
-      /* left shift for the PP mark (visual balance) */
-      --pp-shift: -42px; /* adjust a hair if you need 1–2px more */
+      --hero-text-max:62rem;    /* give the right text more horizontal room */
+      --hero-right-extra: min(6vw, 64px); /* push the text a bit further right */
     }
-
     *{box-sizing:border-box}
     html,body{margin:0}
     body{
@@ -75,10 +64,12 @@
       backdrop-filter:blur(10px);
       border-bottom:1px solid var(--line);
     }
+    /* exact, clean spacing left / top / bottom */
     .header .container{max-width:none;padding-left:var(--header-pad-x);padding-right:var(--header-pad-x);position:relative}
     .h-inner{height:var(--header-h);display:flex;align-items:center;gap:16px}
     .left{display:flex;align-items:center;gap:22px;flex:1}
 
+    /* Left PRIME PAINT wordmark (smaller + symmetrical padding) */
     .brand-logo{display:flex;align-items:center;text-decoration:none}
     .brand-img{height:var(--brand-h);width:auto;display:block;object-fit:contain}
 
@@ -96,35 +87,26 @@
       opacity:.45;z-index:-2;
     }
     .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.65));z-index:-1}
-
     .hero-inner{padding:0}
-    .hero-wrap{
-      padding-left:var(--hero-gutter-left);
-      padding-right:var(--hero-gutter-right);
-      max-width:1180px;margin:0 auto;height:100%;
-    }
+    .hero-wrap{padding-inline:var(--hero-gutter);max-width:1180px;margin:0 auto;height:100%}
     .hero-grid{
       display:grid;
-      grid-template-columns: 0.95fr 1.45fr;
+      grid-template-columns:1fr 1.25fr;   /* make right side wider */
       gap:var(--hero-gap);
-      align-items:center;
-      height:calc(100vh - var(--header-h) - var(--hero-nudge));
-      position:relative;
-      top:var(--hero-nudge);
+      align-items:center;                 /* vertical centering of both columns */
+      height:calc(100vh - var(--header-h));
     }
-
     .hero-left{
       display:flex;align-items:center;justify-content:flex-start;
-      transform: translateX(var(--pp-shift));
+      padding-left:0;
     }
     .hero-logo{
       height:clamp(360px,58vh,620px);
       width:auto;display:block;
       filter:drop-shadow(0 6px 22px rgba(0,0,0,.35));
     }
-
     .hero-right{
-      display:flex;align-items:center;justify-content:flex-start;
+      display:flex;justify-content:flex-start;
       padding-right:var(--hero-right-extra);
     }
     .hero-right-inner{
@@ -133,37 +115,13 @@
     }
 
     .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
-
-    .hero-title{
-      margin:.45rem 0 0;
-      font-weight:700;
-      line-height:1.04;
-      font-size: clamp(2rem, 4.2vw, 3.2rem);
-      max-width: 48rem;
-      letter-spacing:.01em;
-      text-wrap: balance;
-    }
-    .hero-title .line{display:block; white-space:nowrap;}
-
-    .lead{color:#ececf1;margin-top:.75rem;max-width:60ch}
-
-    .pill{
-      display:inline-flex;align-items:center;gap:.5rem;
-      border:1px solid var(--line);border-radius:999px;
-      padding:.55rem 1rem;background:#15151a;color:#e8e8ec;
-      font-size:.95rem;text-decoration:none;transition:.25s;
-    }
-    .pill:hover{transform:translateY(-1px);background:#191a20}
+    h1{font-size:clamp(2.4rem,5.6vw,4rem);line-height:1.06;margin:.5rem 0 0}
+    .lead{color:#ececf1;margin-top:.9rem}
 
     @media (max-width: 960px){
-      :root{
-        --header-h:70px; --brand-h:46px;
-        --hero-gutter-left:18px; --hero-gutter-right:18px;
-        --hero-gap:14px; --hero-nudge: 8px;
-        --pp-shift: 0px;
-      }
-      .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h) - var(--hero-nudge))}
-      .hero-left{justify-content:center;transform:none}
+      :root{ --header-h:70px; --brand-h:46px; --hero-gutter:20px; --hero-gap:14px }
+      .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h))}
+      .hero-left{justify-content:center}
       .hero-logo{height:clamp(200px,44vh,360px)}
       .hero-right{justify-content:center;padding-right:0}
       .hero-right-inner{margin:0;width:100%;text-align:center}
@@ -177,7 +135,6 @@
       .mainnav.show{display:flex}
       .menu-btn{display:inline-flex}
       .left{gap:12px}
-      .hero-title{max-width: 26ch}
     }
 
     section{padding:72px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
@@ -223,6 +180,7 @@
   <header class="header">
     <div class="container h-inner">
       <div class="left">
+        <!-- LEFT PRIME PAINT wordmark (smaller, clean spacing) -->
         <a class="brand-logo" href="#top" aria-label="Prime Paint SRQ home">
           <img class="brand-img" src="assets/prime-paint-logo.png" alt="PRIME PAINT">
         </a>
@@ -236,6 +194,8 @@
           <a href="#contact">Contact</a>
         </nav>
       </div>
+
+      <!-- RIGHT LOGO REMOVED PER REQUEST -->
     </div>
   </header>
 
@@ -247,21 +207,16 @@
         <div class="hero-left">
           <img class="hero-logo" src="assets/prime-paint-mark.png" alt="Prime Paint SRQ monogram">
         </div>
-
         <div class="hero-right">
           <div class="hero-right-inner">
             <div class="eyebrow">Top of the line</div>
-            <h1 class="hero-title">
-              <span class="line">Transforming Walls</span>
-              <span class="line">Elevating Spaces</span>
-            </h1>
-            <p class="lead">Interior &amp; exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
+            <h1>Transforming<br/>Walls • Elevating<br/>Spaces</h1>
+            <p class="lead">Interior & exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
             <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
               <a href="#contact" class="pill">Get a Free Quote</a>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </section>
@@ -269,11 +224,12 @@
   <!-- Services -->
   <section id="services">
     <div class="container">
-      <div style="display:flex;align-items:end;justify-content:flex-start;gap:1rem;flex-wrap:wrap">
+      <div style="display:flex;align-items:end;justify-content:space-between;gap:1rem;flex-wrap:wrap">
         <div>
-          <h2>Signature Painting Services</h2>
+          <h2>Expert Painting Services</h2>
           <div class="sub">Premium results with clear communication and a spotless finish.</div>
         </div>
+        <a href="#contact" class="pill">Request a Quote</a>
       </div>
       <div class="grid g-4 reveal" style="margin-top:16px">
         <article class="card"><h3>Interior Painting</h3><p class="sub">Walls, ceilings, trim, feature walls, staircases. Low-VOC options available.</p></article>
@@ -300,8 +256,9 @@
         </ul>
       </div>
       <div class="card">
-        <img src="https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?q=80&w=1600&auto=format&fit=crop"
-             alt="Paint roller applying fresh coat (stock)"
+        <!-- REPLACED IMAGE HERE -->
+        <img src="assets/why-living-room.jpg"
+             alt="Clean, modern living room interior — sample of premium finish"
              loading="lazy"
              style="width:100%;max-width:100%;height:220px;display:block;object-fit:cover;border-radius:12px;margin:0 auto">
       </div>
