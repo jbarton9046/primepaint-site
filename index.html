@@ -23,7 +23,7 @@
   <meta name="twitter:description" content="Top-of-the-line painting & cabinets in Sarasota. Free quotes."/>
   <meta name="twitter:image" content="assets/prime-paint-og-1200.png"/>
 
-  <!-- Favicons (keep your existing files/names if different) -->
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/prime-paint-favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/prime-paint-favicon-16.png">
   <link rel="apple-touch-icon" href="assets/prime-paint-apple-180.png">
@@ -32,20 +32,19 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
       --bg:#0a0a0b; --bg2:#0f0f12; --text:#f2f2f3; --muted:#bdbdc2; --line:#232329;
-      --header-h:86px;
-      --header-pad-x:24px;
-      --brand-h:50px;
-
-      /* Hero layout */
-      --hero-left-w: 440px;          /* PP logo column width on desktop */
-      --hero-gap: 24px;              /* space between logo and text (pulled closer) */
-      --hero-pad-x: 28px;            /* inner padding left/right for hero content */
-      --hero-text-max: min(820px, 60vw); /* keep headline wide and elegant */
+      /* Header sizing tuned for perfectly even spacing with the left logo */
+      --header-h:86px;          /* total header height */
+      --brand-h:50px;           /* left wordmark height (smaller than before) */
+      --header-pad-x:24px;      /* equal left padding */
+      --hero-gutter:28px;       /* side padding for hero content */
+      --hero-gap:18px;
+      --hero-text-max:62rem;    /* give the right text more horizontal room */
+      --hero-right-extra: min(6vw, 64px); /* push the text a bit further right */
     }
     *{box-sizing:border-box}
     html,body{margin:0}
@@ -56,6 +55,7 @@
       line-height:1.6;
       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
     }
+    .container{max-width:1180px;margin:0 auto;padding:0 1rem}
 
     /* ===== Header ===== */
     .header{
@@ -64,147 +64,108 @@
       backdrop-filter:blur(10px);
       border-bottom:1px solid var(--line);
     }
-    .header .container{max-width:none;padding-left:var(--header-pad-x);padding-right:var(--header-pad-x)}
+    /* exact, clean spacing left / top / bottom */
+    .header .container{max-width:none;padding-left:var(--header-pad-x);padding-right:var(--header-pad-x);position:relative}
     .h-inner{height:var(--header-h);display:flex;align-items:center;gap:16px}
     .left{display:flex;align-items:center;gap:22px;flex:1}
 
-    /* Brand left = PRIME PAINT image */
+    /* Left PRIME PAINT wordmark (smaller + symmetrical padding) */
     .brand-logo{display:flex;align-items:center;text-decoration:none}
     .brand-img{height:var(--brand-h);width:auto;display:block;object-fit:contain}
 
     .mainnav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-left:2px}
     .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.98rem;line-height:1;padding:.4rem 0}
+    .menu-btn{display:none;align-items:center;justify-content:center;border:1px solid var(--line);background:#15151a;color:#eaeaf0;border-radius:10px;padding:8px 10px;font-size:.95rem;line-height:1;cursor:pointer}
 
     /* ===== Hero =====
-       Exact viewport fit from the bottom of the navbar to the bottom of the screen.
-       2-column grid: left = PP logo, right = headline (centered within remaining space). */
-    .hero{
-      position:relative; isolation:isolate; overflow:hidden;
-      min-height:calc(100vh - var(--header-h));
-      padding-top: 18px;              /* small breathing room under navbar */
-    }
+       The hero content spans exactly the viewport minus the fixed header
+       so the PP mark is vertically centered between bottom of header
+       and bottom of initial viewport. */
+    .hero{position:relative;isolation:isolate;overflow:hidden;min-height:calc(100vh - var(--header-h))}
     .hero::before{
-      content:""; position:absolute; inset:0;
+      content:"";position:absolute;inset:0;
       background:
         linear-gradient(120deg,rgba(255,255,255,.06),transparent 30%),
-        url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
-      opacity:.45; z-index:-2;
+        url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center center / cover no-repeat;
+      opacity:.45;z-index:-2;
     }
     .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.65));z-index:-1}
-
-    .hero-inner{
-      height:100%;
+    .hero-inner{padding:0}
+    .hero-wrap{padding-inline:var(--hero-gutter);max-width:1180px;margin:0 auto;height:100%}
+    .hero-grid{
       display:grid;
-      grid-template-columns: minmax(260px, var(--hero-left-w)) 1fr;
-      gap: var(--hero-gap);
-      align-items:center;             /* vertically center both logo and text */
-      padding: 0 var(--hero-pad-x) 24px var(--hero-pad-x);
+      grid-template-columns:1fr 1.25fr;   /* make right side wider */
+      gap:var(--hero-gap);
+      align-items:center;                 /* vertical centering of both columns */
+      height:calc(100vh - var(--header-h));
+    }
+    .hero-left{
+      display:flex;align-items:center;justify-content:flex-start;
+      /* center the PP mark in its column vertically and respect left gutter */
+      padding-left:0;
+    }
+    .hero-logo{
+      height:clamp(360px,58vh,620px);     /* large but fully contained */
+      width:auto;display:block;
+      filter:drop-shadow(0 6px 22px rgba(0,0,0,.35));
+    }
+    .hero-right{
+      display:flex;justify-content:flex-start;
+      padding-right:var(--hero-right-extra);
+    }
+    .hero-right-inner{
+      width:min(var(--hero-text-max),100%);
+      margin-left:0;
     }
 
-    /* Left: PP mark */
-    .pp-wrap{display:flex;align-items:center;justify-content:flex-start}
-    .pp{
-      width: 100%;
-      max-width: var(--hero-left-w);
-      height: auto;
-      display:block;
-      object-fit:contain;
-      filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+    .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
+    h1{font-size:clamp(2.4rem,5.6vw,4rem);line-height:1.06;margin:.5rem 0 0}
+    .lead{color:#ececf1;margin-top:.9rem}
+
+    @media (max-width: 960px){
+      :root{ --header-h:70px; --brand-h:46px; --hero-gutter:20px; --hero-gap:14px }
+      .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h))}
+      .hero-left{justify-content:center}
+      .hero-logo{height:clamp(200px,44vh,360px)}
+      .hero-right{justify-content:center;padding-right:0}
+      .hero-right-inner{margin:0;width:100%;text-align:center}
+      .lead{margin-left:auto;margin-right:auto}
+      .mainnav{
+        position:absolute;left:0;right:0;top:100%;
+        background:#0f0f12;border-bottom:1px solid var(--line);
+        display:none;flex-direction:column;gap:0;padding:10px 22px;
+      }
+      .mainnav a{padding:12px 2px;font-size:1rem}
+      .mainnav.show{display:flex}
+      .menu-btn{display:inline-flex}
+      .left{gap:12px}
     }
 
-    /* Right: Headline block centered within remaining space */
-    .headline{
-      max-width: var(--hero-text-max);
-      margin-inline: auto;            /* center between logo and right edge */
-    }
-    .eyebrow{
-      letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.82rem
-    }
-    .hl{
-      margin: 8px 0 0;
-      display:grid;
-      gap: 6px;                       /* tight but elegant */
-      align-items:center;
-      justify-items: start;
-    }
-    .hl h1{
-      margin:0;
-      line-height:1.02;
-      font-weight:800;
-      font-size: clamp(2rem, 5.4vw, 3.9rem);  /* large, single-line targets */
-      white-space:nowrap;             /* keep each line to one row */
-    }
-    .dot{
-      font-weight:800;
-      line-height:1;
-      font-size: clamp(1.8rem, 4.6vw, 3.2rem);
-      color:#ffffff;
-      place-self:center;              /* perfectly centered between lines */
-      margin:2px 0;
-    }
-    .lead{color:#ececf1;max-width:60ch;margin-top:12px}
-
-    /* CTA pills / shared */
-    .pill{
-      display:inline-flex;align-items:center;gap:.5rem;
-      border:1px solid var(--line);border-radius:999px;
-      padding:.55rem 1rem;background:#15151a;color:#e8e8ec;
-      font-size:.95rem;text-decoration:none;transition:.25s;
-    }
-    .pill:hover{transform:translateY(-1px);background:#191a20}
-
-    section{padding:72px 0;border-top:1px solid var(--line)}
+    section{padding:72px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
     h2{font-size:1.95rem;margin:0}
     .sub{color:var(--muted);margin-top:.35rem}
     .grid{display:grid;gap:1rem}
     .g-4{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
     .card{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:18px}
 
-    /* Gallery (unchanged, retains smaller option) */
     .gallery{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:18px}
     .gallery figure{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line)}
     .gallery img{width:100%;height:220px;object-fit:cover;transition:transform .35s ease}
     .gallery figure:hover img{transform:scale(1.06)}
     .cap{position:absolute;inset-inline:0;bottom:0;padding:.55rem .8rem;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));font-size:.9rem}
 
-    .gallery figure.small img{height:160px;}
-    @media (max-width:640px){ .gallery figure.small img{height:140px;} }
-
-    /* Why / Process / Footer (unchanged) */
     .why{display:grid;gap:2rem;align-items:center}
     @media (min-width: 960px){ .why{grid-template-columns:1.05fr .95fr} }
+
     .list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:16px 0 0;padding:0}
     .list li{list-style:none;display:flex;align-items:center;gap:8px}
-    .dot-sm{width:7px;height:7px;border-radius:50%;background:#fff;display:inline-block}
+    .dot{width:7px;height:7px;border-radius:50%;background:#fff;display:inline-block}
 
     .footer{border-top:1px solid var(--line);padding:28px 0;color:#bdbdc3;font-size:.95rem}
 
-    /* Mobile nav polish */
-    @media (max-width: 840px){
-      :root{ --header-h:76px; --brand-h:42px; --hero-left-w: 260px; --hero-gap:18px; }
-      .h-inner{gap:12px}
-      .mainnav{gap:16px}
-    }
-    /* Narrow screens: stack hero columns, keep proportions clean */
-    @media (max-width: 760px){
-      :root{ --hero-left-w: 220px; }
-      .hero-inner{
-        grid-template-columns: 1fr;
-        gap: 14px;
-        align-items:start;
-        padding-top: 8px;
-      }
-      .pp-wrap{justify-content:center}
-      .headline{margin-inline:auto;text-align:center}
-      .hl{justify-items:center}
-      .lead{margin-inline:auto}
-    }
-
-    /* reveal-on-scroll */
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
 
-    /* Mobile floating call btn (unchanged) */
     @media (max-width: 640px){
       .call-fab{
         position: fixed; right: 16px; bottom: 18px; z-index: 40;
@@ -221,45 +182,46 @@
 
   <!-- ===== Header ===== -->
   <header class="header">
-    <div class="container">
-      <div class="h-inner">
-        <div class="left">
-          <!-- Brand: PRIME PAINT image (clicks to top) -->
-          <a class="brand-logo" href="#top" aria-label="Prime Paint SRQ home">
-            <img class="brand-img" src="assets/prime-paint-logo.png" alt="PRIME PAINT wordmark">
-          </a>
-          <nav class="mainnav" aria-label="Primary">
-            <a href="#services">Services</a>
-            <a href="#why">Why Us</a>
-            <a href="#process">Process</a>
-            <a href="#promise">Promise</a>
-            <a href="#contact">Contact</a>
-          </nav>
-        </div>
+    <div class="container h-inner">
+      <div class="left">
+        <!-- LEFT PRIME PAINT wordmark (smaller, clean spacing) -->
+        <a class="brand-logo" href="#top" aria-label="Prime Paint SRQ home">
+          <img class="brand-img" src="assets/prime-paint-logo.png" alt="PRIME PAINT">
+        </a>
+
+        <button class="menu-btn" aria-controls="primary-nav" aria-expanded="false">Menu</button>
+        <nav id="primary-nav" class="mainnav" aria-label="Primary">
+          <a href="#services">Services</a>
+          <a href="#why">Why Us</a>
+          <a href="#process">Process</a>
+          <a href="#promise">Promise</a>
+          <a href="#contact">Contact</a>
+        </nav>
       </div>
+
+      <!-- RIGHT LOGO REMOVED PER REQUEST -->
     </div>
   </header>
 
-  <!-- Hero (exact viewport between header and bottom) -->
-  <section class="hero" aria-labelledby="hero-title">
+  <!-- ===== Hero ===== -->
+  <section class="hero">
     <div class="shade"></div>
-    <div class="hero-inner">
-      <!-- Left: PP Mark -->
-      <div class="pp-wrap">
-        <img class="pp" src="assets/prime-paint-mark.png" alt="PP logo mark">
-      </div>
-
-      <!-- Right: Headline centered between logo and page edge -->
-      <div class="headline">
-        <div class="eyebrow">Top of the line</div>
-        <div class="hl" role="group" aria-label="Main headline">
-          <h1 id="hero-title">Transforming Walls</h1>
-          <div class="dot" aria-hidden="true">•</div>
-          <h1>Elevating Spaces</h1>
+    <div class="hero-wrap hero-inner">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <!-- PP monogram: vertically centered between bottom of navbar and bottom of viewport -->
+          <img class="hero-logo" src="assets/prime-paint-mark.png" alt="Prime Paint SRQ monogram">
         </div>
-        <p class="lead">Interior &amp; exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
-        <div style="margin-top:14px">
-          <a href="#contact" class="pill">Get a Free Quote</a>
+        <div class="hero-right">
+          <div class="hero-right-inner">
+            <div class="eyebrow">Top of the line</div>
+            <!-- kept content, just giving the column more width so it feels less vertical -->
+            <h1>Transforming<br/>Walls • Elevating<br/>Spaces</h1>
+            <p class="lead">Interior & exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
+              <a href="#contact" class="pill">Get a Free Quote</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -291,19 +253,19 @@
         <h2>Why Choose Prime Paint SRQ?</h2>
         <p class="sub">We’re craftsmen who take pride in the details—surface prep to final walk-through.</p>
         <ul class="list" aria-label="Reasons to choose us">
-          <li><span class="dot-sm"></span> Professionalism</li>
-          <li><span class="dot-sm"></span> Communication</li>
-          <li><span class="dot-sm"></span> Honesty</li>
-          <li><span class="dot-sm"></span> Integrity</li>
-          <li><span class="dot-sm"></span> Cleanliness</li>
-          <li><span class="dot-sm"></span> Quality That Lasts</li>
+          <li><span class="dot"></span> Professionalism</li>
+          <li><span class="dot"></span> Communication</li>
+          <li><span class="dot"></span> Honesty</li>
+          <li><span class="dot"></span> Integrity</li>
+          <li><span class="dot"></span> Cleanliness</li>
+          <li><span class="dot"></span> Quality That Lasts</li>
         </ul>
       </div>
       <div class="card">
         <img src="https://images.unsplash.com/photo-1505852679233-d9fd70aff56d?q=80&w=1600&auto=format&fit=crop"
              alt="Paint roller applying fresh coat (stock)"
              loading="lazy"
-             style="width:100%;height:220px;display:block;object-fit:cover;border-radius:12px">
+             style="width:100%;max-width:100%;height:220px;display:block;object-fit:cover;border-radius:12px;margin:0 auto">
       </div>
     </div>
   </section>
@@ -389,7 +351,7 @@
   <footer class="footer">
     <div class="container" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
       <div style="display:flex;align-items:center;gap:10px">
-        <img src="assets/prime-paint-logo.png" alt="Prime Paint SRQ logo small" width="56" height="56" style="border-radius:8px;background:#15151a;padding:4px;object-fit:contain">
+        <img src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo small" width="56" height="56" style="border-radius:8px;background:#15151a;padding:4px;object-fit:contain">
         <span>© <span id="yr"></span> Prime Paint SRQ. All rights reserved.</span>
       </div>
       <div>Licensed & Insured • Sarasota, FL</div>
@@ -416,6 +378,18 @@
       var body = encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\n\n' + message);
       window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + body;
     });
+
+    // Mobile nav toggle
+    (function(){
+      var btn = document.querySelector('.menu-btn');
+      var nav = document.getElementById('primary-nav');
+      if(btn && nav){
+        btn.addEventListener('click', function(){
+          var open = nav.classList.toggle('show');
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      }
+    })();
   </script>
 </body>
 </html>
