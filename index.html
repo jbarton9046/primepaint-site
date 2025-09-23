@@ -7,8 +7,7 @@
 
   <!-- Primary SEO -->
   <meta name="description" content="Prime Paint SRQ by Ty Christian delivers top-of-the-line interior & exterior painting, cabinet refinishing, and wall murals in Sarasota, FL. Free quotes: (615) 589-7044."/>
-
-  <!-- Replace YOUR-SITE after deploy -->
+  <!-- After deploy, replace YOUR-SITE with your real domain/Netlify URL -->
   <link rel="canonical" href="https://YOUR-SITE.netlify.app/"/>
 
   <!-- Open Graph / Twitter -->
@@ -16,16 +15,16 @@
   <meta property="og:title" content="Prime Paint SRQ – Ty Christian | Sarasota Painting"/>
   <meta property="og:description" content="Interior/exterior painting, cabinet finishing, and murals. Professional, clean, on-time. Free quotes."/>
   <meta property="og:url" content="https://YOUR-SITE.netlify.app/"/>
-  <meta property="og:image" content="https://YOUR-SITE.netlify.app/og-cover.jpg"/>
-  <meta property="og:image:alt" content="Prime Paint SRQ project by Ty Christian"/>
+  <meta property="og:image" content="https://YOUR-SITE.netlify.app/assets/ty-logo-512.png"/>
+  <meta property="og:image:alt" content="Prime Paint SRQ monogram logo"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Prime Paint SRQ – Ty Christian | Sarasota Painting"/>
   <meta name="twitter:description" content="Top-of-the-line painting & cabinets in Sarasota. Free quotes."/>
-  <meta name="twitter:image" content="https://YOUR-SITE.netlify.app/og-cover.jpg"/>
+  <meta name="twitter:image" content="https://YOUR-SITE.netlify.app/assets/ty-logo-512.png"/>
 
-  <!-- Favicon & tab icon (uses your logo) -->
-  <link rel="icon" href="ty-logo.jpg" sizes="32x32"/>
-  <link rel="apple-touch-icon" href="ty-logo.jpg"/>
+  <!-- Favicons / tab icon -->
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <meta name="theme-color" content="#0a0a0b"/>
 
   <!-- Fonts -->
@@ -39,8 +38,8 @@
     "@context": "https://schema.org",
     "@type": "HousePainter",
     "name": "Prime Paint SRQ",
-    "image": "https://YOUR-SITE.netlify.app/og-cover.jpg",
-    "logo": "https://YOUR-SITE.netlify.app/ty-logo.jpg",
+    "image": "https://YOUR-SITE.netlify.app/assets/ty-logo-512.png",
+    "logo": "https://YOUR-SITE.netlify.app/assets/ty-logo-512.png",
     "url": "https://YOUR-SITE.netlify.app/",
     "areaServed": "Sarasota, FL",
     "address": { "@type": "PostalAddress", "addressLocality": "Sarasota", "addressRegion": "FL", "addressCountry": "US" },
@@ -61,10 +60,19 @@
     }
     .container{max-width:1180px;margin:0 auto;padding:0 1rem}
     .header{position:sticky;top:0;z-index:20;background:rgba(10,10,11,.7);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-    .h-inner{height:70px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:.8rem;font-weight:800;letter-spacing:.04em}
-    /* BIGGER logo */
-    .brand img{height:56px;width:56px;border-radius:12px;background:#15151a;padding:6px;object-fit:contain}
+    .h-inner{height:88px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:0.9rem;font-weight:800;letter-spacing:.03em}
+    /* BIG floating logo, tightly cropped graphic */
+    .brand img{
+      height: calc(88px - 16px);      /* fill navbar height (less padding) */
+      width: auto;                     /* keep aspect ratio */
+      padding: 6px 10px;               /* slim frame */
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      background: rgba(17,18,23,0.85);
+      object-fit: contain;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.4) inset;
+    }
     nav a{color:#eaeaf0;text-decoration:none;margin-left:1rem;font-size:.95rem}
     .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:16px;padding:.6rem 1.1rem;font-weight:600;border:1px solid var(--line);transition:.25s}
     .btn:hover{transform:translateY(-1px)}
@@ -81,10 +89,7 @@
     .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
     h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.05;margin:.5rem 0 0}
     .lead{color:#ececf1;max-width:60ch;margin-top:.9rem}
-    /* hero logo badge (subtle but visible) */
-    .hero-badge{display:flex;align-items:center;gap:.8rem;margin-top:14px}
-    .hero-badge img{width:64px;height:64px;border-radius:14px;background:#15151a;padding:6px;border:1px solid var(--line)}
-    .owner{display:flex;gap:14px;align-items:center;margin-top:10px}
+    .owner{display:flex;gap:14px;align-items:center;margin-top:14px}
     .owner img{width:56px;height:56px;border-radius:14px;object-fit:cover;border:1px solid var(--line)}
 
     section{padding:72px 0;border-top:1px solid var(--line)}
@@ -108,6 +113,12 @@
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
     img{max-width:100%;height:auto}
+
+    /* Mobile adjustments for navbar logo */
+    @media (max-width: 640px){
+      .h-inner{height:78px}
+      .brand img{height: calc(78px - 14px); padding: 5px 8px;}
+    }
   </style>
 </head>
 <body>
@@ -115,7 +126,7 @@
   <header class="header">
     <div class="container h-inner">
       <div class="brand">
-        <img src="ty-logo.jpg" alt="Prime Paint SRQ logo" width="112" height="112" loading="eager" fetchpriority="high"/>
+        <img src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo" width="200" height="200" loading="eager" fetchpriority="high"/>
         <span>Prime Paint SRQ</span>
       </div>
       <nav class="hide-mobile">
@@ -138,15 +149,11 @@
       <h1>Transforming Walls • Elevating Spaces</h1>
       <p class="lead">Interior & exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
 
-      <!-- prominent logo badge + owner -->
-      <div class="hero-badge">
-        <img src="ty-logo.jpg" alt="Prime Paint SRQ monogram"/>
-        <div class="owner">
-          <img src="ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500" loading="eager"/>
-          <div>
-            <div style="font-weight:600">Ty Christian</div>
-            <div class="sub">Prime Paint SRQ</div>
-          </div>
+      <div class="owner">
+        <img src="assets/ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500" loading="eager"/>
+        <div>
+          <div style="font-weight:600">Ty Christian</div>
+          <div class="sub">Prime Paint SRQ</div>
         </div>
       </div>
 
@@ -289,7 +296,7 @@
   <footer class="footer">
     <div class="container" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
       <div style="display:flex;align-items:center;gap:10px">
-        <img src="ty-logo.jpg" alt="Prime Paint SRQ logo small" width="56" height="56" style="border-radius:8px;background:#15151a;padding:4px;object-fit:contain">
+        <img src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo small" width="56" height="56" style="border-radius:8px;background:#15151a;padding:4px;object-fit:contain">
         <span>© <span id="yr"></span> Prime Paint SRQ. All rights reserved.</span>
       </div>
       <div>Licensed & Insured • Sarasota, FL</div>
