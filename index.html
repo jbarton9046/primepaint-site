@@ -37,17 +37,24 @@
   <style>
     :root{
       --bg:#0a0a0b; --bg2:#0f0f12; --text:#f2f2f3; --muted:#bdbdc2; --line:#232329;
+
+      /* header */
       --header-h:86px;
       --brand-h:50px;
       --header-pad-x:24px;
 
-      /* hero tuning */
-      --hero-gutter-left:14px;          /* tighter left gutter (about half) */
+      /* hero layout */
+      --hero-gutter-left:14px;      /* tight left gutter so PP can sit further left */
       --hero-gutter-right:28px;
       --hero-gap:18px;
-      --hero-text-max:60rem;            /* ample width, no overflow */
+      --hero-text-max:60rem;
       --hero-right-extra: min(6vw, 64px);
+
+      /* vertical nudge: we shift content down AND reduce height by same amount
+         so it's perfectly centered between bottom of navbar and bottom of viewport */
+      --hero-nudge: 14px;           /* adjust +/– a few px if you want micro-tuning */
     }
+
     *{box-sizing:border-box}
     html,body{margin:0}
     body{
@@ -96,16 +103,18 @@
     }
     .hero-grid{
       display:grid;
-      grid-template-columns: 0.95fr 1.45fr; /* a touch more room for text */
+      grid-template-columns: 0.95fr 1.45fr;
       gap:var(--hero-gap);
       align-items:center;
-      height:calc(100vh - var(--header-h));
+      /* center band calc with a small downward nudge for perfect symmetry */
+      height:calc(100vh - var(--header-h) - var(--hero-nudge));
+      position:relative;
+      top:var(--hero-nudge);
     }
 
     .hero-left{
       display:flex;align-items:center;justify-content:flex-start;
-      /* push the mark left to match your visual */
-      transform: translateX(-28px);
+      transform: translateX(-28px); /* keeps the PP a bit closer to the edge */
     }
     .hero-logo{
       height:clamp(360px,58vh,620px);
@@ -124,24 +133,36 @@
 
     .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
 
-    /* Two-line headline with centered dot (no overflow) */
+    /* Two-line headline, no dot */
     .hero-title{
       margin:.45rem 0 0;
       font-weight:700;
-      line-height:1.05;
+      line-height:1.04;
       font-size: clamp(2rem, 4.2vw, 3.2rem);
       max-width: 48rem;
       letter-spacing:.01em;
       text-wrap: balance;
     }
     .hero-title .line{display:block; white-space:nowrap;}
-    .hero-title .dot{display:block; text-align:center; line-height:1; margin:.1rem 0; font-size:.9em}
 
     .lead{color:#ececf1;margin-top:.75rem;max-width:60ch}
 
+    /* pills */
+    .pill{
+      display:inline-flex;align-items:center;gap:.5rem;
+      border:1px solid var(--line);border-radius:999px;
+      padding:.55rem 1rem;background:#15151a;color:#e8e8ec;
+      font-size:.95rem;text-decoration:none;transition:.25s;
+    }
+    .pill:hover{transform:translateY(-1px);background:#191a20}
+
     @media (max-width: 960px){
-      :root{ --header-h:70px; --brand-h:46px; --hero-gutter-left:18px; --hero-gutter-right:18px; --hero-gap:14px }
-      .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h))}
+      :root{
+        --header-h:70px; --brand-h:46px;
+        --hero-gutter-left:18px; --hero-gutter-right:18px;
+        --hero-gap:14px; --hero-nudge: 8px;
+      }
+      .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h) - var(--hero-nudge))}
       .hero-left{justify-content:center;transform:none}
       .hero-logo{height:clamp(200px,44vh,360px)}
       .hero-right{justify-content:center;padding-right:0}
@@ -231,14 +252,15 @@
           <div class="hero-right-inner">
             <div class="eyebrow">Top of the line</div>
 
-            <!-- Two-line headline with centered dot -->
+            <!-- Two lines, no dot -->
             <h1 class="hero-title">
               <span class="line">Transforming Walls</span>
-              <span class="dot" aria-hidden="true">•</span>
               <span class="line">Elevating Spaces</span>
             </h1>
 
             <p class="lead">Interior &amp; exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
+
+            <!-- pill is back -->
             <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
               <a href="#contact" class="pill">Get a Free Quote</a>
             </div>
