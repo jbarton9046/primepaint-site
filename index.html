@@ -175,7 +175,6 @@
       }
       .mainnav a{padding:12px 2px;font-size:1rem}
       .mainnav.show{display:flex}
-      .menu-btn{display:inline-flex}
       .left{gap:12px}
       .hero-title{max-width: 26ch}
     }
@@ -215,21 +214,36 @@
       }
     }
 
-    /* ===== Promise grid (NEW) ===== */
-    .promise-grid{
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:22px;
-      align-items:start;
-      margin-top:14px;
+    /* ==== Founder card: larger photo + right-aligned text ==== */
+    .founder-card{
+      display:flex;
+      align-items:center;
+      gap:18px;
     }
-    .promise-left > .card{margin-top:14px}
-    .promise-right .card{height:100%}
+    .founder-photo{
+      width:min(260px,28vw);
+      height:min(260px,28vw);
+      border-radius:16px;
+      object-fit:cover;
+      border:1px solid var(--line);
+      flex:0 0 auto;
+    }
+    .founder-meta{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width:0;
+    }
+    .founder-name{
+      font-weight:700;
+      font-size:1.35rem;
+    }
+    .founder-quote{max-width:60ch}
 
-    @media (max-width: 960px){
-      .promise-grid{grid-template-columns:1fr}
-      .promise-right{order:3}
-      .promise-left{order:1}
+    @media (max-width: 720px){
+      .founder-card{flex-direction:column; align-items:flex-start}
+      .founder-photo{width:220px;height:220px}
+      .founder-meta{width:100%}
     }
   </style>
 </head>
@@ -317,7 +331,7 @@
         </ul>
       </div>
       <div class="card">
-        <!-- ONLY CHANGE: replaced image source -->
+        <!-- ONLY CHANGE PREVIOUSLY: replaced image source -->
         <img src="assets/why-living-room.jpg"
              alt="Clean, modern living room interior — sample of premium finish"
              loading="lazy"
@@ -339,35 +353,27 @@
     </div>
   </section>
 
-  <!-- Promise (split into left/right) -->
+  <!-- Promise + Founder -->
   <section id="promise">
     <div class="container reveal">
-      <div class="promise-grid">
-        <!-- Left column: headline + statement + pricing -->
-        <div class="promise-left">
-          <h2>The Prime Paint Promise</h2>
-          <div class="sub" style="max-width:70ch;margin-top:.6rem">
-            At Prime Paint, we are more than painters. Our mission is to deliver exceptional interior and exterior painting services built on hard work, professionalism, and a commitment to excellence. We foster open and honest communication so every client feels heard and respected throughout the process. With positivity, genuine hospitality, and a relentless dedication to detail, we create lasting results that reflect pride in our craft and care for our community—ensuring you’re left with a prime experience you’ll never forget.
-          </div>
+      <h2>The Prime Paint Promise</h2>
+      <div class="sub" style="max-width:70ch;margin-top:.6rem">
+        At Prime Paint, we are more than painters. Our mission is to deliver exceptional interior and exterior painting services built on hard work, professionalism, and a commitment to excellence. We foster open and honest communication so every client feels heard and respected throughout the process. With positivity, genuine hospitality, and a relentless dedication to detail, we create lasting results that reflect pride in our craft and care for our community—ensuring you’re left with a prime experience you’ll never forget.
+      </div>
 
-          <div class="card" style="margin-top:14px">
-            <strong>Pricing & Free Estimates</strong>
-            <p class="sub" style="margin:6px 0 0">Submit the contact form and we’ll reach out to schedule a free, no-obligation estimate at your home.</p>
-          </div>
+      <!-- UPDATED: larger photo + right-aligned text -->
+      <div class="card founder-card" style="margin-top:16px;">
+        <img class="founder-photo" src="assets/ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500">
+        <div class="founder-meta">
+          <div class="founder-name">Ty Christian</div>
+          <div class="sub">Founder • Prime Paint SRQ</div>
+          <p class="sub founder-quote">“We treat each home like our own—clear communication, meticulous prep, and finishes that last.”</p>
         </div>
+      </div>
 
-        <!-- Right column: Ty card -->
-        <div class="promise-right">
-          <div class="card" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
-            <img src="assets/ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500"
-                 style="width:180px;height:180px;object-fit:cover;border-radius:18px;border:1px solid var(--line)">
-            <div>
-              <div style="font-weight:700;font-size:1.25rem">Ty Christian</div>
-              <div class="sub" style="margin-top:2px">Founder • Prime Paint SRQ</div>
-              <p class="sub" style="margin-top:10px;max-width:60ch">“We treat each home like our own—clear communication, meticulous prep, and finishes that last.”</p>
-            </div>
-          </div>
-        </div>
+      <div class="card" style="margin-top:14px">
+        <strong>Pricing & Free Estimates</strong>
+        <p class="sub" style="margin:6px 0 0">Submit the contact form and we’ll reach out to schedule a free, no-obligation estimate at your home.</p>
       </div>
     </div>
   </section>
