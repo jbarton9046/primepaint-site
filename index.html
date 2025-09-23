@@ -37,14 +37,15 @@
   <style>
     :root{
       --bg:#0a0a0b; --bg2:#0f0f12; --text:#f2f2f3; --muted:#bdbdc2; --line:#232329;
-      /* Header sizing tuned for perfectly even spacing with the left logo */
-      --header-h:86px;          /* total header height */
-      --brand-h:50px;           /* left wordmark height (smaller than before) */
-      --header-pad-x:24px;      /* equal left padding */
-      --hero-gutter:28px;       /* side padding for hero content */
+      --header-h:86px;
+      --brand-h:50px;
+      --header-pad-x:24px;
+
+      /* hero tuning */
+      --hero-gutter:28px;
       --hero-gap:18px;
-      --hero-text-max:62rem;    /* give the right text more horizontal room */
-      --hero-right-extra: min(6vw, 64px); /* push the text a bit further right */
+      --hero-text-max:64rem;          /* wider headline area -> less vertical wrap */
+      --hero-right-extra: min(6vw, 64px);
     }
     *{box-sizing:border-box}
     html,body{margin:0}
@@ -64,12 +65,10 @@
       backdrop-filter:blur(10px);
       border-bottom:1px solid var(--line);
     }
-    /* exact, clean spacing left / top / bottom */
     .header .container{max-width:none;padding-left:var(--header-pad-x);padding-right:var(--header-pad-x);position:relative}
     .h-inner{height:var(--header-h);display:flex;align-items:center;gap:16px}
     .left{display:flex;align-items:center;gap:22px;flex:1}
 
-    /* Left PRIME PAINT wordmark (smaller + symmetrical padding) */
     .brand-logo{display:flex;align-items:center;text-decoration:none}
     .brand-img{height:var(--brand-h);width:auto;display:block;object-fit:contain}
 
@@ -77,10 +76,7 @@
     .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.98rem;line-height:1;padding:.4rem 0}
     .menu-btn{display:none;align-items:center;justify-content:center;border:1px solid var(--line);background:#15151a;color:#eaeaf0;border-radius:10px;padding:8px 10px;font-size:.95rem;line-height:1;cursor:pointer}
 
-    /* ===== Hero =====
-       The hero content spans exactly the viewport minus the fixed header
-       so the PP mark is vertically centered between bottom of header
-       and bottom of initial viewport. */
+    /* ===== Hero ===== */
     .hero{position:relative;isolation:isolate;overflow:hidden;min-height:calc(100vh - var(--header-h))}
     .hero::before{
       content:"";position:absolute;inset:0;
@@ -90,27 +86,31 @@
       opacity:.45;z-index:-2;
     }
     .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.65));z-index:-1}
+
     .hero-inner{padding:0}
     .hero-wrap{padding-inline:var(--hero-gutter);max-width:1180px;margin:0 auto;height:100%}
+
     .hero-grid{
       display:grid;
-      grid-template-columns:1fr 1.25fr;   /* make right side wider */
+      grid-template-columns: 1fr 1.4fr;  /* give the text more width */
       gap:var(--hero-gap);
-      align-items:center;                 /* vertical centering of both columns */
+      align-items:center;
       height:calc(100vh - var(--header-h));
     }
+
     .hero-left{
       display:flex;align-items:center;justify-content:flex-start;
-      /* center the PP mark in its column vertically and respect left gutter */
-      padding-left:0;
+      /* nudge logo left a smidge for symmetry */
+      transform: translateX(-10px);
     }
     .hero-logo{
-      height:clamp(360px,58vh,620px);     /* large but fully contained */
+      height:clamp(360px,58vh,620px);
       width:auto;display:block;
       filter:drop-shadow(0 6px 22px rgba(0,0,0,.35));
     }
+
     .hero-right{
-      display:flex;justify-content:flex-start;
+      display:flex;align-items:center;justify-content:flex-start;
       padding-right:var(--hero-right-extra);
     }
     .hero-right-inner{
@@ -119,13 +119,24 @@
     }
 
     .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
-    h1{font-size:clamp(2.4rem,5.6vw,4rem);line-height:1.06;margin:.5rem 0 0}
-    .lead{color:#ececf1;margin-top:.9rem}
+
+    /* Headline: wider, tighter line-height, less vertical wrap */
+    .hero-title{
+      margin:.4rem 0 0;
+      font-weight:700;
+      line-height:1.03;                         /* tighter vertical rhythm */
+      font-size: clamp(2.2rem, 4.9vw, 3.6rem);  /* slightly smaller to fit in 2 lines */
+      max-width: 36ch;                          /* promotes 2 neat lines */
+      letter-spacing:.01em;
+    }
+    .hero-title .mid{white-space:nowrap;}       /* keeps each phrase intact mostly */
+
+    .lead{color:#ececf1;margin-top:.75rem;max-width:60ch}
 
     @media (max-width: 960px){
       :root{ --header-h:70px; --brand-h:46px; --hero-gutter:20px; --hero-gap:14px }
       .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h))}
-      .hero-left{justify-content:center}
+      .hero-left{justify-content:center;transform:none}
       .hero-logo{height:clamp(200px,44vh,360px)}
       .hero-right{justify-content:center;padding-right:0}
       .hero-right-inner{margin:0;width:100%;text-align:center}
@@ -139,6 +150,7 @@
       .mainnav.show{display:flex}
       .menu-btn{display:inline-flex}
       .left{gap:12px}
+      .hero-title{max-width: 22ch}
     }
 
     section{padding:72px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
@@ -184,7 +196,7 @@
   <header class="header">
     <div class="container h-inner">
       <div class="left">
-        <!-- LEFT PRIME PAINT wordmark (smaller, clean spacing) -->
+        <!-- LEFT PRIME PAINT wordmark -->
         <a class="brand-logo" href="#top" aria-label="Prime Paint SRQ home">
           <img class="brand-img" src="assets/prime-paint-logo.png" alt="PRIME PAINT">
         </a>
@@ -198,8 +210,6 @@
           <a href="#contact">Contact</a>
         </nav>
       </div>
-
-      <!-- RIGHT LOGO REMOVED PER REQUEST -->
     </div>
   </header>
 
@@ -209,20 +219,25 @@
     <div class="hero-wrap hero-inner">
       <div class="hero-grid">
         <div class="hero-left">
-          <!-- PP monogram: vertically centered between bottom of navbar and bottom of viewport -->
           <img class="hero-logo" src="assets/prime-paint-mark.png" alt="Prime Paint SRQ monogram">
         </div>
+
         <div class="hero-right">
           <div class="hero-right-inner">
             <div class="eyebrow">Top of the line</div>
-            <!-- kept content, just giving the column more width so it feels less vertical -->
-            <h1>Transforming<br/>Walls • Elevating<br/>Spaces</h1>
-            <p class="lead">Interior & exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
+
+            <!-- Shorter, two-line headline; centered vertically to the logo -->
+            <h1 class="hero-title">
+              <span class="mid">Transforming Walls</span>&nbsp;&bull;&nbsp;<span class="mid">Elevating Spaces</span>
+            </h1>
+
+            <p class="lead">Interior &amp; exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
             <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
               <a href="#contact" class="pill">Get a Free Quote</a>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
