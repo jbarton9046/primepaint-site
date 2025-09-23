@@ -14,16 +14,17 @@
   <meta property="og:title" content="Prime Paint SRQ – Ty Christian | Sarasota Painting"/>
   <meta property="og:description" content="Interior/exterior painting, cabinet finishing, and murals. Professional, clean, on-time. Free quotes."/>
   <meta property="og:url" content="https://YOUR-SITE.netlify.app/"/>
-  <meta property="og:image" content="https://YOUR-SITE.netlify.app/assets/ty-logo-512.png"/>
-  <meta property="og:image:alt" content="Prime Paint SRQ monogram logo"/>
+  <meta property="og:image" content="https://YOUR-SITE.netlify.app/assets/ty-logo-tight.png"/>
+  <meta property="og:image:alt" content="Prime Paint SRQ logo"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Prime Paint SRQ – Ty Christian | Sarasota Painting"/>
   <meta name="twitter:description" content="Top-of-the-line painting & cabinets in Sarasota. Free quotes."/>
-  <meta name="twitter:image" content="https://YOUR-SITE.netlify.app/assets/ty-logo-512.png"/>
+  <meta name="twitter:image" content="https://YOUR-SITE.netlify.app/assets/ty-logo-tight.png"/>
 
-  <!-- Favicons / tab icon -->
-  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <!-- Favicons / tab icon (use your logo) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/ty-logo-tight.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/ty-logo-tight.png">
+  <link rel="apple-touch-icon" href="assets/ty-logo-tight.png">
   <meta name="theme-color" content="#0a0a0b"/>
 
   <!-- Fonts -->
@@ -37,8 +38,8 @@
     "@context": "https://schema.org",
     "@type": "HousePainter",
     "name": "Prime Paint SRQ",
-    "image": "https://YOUR-SITE.netlify.app/assets/ty-logo-512.png",
-    "logo": "https://YOUR-SITE.netlify.app/assets/ty-logo-512.png",
+    "image": "https://YOUR-SITE.netlify.app/assets/ty-logo-tight.png",
+    "logo": "https://YOUR-SITE.netlify.app/assets/ty-logo-tight.png",
     "url": "https://YOUR-SITE.netlify.app/",
     "areaServed": "Sarasota, FL",
     "address": { "@type": "PostalAddress", "addressLocality": "Sarasota", "addressRegion": "FL", "addressCountry": "US" },
@@ -59,36 +60,30 @@
     }
     .container{max-width:1180px;margin:0 auto;padding:0 1rem}
 
-    /* ===== Header: left-aligned content, logo far right (bigger, NO border) ===== */
+    /* ===== Header (left items + logo far right; logo bigger, no border) ===== */
     .header{position:sticky;top:0;z-index:20;background:rgba(10,10,11,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
     .h-inner{height:86px;display:flex;align-items:center;gap:16px}
     .left{display:flex;align-items:center;gap:22px;flex:1}
     .brand{font-weight:800;letter-spacing:.03em;white-space:nowrap;color:#eaeaf0;text-decoration:none}
     .mainnav{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
     .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.95rem;line-height:1;padding:0.4rem 0}
-
     .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:16px;padding:.4rem .9rem;font-weight:600;border:1px solid var(--line);transition:.25s;line-height:1}
     .btn:hover{transform:translateY(-1px)}
-
     .logo-badge{
-      height:76px; width:auto;                /* bigger */
-      padding:8px 12px;
-      border-radius:14px;
-      background:rgba(17,18,23,.90);          /* subtle panel */
-      object-fit:contain;
-      /* no border, no inset line */
+      height:76px;width:auto;padding:8px 12px;border-radius:14px;
+      background:rgba(17,18,23,.90);object-fit:contain; /* no border */
     }
 
-    /* ===== Pill system (used for badges AND hero buttons) ===== */
+    /* Pills (used for badges AND hero buttons) */
     .pill{
-      display:inline-flex; align-items:center; gap:.5rem;
-      border:1px solid var(--line); border-radius:999px;
-      padding:.55rem 1rem; background:#15151a; color:#e8e8ec;
-      font-size:.95rem; text-decoration:none; transition:.25s;
+      display:inline-flex;align-items:center;gap:.5rem;
+      border:1px solid var(--line);border-radius:999px;
+      padding:.55rem 1rem;background:#15151a;color:#e8e8ec;
+      font-size:.95rem;text-decoration:none;transition:.25s;
     }
-    .pill:hover{ transform:translateY(-1px); background:#191a20; }
+    .pill:hover{transform:translateY(-1px);background:#191a20}
 
-    /* Hero + general UI */
+    /* Hero & general UI */
     .hero{position:relative;isolation:isolate;overflow:hidden}
     .hero::before{content:"";position:absolute;inset:0;background:
       linear-gradient(120deg,rgba(255,255,255,.06),transparent 30%),
@@ -143,12 +138,11 @@
 <body>
   <div id="top"></div>
 
-  <!-- ===== Header (everything left; logo right) ===== -->
+  <!-- ===== Header ===== -->
   <header class="header">
     <div class="container h-inner">
       <div class="left">
         <a class="brand" href="#top">Prime Paint SRQ</a>
-
         <nav class="mainnav" aria-label="Primary">
           <a href="#services">Services</a>
           <a href="#work">Projects</a>
@@ -156,15 +150,13 @@
           <a href="#promise">Promise</a>
           <a href="#process">Process</a>
           <a href="#contact" class="btn">Contact</a>
-          <!-- Removed CALL from navbar per request -->
         </nav>
       </div>
-
       <img class="logo-badge" src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo">
     </div>
   </header>
 
-  <!-- Hero (owner moved to Promise; hero stays clean) -->
+  <!-- Hero -->
   <section class="hero">
     <div class="shade"></div>
     <div class="container hero-inner">
@@ -179,7 +171,6 @@
         <span class="pill">Clean Job Sites</span>
       </div>
 
-      <!-- Matching dark pill actions -->
       <div class="hero-cta" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
         <a href="#contact" class="pill">Get a Free Quote</a>
         <a href="#work" class="pill">See Our Work</a>
@@ -223,7 +214,7 @@
     </div>
   </section>
 
-  <!-- The Prime Paint Promise  (OWNER MOVED HERE & BIGGER) -->
+  <!-- Promise + Founder -->
   <section id="promise">
     <div class="container reveal">
       <h2>The Prime Paint Promise</h2>
@@ -232,7 +223,6 @@
         At Prime Paint, we are more than painters. Our mission is to deliver exceptional interior and exterior painting services built on hard work, professionalism, and a commitment to excellence. We foster open and honest communication so every client feels heard and respected throughout the process. With positivity, genuine hospitality, and a relentless dedication to detail, we create lasting results that reflect pride in our craft and care for our community—ensuring you’re left with a prime experience you’ll never forget.
       </div>
 
-      <!-- Founder card -->
       <div class="card" style="margin-top:16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
         <img src="assets/ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500"
              style="width:180px;height:180px;object-fit:cover;border-radius:18px;border:1px solid var(--line)">
