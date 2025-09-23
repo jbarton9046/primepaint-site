@@ -214,6 +214,23 @@
         border:1px solid rgba(255,255,255,.25); box-shadow:0 10px 25px rgba(0,0,0,.35);
       }
     }
+
+    /* ===== Promise grid (NEW) ===== */
+    .promise-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:22px;
+      align-items:start;
+      margin-top:14px;
+    }
+    .promise-left > .card{margin-top:14px}
+    .promise-right .card{height:100%}
+
+    @media (max-width: 960px){
+      .promise-grid{grid-template-columns:1fr}
+      .promise-right{order:3}
+      .promise-left{order:1}
+    }
   </style>
 </head>
 <body>
@@ -322,27 +339,35 @@
     </div>
   </section>
 
-  <!-- Promise + Founder -->
+  <!-- Promise (split into left/right) -->
   <section id="promise">
     <div class="container reveal">
-      <h2>The Prime Paint Promise</h2>
-      <div class="sub" style="max-width:70ch;margin-top:.6rem">
-        At Prime Paint, we are more than painters. Our mission is to deliver exceptional interior and exterior painting services built on hard work, professionalism, and a commitment to excellence. We foster open and honest communication so every client feels heard and respected throughout the process. With positivity, genuine hospitality, and a relentless dedication to detail, we create lasting results that reflect pride in our craft and care for our community—ensuring you’re left with a prime experience you’ll never forget.
-      </div>
+      <div class="promise-grid">
+        <!-- Left column: headline + statement + pricing -->
+        <div class="promise-left">
+          <h2>The Prime Paint Promise</h2>
+          <div class="sub" style="max-width:70ch;margin-top:.6rem">
+            At Prime Paint, we are more than painters. Our mission is to deliver exceptional interior and exterior painting services built on hard work, professionalism, and a commitment to excellence. We foster open and honest communication so every client feels heard and respected throughout the process. With positivity, genuine hospitality, and a relentless dedication to detail, we create lasting results that reflect pride in our craft and care for our community—ensuring you’re left with a prime experience you’ll never forget.
+          </div>
 
-      <div class="card" style="margin-top:16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
-        <img src="assets/ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500"
-             style="width:180px;height:180px;object-fit:cover;border-radius:18px;border:1px solid var(--line)">
-        <div>
-          <div style="font-weight:700;font-size:1.25rem">Ty Christian</div>
-          <div class="sub" style="margin-top:2px">Founder • Prime Paint SRQ</div>
-          <p class="sub" style="margin-top:10px;max-width:60ch">“We treat each home like our own—clear communication, meticulous prep, and finishes that last.”</p>
+          <div class="card" style="margin-top:14px">
+            <strong>Pricing & Free Estimates</strong>
+            <p class="sub" style="margin:6px 0 0">Submit the contact form and we’ll reach out to schedule a free, no-obligation estimate at your home.</p>
+          </div>
         </div>
-      </div>
 
-      <div class="card" style="margin-top:14px">
-        <strong>Pricing & Free Estimates</strong>
-        <p class="sub" style="margin:6px 0 0">Submit the contact form and we’ll reach out to schedule a free, no-obligation estimate at your home.</p>
+        <!-- Right column: Ty card -->
+        <div class="promise-right">
+          <div class="card" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+            <img src="assets/ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500"
+                 style="width:180px;height:180px;object-fit:cover;border-radius:18px;border:1px solid var(--line)">
+            <div>
+              <div style="font-weight:700;font-size:1.25rem">Ty Christian</div>
+              <div class="sub" style="margin-top:2px">Founder • Prime Paint SRQ</div>
+              <p class="sub" style="margin-top:10px;max-width:60ch">“We treat each home like our own—clear communication, meticulous prep, and finishes that last.”</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
