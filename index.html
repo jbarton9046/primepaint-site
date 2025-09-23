@@ -247,6 +247,75 @@
       .founder-photo-lg{width:240px;height:240px}
       .founder-quote-block p{max-width:60ch}
     }
+
+    /* ===================== CONTACT — new chic form ===================== */
+    #contact .contact-wrap{
+      max-width:860px;
+      margin:0 auto;
+    }
+    #contact .contact-links a{
+      color:#eaeaf0;
+      text-decoration:none;
+      border-bottom:1px dashed rgba(234,234,240,.28);
+      transition:border-color .2s ease, color .2s ease;
+    }
+    #contact .contact-links a:hover{ border-bottom-color:#eaeaf0; }
+
+    .form-card{
+      background:var(--bg2);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:22px;
+    }
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    .field{position:relative; display:flex; flex-direction:column; gap:6px}
+    .label{font-weight:600; color:#eaeaf0; font-size:.95rem}
+
+    .input, .select, .textarea{
+      width:100%;
+      background:#111114;
+      color:#eaeaf0;
+      border:1px solid #2a2a31;
+      border-radius:12px;
+      padding:12px 14px;
+      font-size:1rem;
+      outline:none;
+      transition:border-color .15s ease, box-shadow .15s ease, background .15s ease, transform .05s ease;
+    }
+    .input:focus, .select:focus, .textarea:focus{
+      border-color:#3a3a44;
+      box-shadow:0 0 0 3px rgba(255,255,255,.06);
+      background:#121218;
+    }
+    .input:active{ transform:scale(0.998); }
+
+    .textarea{min-height:130px; resize:vertical}
+    .meta-row{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; margin-top:6px; color:var(--muted); font-size:.9rem;
+    }
+    .progress{
+      position:relative; flex:1; height:6px; background:#17171c; border-radius:999px; overflow:hidden;
+    }
+    .progress > span{
+      position:absolute; left:0; top:0; bottom:0; width:0%;
+      background:linear-gradient(90deg, #cfcfd6, #ffffff); border-radius:999px; transition:width .2s ease;
+    }
+
+    .submit-pill{
+      width:100%; justify-content:center; padding:.85rem 1.25rem; font-weight:700;
+      background:#15151a; border:1px solid var(--line);
+    }
+    .submit-pill:hover{ background:#191a20 }
+    .submit-pill:active{ transform:translateY(1px) }
+
+    @media (max-width:760px){
+      .form-grid{ grid-template-columns:1fr; }
+    }
   </style>
 </head>
 <body>
@@ -401,30 +470,61 @@
     </div>
   </section>
 
-  <!-- Contact -->
+  <!-- Contact (CHIC + FUN) -->
   <section id="contact">
-    <div class="container" style="display:grid;gap:2rem">
-      <div>
-        <h2>Contact Us</h2>
-        <p class="sub">Proudly serving Sarasota and surrounding areas.</p>
-        <p class="sub" aria-label="Contact details">
-          Phone: <a href="tel:+16155897044">(615) 589-7044</a> ·
-          Email: <a href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
-        </p>
+    <div class="container">
+      <div class="contact-wrap" style="display:grid;gap:1.2rem">
+        <div>
+          <h2>Contact Us</h2>
+          <p class="sub">Proudly serving Sarasota and surrounding areas.</p>
+          <p class="sub contact-links" aria-label="Contact details">
+            Phone: <a href="tel:+16155897044">(615) 589-7044</a> ·
+            Email: <a href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
+          </p>
+        </div>
+
+        <form id="form" class="form-card" aria-label="Quote request form">
+          <div class="form-grid">
+            <div class="field">
+              <label class="label" for="name">Name</label>
+              <input class="input" id="name" name="name" placeholder="Your name" required>
+            </div>
+
+            <div class="field">
+              <label class="label" for="phone">Phone</label>
+              <input class="input" id="phone" name="phone" inputmode="tel" placeholder="(615) 555-1234">
+            </div>
+
+            <div class="field" style="grid-column:1 / -1">
+              <label class="label" for="service">Type of project (optional)</label>
+              <select class="select" id="service" name="service">
+                <option value="">Select one…</option>
+                <option>Interior Painting</option>
+                <option>Exterior Painting</option>
+                <option>Cabinet Painting</option>
+                <option>Wall Mural / Feature</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="field" style="grid-column:1 / -1">
+              <label class="label" for="message">Message</label>
+              <textarea class="textarea" id="message" name="message" rows="6" maxlength="600" placeholder="Tell us about your project…"></textarea>
+
+              <div class="meta-row">
+                <span id="char-count">0 / 600</span>
+                <div class="progress"><span id="char-bar"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px">
+            <button class="pill submit-pill" type="submit">Send Request</button>
+          </div>
+
+          <p class="sub" style="font-size:.9rem;margin-top:10px">By submitting, you agree to be contacted about your project.</p>
+        </form>
       </div>
-      <form id="form" class="card" aria-label="Quote request form">
-        <label for="name">Name</label>
-        <input id="name" name="name" placeholder="Your name" required>
-        <div style="height:8px"></div>
-        <label for="phone">Phone</label>
-        <input id="phone" name="phone" placeholder="(615) 555-1234">
-        <div style="height:8px"></div>
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…"></textarea>
-        <div style="height:12px"></div>
-        <button class="pill" type="submit" style="width:100%;justify-content:center">Send Request</button>
-        <p class="sub" style="font-size:.85rem;margin-top:8px">By submitting, you agree to be contacted about your project.</p>
-      </form>
     </div>
   </section>
 
@@ -451,13 +551,58 @@
 
     // year + mailto form
     document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Phone formatter ( (###) ###-#### )
+    (function(){
+      var phone = document.getElementById('phone');
+      if(!phone) return;
+      function format(v){
+        v = v.replace(/\D/g,'').slice(0,10);
+        var p1 = v.slice(0,3), p2 = v.slice(3,6), p3 = v.slice(6,10);
+        if(v.length > 6) return '('+p1+') '+p2+'-'+p3;
+        if(v.length > 3) return '('+p1+') '+p2;
+        if(v.length > 0) return '('+p1;
+        return '';
+      }
+      phone.addEventListener('input', function(e){
+        var start = phone.selectionStart;
+        phone.value = format(phone.value);
+        // best-effort caret keeping
+        phone.selectionStart = phone.selectionEnd = start;
+      });
+    })();
+
+    // Message character count + progress + auto-resize
+    (function(){
+      var ta = document.getElementById('message');
+      var count = document.getElementById('char-count');
+      var bar = document.getElementById('char-bar');
+      if(!ta) return;
+      function update(){
+        var len = ta.value.length;
+        var max = ta.getAttribute('maxlength') ? parseInt(ta.getAttribute('maxlength'),10) : 600;
+        count.textContent = len + ' / ' + max;
+        bar.style.width = Math.min(100, (len/max)*100) + '%';
+        // auto-resize
+        ta.style.height = 'auto';
+        ta.style.height = Math.min(320, ta.scrollHeight) + 'px';
+      }
+      ta.addEventListener('input', update);
+      update();
+    })();
+
+    // mailto submit with extra fields
     document.getElementById('form').addEventListener('submit', function(e){
       e.preventDefault();
       var name = document.getElementById('name').value || '';
       var phone = document.getElementById('phone').value || '';
+      var service = document.getElementById('service').value || '';
       var message = document.getElementById('message').value || '';
-      var body = encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\n\n' + message);
-      window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + body;
+      var body = 'Name: ' + name +
+                 '\nPhone: ' + phone +
+                 (service ? '\nService: ' + service : '') +
+                 '\n\n' + message;
+      window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + encodeURIComponent(body);
     });
 
     // Mobile nav toggle
