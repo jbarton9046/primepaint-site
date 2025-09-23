@@ -102,17 +102,25 @@
 
     /* Split hero: PP mark left, text right */
     .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center}
-    .hero-logo{width:100%;max-width:540px;display:block;height:auto;margin:0 auto;filter:drop-shadow(0 6px 22px rgba(0,0,0,.35))}
-    .hero-right .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
-    .hero-right h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.05;margin:.5rem 0 0}
-    .hero-right .lead{color:#ececf1;max-width:60ch;margin-top:.9rem}
 
+    /* >>> CHANGED: size the PP logo by height so it fits nicely */
+    .hero-logo{
+      height: clamp(160px, 42vh, 320px);
+      width: auto;
+      display: block;
+      margin: 0 auto;
+      filter: drop-shadow(0 6px 22px rgba(0,0,0,.35));
+    }
     @media (max-width: 960px){
       .hero-grid{grid-template-columns:1fr;gap:18px}
-      .hero-logo{max-width:360px}
+      .hero-logo{height: clamp(120px, 36vh, 240px)}
       .hero-right{text-align:center}
       .hero-right .lead{margin-left:auto;margin-right:auto}
     }
+
+    .hero-right .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
+    .hero-right h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.05;margin:.5rem 0 0}
+    .hero-right .lead{color:#ececf1;max-width:60ch;margin-top:.9rem}
 
     section{padding:72px 0;border-top:1px solid var(--line)}
     h2{font-size:1.95rem;margin:0}
