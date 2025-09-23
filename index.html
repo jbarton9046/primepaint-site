@@ -222,7 +222,6 @@
       .promise-grid{ grid-template-columns:1.1fr .9fr; }
     }
 
-    /* Right column: larger photo with text to the right */
     .founder-split{
       display:flex; align-items:center; gap:20px;
     }
@@ -230,12 +229,9 @@
       width:min(360px,36vw); height:min(360px,36vw);
       border-radius:16px; object-fit:cover; border:1px solid var(--line); flex:0 0 auto;
     }
-    .founder-meta{
-      display:flex; flex-direction:column; gap:6px; min-width:0;
-    }
+    .founder-meta{ display:flex; flex-direction:column; gap:6px; min-width:0; }
     .founder-name{font-weight:700;font-size:1.1rem}
     .founder-quote{max-width:44ch}
-
     .founder-quote-block{margin:0}
     .founder-quote-block p{margin:0 0 .35rem 0; max-width:44ch; font-style:italic}
     .founder-quote-block footer{font-weight:600}
@@ -256,6 +252,64 @@
     #contact a:hover{
       border-bottom-color:rgba(255,255,255,.55);
     }
+
+    /* ===== Contact form polish (only this card) ===== */
+    #contact .contact-card{
+      border-radius:20px;
+      padding:20px;
+    }
+    #contact .contact-grid{
+      display:grid; gap:14px;
+      grid-template-columns:1fr;
+    }
+    #contact .contact-grid .full{ grid-column:1 / -1; }
+
+    @media (min-width: 800px){
+      #contact .contact-grid{
+        grid-template-columns:1fr 1fr;
+      }
+      #contact .contact-grid textarea{ grid-column:1 / -1; }
+    }
+
+    #contact label{
+      font-size:.9rem;
+      color:var(--muted);
+      margin-bottom:6px;
+      display:block;
+    }
+    #contact input,
+    #contact textarea{
+      width:100%;
+      border:1px solid var(--line);
+      background:#121216;       /* dark field — no white */
+      color:var(--text);
+      border-radius:14px;
+      padding:12px 14px;
+      outline:none;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    #contact input::placeholder,
+    #contact textarea::placeholder{ color:#9b9ba2; }
+    #contact input:focus,
+    #contact textarea:focus{
+      border-color:#3a3a45;
+      box-shadow:0 0 0 3px rgba(255,255,255,.04);
+    }
+    #contact .contact-actions{
+      display:flex; justify-content:flex-end; gap:10px; margin-top:6px;
+    }
+    #contact .btn-submit{
+      border:1px solid var(--line);
+      background:#1a1a20;
+      color:#eaeaf0;
+      border-radius:999px;
+      padding:.6rem 1.1rem;
+      font-size:.95rem;
+      cursor:pointer;
+      transition:transform .2s, background .2s;
+    }
+    #contact .btn-submit:hover{ transform:translateY(-1px); background:#202028; }
+    #contact .legal{ font-size:.85rem; color:#9e9ea4; margin-top:10px; }
   </style>
 </head>
 <body>
@@ -299,7 +353,6 @@
             </h1>
             <p class="lead">Interior &amp; exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
             <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
-              <!-- This is the ONLY CTA changed per your request -->
               <a href="#contact" class="pill">Request a Quote</a>
             </div>
           </div>
@@ -405,7 +458,6 @@
       <h2>Ready to elevate your space?</h2>
       <p class="sub">Call or email for a fast, friendly quote.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px">
-        <!-- Reverted to Tap to Call (as before) -->
         <a href="tel:+19412221890" class="pill">(Tap to Call)</a>
         <a href="mailto:primepaintsrq@gmail.com?subject=Quote%20Request" class="pill">primepaintsrq@gmail.com</a>
       </div>
@@ -423,18 +475,28 @@
           Email: <a href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
         </p>
       </div>
-      <form id="form" class="card" aria-label="Quote request form">
-        <label for="name">Name</label>
-        <input id="name" name="name" placeholder="Your name" required>
-        <div style="height:8px"></div>
-        <label for="phone">Phone</label>
-        <input id="phone" name="phone" placeholder="(941) 222-1890">
-        <div style="height:8px"></div>
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…"></textarea>
-        <div style="height:12px"></div>
-        <button class="pill" type="submit" style="width:100%;justify-content:center">Send Request</button>
-        <p class="sub" style="font-size:.85rem;margin-top:8px">By submitting, you agree to be contacted about your project.</p>
+
+      <!-- Polished contact card (only this changed) -->
+      <form id="form" class="card contact-card" aria-label="Quote request form">
+        <div class="contact-grid">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" placeholder="Your name" required>
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" placeholder="(941) 222-1890">
+          </div>
+          <div class="full">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…"></textarea>
+          </div>
+        </div>
+
+        <div class="contact-actions">
+          <button class="btn-submit" type="submit">Send Request</button>
+        </div>
+        <p class="legal">By submitting, you agree to be contacted about your project.</p>
       </form>
     </div>
   </section>
