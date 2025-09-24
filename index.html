@@ -70,10 +70,9 @@
       content:"";position:absolute;inset:0;
       background:linear-gradient(120deg,rgba(255,255,255,.10),transparent 30%),
                  url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center center/cover no-repeat;
-      opacity:.55; /* slightly brighter image */
+      opacity:.55; /* brighter image */
       z-index:-2;
     }
-    /* lighten the top/bottom shade so the image reads brighter */
     .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.20),rgba(0,0,0,.45));z-index:-1}
 
     .hero-inner{padding:0}
@@ -134,10 +133,8 @@
       .call-fab{position:fixed;right:16px;bottom:18px;z-index:40;display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:#0df;color:#000;text-decoration:none;font-weight:800;border:1px solid rgba(255,255,255,.25);box-shadow:0 10px 25px rgba(0,0,0,.35)}
     }
 
-    /* ===== Promise split layout ===== */
     .promise-grid{display:grid;gap:20px;align-items:start}
     @media (min-width:960px){.promise-grid{grid-template-columns:1.1fr .9fr}}
-
     .founder-split{display:flex;align-items:center;gap:20px}
     .founder-photo-lg{width:min(360px,36vw);height:min(360px,36vw);border-radius:16px;object-fit:cover;border:1px solid var(--line);flex:0 0 auto}
     .founder-meta{display:flex;flex-direction:column;gap:6px;min-width:0}
@@ -153,7 +150,7 @@
       .founder-quote-block p{max-width:60ch}
     }
 
-    /* ===== Contact section styling ===== */
+    /* ===== Contact ===== */
     #contact a{color:#eaeaf0;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.25)}
     #contact a:hover{border-bottom-color:rgba(255,255,255,.55)}
 
@@ -166,7 +163,7 @@
     #contact label{font-size:.9rem;color:var(--muted);margin-bottom:6px;display:block}
     #contact .req{color:#eaeaf0;margin-left:4px}
 
-    /* Make inputs match select brightness */
+    /* Inputs match select brightness */
     :where(#contact input,#contact textarea,#contact select){
       width:100%;border:1px solid var(--line);background:#0f0f12;color:#ffffff;
       border-radius:14px;padding:12px 14px;outline:none;transition:border-color .2s,box-shadow .2s
@@ -180,7 +177,7 @@
     #contact .btn-submit:hover{transform:translateY(-1px);background:#202028}
     #contact .legal{font-size:.85rem;color:#9e9ea4;margin-top:10px}
 
-    /* Keep dark theme even when Chrome autofills */
+    /* Chrome autofill stays dark */
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
@@ -192,8 +189,6 @@
       box-shadow:0 0 0px 1000px #0f0f12 inset;
       caret-color:#ffffff;
     }
-
-    /* Prevent extension overlay artifacts */
     #contact input{background-image:none !important;background-repeat:no-repeat !important}
 
     /* Nice selects */
@@ -226,11 +221,7 @@
     .nice-select::-webkit-scrollbar-thumb:hover{background:#3a3a45}
 
     .pac-container,.nice-select{scrollbar-color:#2a2a30 #0f0f12;scrollbar-width:thin}
-
-    @media (prefers-reduced-motion:reduce){
-      .nice-select{transition:none}
-      .reveal{transition:none}
-    }
+    @media (prefers-reduced-motion:reduce){.nice-select{transition:none}.reveal{transition:none}}
   </style>
 </head>
 <body>
@@ -264,7 +255,6 @@
         <div class="hero-left">
           <img class="hero-logo" src="assets/prime-paint-mark.png" alt="Prime Paint SRQ monogram">
         </div>
-
         <div class="hero-right">
           <div class="hero-right-inner">
             <div class="eyebrow">Top of the line</div>
@@ -278,7 +268,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </section>
@@ -338,11 +327,10 @@
     </div>
   </section>
 
-  <!-- Promise (Left | Right split) -->
+  <!-- Promise -->
   <section id="promise">
     <div class="container reveal">
       <div class="promise-grid">
-        <!-- LEFT -->
         <div>
           <h2>The Prime Paint Promise</h2>
           <div class="sub" style="max-width:70ch;margin-top:.6rem">
@@ -355,7 +343,6 @@
           </div>
         </div>
 
-        <!-- RIGHT -->
         <div>
           <div class="card founder-split">
             <img class="founder-photo-lg" src="assets/ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500">
@@ -397,7 +384,6 @@
         </p>
       </div>
 
-      <!-- Contact card -->
       <form id="form" class="card contact-card" aria-label="Quote request form" autocomplete="off">
         <div class="contact-grid">
           <div>
@@ -409,7 +395,6 @@
             <input id="phone" name="phone" placeholder="(941) 222-1890" required aria-required="true" autocomplete="off" inputmode="tel">
           </div>
 
-          <!-- Email + Address -->
           <div>
             <label for="email">Email</label>
             <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="off">
@@ -419,7 +404,6 @@
             <input id="address" name="address" placeholder="Street Address" autocomplete="off" aria-autocomplete="list">
           </div>
 
-          <!-- City + State + Zip -->
           <div class="span-2">
             <div style="display:grid;gap:14px;grid-template-columns:repeat(3,1fr)">
               <div>
@@ -552,25 +536,41 @@
     })();
   </script>
 
-  <!-- Google Places Autocomplete — attaches after 3+ characters (prevents any typing freeze) -->
+  <!-- Google Places Autocomplete — debounced attach + watchdog to avoid freezes -->
   <script>
     (function(){
       const addr = document.getElementById('address');
       if(!addr) return;
 
-      let mapsLoaded = false;
-      let mapsLoading = false;
-      let ac = null;
+      let ac = null, mapsLoaded = false, mapsLoading = false, pendingTimer = null, watchdog = null;
+
+      // Debounce helper
+      function debounce(fn, ms){
+        let t; return function(){ clearTimeout(t); t = setTimeout(fn, ms); };
+      }
 
       function loadMaps(cb){
         if(mapsLoaded){ cb && cb(); return; }
         if(mapsLoading){ document.addEventListener('pp_maps_ready', cb, { once:true }); return; }
         mapsLoading = true;
+
         const s = document.createElement('script');
         s.src = "https://maps.googleapis.com/maps/api/js?key=AlzaSyC1u9hVE7BjAbLSC12pyWYVDdTTRY8OZUk&libraries=places";
         s.async = true; s.defer = true;
-        s.onload = function(){ mapsLoaded = true; mapsLoading = false; document.dispatchEvent(new Event('pp_maps_ready')); cb && cb(); };
-        s.onerror = function(){ mapsLoading = false; /* leave as plain input */ };
+
+        // If Google takes too long, bail out gracefully (plain input).
+        watchdog = setTimeout(function(){ mapsLoading = false; }, 4000);
+
+        s.onload = function(){
+          clearTimeout(watchdog);
+          mapsLoaded = true; mapsLoading = false;
+          document.dispatchEvent(new Event('pp_maps_ready'));
+          cb && cb();
+        };
+        s.onerror = function(){
+          clearTimeout(watchdog);
+          mapsLoading = false; // keep as plain input
+        };
         document.head.appendChild(s);
       }
 
@@ -580,12 +580,12 @@
       }
 
       function attachAutocomplete(){
-        if (!window.google || !google.maps?.places || ac) return;
+        if(!window.google || !google.maps?.places || ac) return;
         try{
           ac = new google.maps.places.Autocomplete(addr, {
-            types: ['address'],
-            componentRestrictions: { country: 'us' },
-            fields: ['address_components','formatted_address']
+            types:['address'],
+            componentRestrictions:{ country:'us' },
+            fields:['address_components','formatted_address']
           });
 
           ac.addListener('place_changed', function(){
@@ -608,25 +608,33 @@
               if(city && cityEl) cityEl.value = city;
               if(state && stateEl) stateEl.value = state;
               if(zip && zipEl) zipEl.value = zip;
-            }catch(e){ console.warn('place_changed handler error:', e); }
+            }catch(e){}
           });
 
-          // Prevent Enter from submitting while the Places panel is open
+          // Don't submit when the suggestions panel is open
           addr.addEventListener('keydown', function(ev){
             const panel = document.querySelector('.pac-container');
             if(ev.key === 'Enter' && panel && panel.style.display !== 'none'){ ev.preventDefault(); }
           });
 
-        }catch(err){ console.warn('Places init failed (leaving plain input):', err); ac = null; }
+        }catch(e){ ac = null; }
       }
 
-      // Only load Maps after user typed 3+ chars. Typing is never blocked.
-      addr.addEventListener('input', function(){
-        if(addr.value.length >= 3 && !mapsLoaded && !mapsLoading){
-          loadMaps(attachAutocomplete);
+      // Only after 3+ chars AND 500ms quiet do we even load Maps
+      const maybeInit = debounce(function(){
+        if(addr.value.length >= 3){
+          if(!mapsLoaded){
+            loadMaps(function(){ attachAutocomplete(); });
+          }else{
+            attachAutocomplete();
+          }
         }
-      }, { passive:true });
+      }, 500);
 
+      addr.addEventListener('input', function(){
+        // Keep typing responsive; we only consider init after a pause
+        maybeInit();
+      }, { passive:true });
     })();
   </script>
 </body>
