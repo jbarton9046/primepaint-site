@@ -85,11 +85,11 @@
       --pp-shift: -42px;
 
       /* Footer mark sizing (base) */
-      --footer-mark-size: 54px;      /* monogram height */
-      --footer-side-gap: 22px;       /* space between text & logo */
-      --footer-above-gap: 22px;      /* space above logo (equals side gap for symmetry) */
-      --footer-side-text: 9.5px;     /* small flanking text */
-      --footer-side-tracking: .38em; /* letter spacing for flanking text */
+      --footer-mark-size: 54px;
+      --footer-side-gap: 22px;
+      --footer-above-gap: 22px;
+      --footer-side-text: 9.5px;
+      --footer-side-tracking: .38em;
     }
 
     *{box-sizing:border-box}
@@ -270,8 +270,8 @@
       .card{ margin-left:auto; margin-right:auto; text-align:center; }
       #contact .contact-card{ text-align:left; margin-left:0; margin-right:0; }
       #process .card, #services .card, #promise .card, #why .card{ margin-left:auto; margin-right:auto; }
-      /* center the send button on mobile */
-      #contact .contact-actions{ justify-content:center; }
+      /* center the send button on mobile (stronger rule + full row) */
+      #contact .contact-actions{ justify-content:center !important; width:100%; }
     }
 
     /* ===== Contact form ===== */
@@ -669,8 +669,18 @@
       </div>
 
       <!-- Netlify Forms-enabled form -->
-      <form id="form" class="card contact-card" aria-label="Quote request form" autocomplete="off" novalidate
-            name="quote" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <form
+        id="form"
+        class="card contact-card"
+        aria-label="Quote request form"
+        autocomplete="off"
+        novalidate
+        name="quote"
+        method="POST"
+        action="/"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+      >
         <input type="hidden" name="form-name" value="quote">
         <p style="display:none">
           <label>Don’t fill this out: <input name="bot-field"></label>
@@ -837,23 +847,36 @@
     (function(){
       const form = document.getElementById('form');
       if(!form) return;
+
+      function encodeFormData(fd){
+        // Convert FormData -> plain object -> URL-encoded string
+        const obj = {};
+        fd.forEach((v, k) => { obj[k] = v; });
+        return Object.keys(obj).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&');
+      }
+
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const fd = new FormData(form);
+
         // Basic required validation (Name, Phone, Message)
         if(!fd.get('name')?.trim() || !fd.get('phone')?.trim() || !fd.get('message')?.trim()){
           alert('Please fill in Name, Phone, and Message.'); return;
         }
+
         try{
-          const res = await fetch('/', {
+          const body = encodeFormData(fd);
+          const res = await fetch(form.getAttribute('action') || '/', {
             method:'POST',
             headers:{ 'Content-Type':'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(fd)
+            body
           });
-          if(res.ok){
+
+          // Netlify may 303-redirect on success in non-AJAX flows — treat 2xx OR 3xx as success here.
+          if ((res.status >= 200 && res.status < 300) || (res.status >= 300 && res.status < 400)){
             form.reset();
             alert('Thanks! Your request was sent. We’ll get back to you shortly.');
-          }else{
+          } else {
             alert('Hmm, there was an issue sending. Please try again in a moment or call us.');
           }
         }catch(err){
@@ -883,8 +906,7 @@
           // only toggle on narrow screens; otherwise follow link
           if(window.matchMedia('(max-width: 960px)').matches){
             ev.preventDefault();
-            if(brand.classList.contains('open')){ brand.classList.remove('open'); }
-            else{ brand.classList.add('open'); }
+            brand.classList.toggle('open');
           }
         });
         // click-away
