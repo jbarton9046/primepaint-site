@@ -36,10 +36,23 @@
 
   <style>
     :root{
-      --bg:#0a0a0b; --bg2:#0f0f12; --text:#f7f7f9; --muted:#c9c9cf; --line:#232329;
-      --header-h:86px; --brand-h:50px; --header-pad-x:24px;
-      --hero-gutter-left:14px; --hero-gutter-right:28px; --hero-gap:18px; --hero-text-max:60rem; --hero-right-extra:min(6vw,64px);
-      --hero-nudge:14px; --pp-shift:-42px;
+      --bg:#0a0a0b; --bg2:#0f0f12; --text:#f2f2f3; --muted:#bdbdc2; --line:#232329;
+
+      /* header */
+      --header-h:86px;
+      --brand-h:50px;
+      --header-pad-x:24px;
+
+      /* hero layout */
+      --hero-gutter-left:14px;
+      --hero-gutter-right:28px;
+      --hero-gap:18px;
+      --hero-text-max:60rem;
+      --hero-right-extra: min(6vw, 64px);
+      --hero-nudge: 14px;
+
+      /* left shift for the PP mark (visual balance) */
+      --pp-shift: -42px;
     }
 
     *{box-sizing:border-box}
@@ -54,12 +67,19 @@
     .container{max-width:1180px;margin:0 auto;padding:0 1rem}
 
     /* ===== Header ===== */
-    .header{position:fixed;left:0;right:0;top:0;z-index:30;background:rgba(10,10,11,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .header{
+      position:fixed; left:0; right:0; top:0; z-index:30;
+      background:rgba(10,10,11,.72);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+    }
     .header .container{max-width:none;padding-left:var(--header-pad-x);padding-right:var(--header-pad-x);position:relative}
     .h-inner{height:var(--header-h);display:flex;align-items:center;gap:16px}
     .left{display:flex;align-items:center;gap:22px;flex:1}
+
     .brand-logo{display:flex;align-items:center;text-decoration:none}
     .brand-img{height:var(--brand-h);width:auto;display:block;object-fit:contain}
+
     .mainnav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-left:2px}
     .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.98rem;line-height:1;padding:.4rem 0}
     .menu-btn{display:none;align-items:center;justify-content:center;border:1px solid var(--line);background:#15151a;color:#eaeaf0;border-radius:10px;padding:8px 10px;font-size:.95rem;line-height:1;cursor:pointer}
@@ -68,39 +88,65 @@
     .hero{position:relative;isolation:isolate;overflow:hidden;min-height:calc(100vh - var(--header-h))}
     .hero::before{
       content:"";position:absolute;inset:0;
-      background:linear-gradient(120deg,rgba(255,255,255,.10),transparent 30%),
-                 url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center center/cover no-repeat;
-      opacity:.55; /* brighter */
-      z-index:-2;
+      background:
+        linear-gradient(120deg,rgba(255,255,255,.06),transparent 30%),
+        url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center center / cover no-repeat;
+      opacity:.45;z-index:-2;
     }
-    .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.20),rgba(0,0,0,.45));z-index:-1}
+    /* lightened tint a touch */
+    .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.5));z-index:-1}
 
-    .hero-wrap{padding-left:var(--hero-gutter-left);padding-right:var(--hero-gutter-right);max-width:1180px;margin:0 auto;height:100%}
-    .hero-grid{display:grid;grid-template-columns:.95fr 1.45fr;gap:var(--hero-gap);align-items:center;height:calc(100vh - var(--header-h) - var(--hero-nudge));position:relative;top:var(--hero-nudge)}
-    .hero-left{display:flex;align-items:center;justify-content:flex-start;transform:translateX(var(--pp-shift))}
-    .hero-logo{height:clamp(360px,58vh,620px);width:auto;display:block;filter:drop-shadow(0 6px 22px rgba(0,0,0,.35))}
-    .hero-right{display:flex;align-items:center;justify-content:flex-start;padding-right:var(--hero-right-extra)}
-    .hero-right-inner{width:min(var(--hero-text-max),100%);margin-left:0}
+    .hero-inner{padding:0}
+    .hero-wrap{
+      padding-left:var(--hero-gutter-left);
+      padding-right:var(--hero-gutter-right);
+      max-width:1180px;margin:0 auto;height:100%;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 0.95fr 1.45fr;
+      gap:var(--hero-gap);
+      align-items:center;
+      height:calc(100vh - var(--header-h) - var(--hero-nudge));
+      position:relative;
+      top:var(--hero-nudge);
+    }
+
+    .hero-left{display:flex;align-items:center;justify-content:flex-start;transform: translateX(var(--pp-shift));}
+    .hero-logo{height:clamp(360px,58vh,620px);width:auto;display:block;filter:drop-shadow(0 6px 22px rgba(0,0,0,.35));}
+
+    .hero-right{display:flex;align-items:center;justify-content:flex-start;padding-right:var(--hero-right-extra);}
+    .hero-right-inner{width:min(var(--hero-text-max),100%);margin-left:0;}
+
     .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
-    .hero-title{margin:.45rem 0 0;font-weight:700;line-height:1.04;font-size:clamp(2rem,4.2vw,3.2rem);max-width:48rem;letter-spacing:.01em;text-wrap:balance}
-    .hero-title .line{display:block;white-space:nowrap}
+
+    .hero-title{
+      margin:.45rem 0 0;font-weight:700;line-height:1.04;
+      font-size: clamp(2rem, 4.2vw, 3.2rem);max-width:48rem;letter-spacing:.01em;text-wrap:balance;
+    }
+    .hero-title .line{display:block; white-space:nowrap;}
+
     .lead{color:#ececf1;margin-top:.75rem;max-width:60ch}
-    .pill{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);border-radius:999px;padding:.55rem 1rem;background:#15151a;color:#e8e8ec;font-size:.95rem;text-decoration:none;transition:.25s}
+
+    .pill{
+      display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);border-radius:999px;
+      padding:.55rem 1rem;background:#15151a;color:#e8e8ec;font-size:.95rem;text-decoration:none;transition:.25s;
+    }
     .pill:hover{transform:translateY(-1px);background:#191a20}
 
-    @media (max-width:960px){
-      :root{--header-h:70px;--brand-h:46px;--hero-gutter-left:18px;--hero-gutter-right:18px;--hero-gap:14px;--hero-nudge:8px;--pp-shift:0}
+    @media (max-width: 960px){
+      :root{--header-h:70px; --brand-h:46px; --hero-gutter-left:18px; --hero-gutter-right:18px; --hero-gap:14px; --hero-nudge: 8px; --pp-shift: 0px;}
       .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h) - var(--hero-nudge))}
       .hero-left{justify-content:center;transform:none}
       .hero-logo{height:clamp(200px,44vh,360px)}
       .hero-right{justify-content:center;padding-right:0}
       .hero-right-inner{margin:0;width:100%;text-align:center}
       .lead{margin-left:auto;margin-right:auto}
-      .mainnav{position:absolute;left:0;right:0;top:100%;background:#0f0f12;border-bottom:1px solid var(--line);display:none;flex-direction:column;gap:0;padding:10px 22px}
+      .mainnav{position:absolute;left:0;right:0;top:100%;background:#0f0f12;border-bottom:1px solid var(--line);display:none;flex-direction:column;gap:0;padding:10px 22px;}
       .mainnav a{padding:12px 2px;font-size:1rem}
       .mainnav.show{display:flex}
       .left{gap:12px}
-      .hero-title{max-width:26ch}
+      .hero-title{max-width: 26ch}
     }
 
     section{padding:72px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
@@ -117,7 +163,7 @@
     .cap{position:absolute;inset-inline:0;bottom:0;padding:.55rem .8rem;background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));font-size:.9rem}
 
     .why{display:grid;gap:2rem;align-items:center}
-    @media (min-width:960px){.why{grid-template-columns:1.05fr .95fr}}
+    @media (min-width: 960px){ .why{grid-template-columns:1.05fr .95fr} }
 
     .list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:16px 0 0;padding:0}
     .list li{list-style:none;display:flex;align-items:center;gap:8px}
@@ -128,93 +174,113 @@
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
 
-    @media (max-width:640px){
-      .call-fab{position:fixed;right:16px;bottom:18px;z-index:40;display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:#0df;color:#000;text-decoration:none;font-weight:800;border:1px solid rgba(255,255,255,.25);box-shadow:0 10px 25px rgba(0,0,0,.35)}
+    @media (max-width: 640px){
+      .call-fab{position: fixed; right: 16px; bottom: 18px; z-index: 40;display:flex; align-items:center; justify-content:center;
+        width:56px; height:56px; border-radius:50%;background:#0df; color:#000; text-decoration:none; font-weight:800;
+        border:1px solid rgba(255,255,255,.25); box-shadow:0 10px 25px rgba(0,0,0,.35);}
     }
 
-    .promise-grid{display:grid;gap:20px;align-items:start}
-    @media (min-width:960px){.promise-grid{grid-template-columns:1.1fr .9fr}}
-    .founder-split{display:flex;align-items:center;gap:20px}
-    .founder-photo-lg{width:min(360px,36vw);height:min(360px,36vw);border-radius:16px;object-fit:cover;border:1px solid var(--line);flex:0 0 auto}
-    .founder-meta{display:flex;flex-direction:column;gap:6px;min-width:0}
+    /* ===== Promise split layout (Left | Right) ===== */
+    .promise-grid{display:grid; gap:20px; align-items:start;}
+    @media (min-width: 960px){ .promise-grid{ grid-template-columns:1.1fr .9fr; } }
+
+    .founder-split{display:flex; align-items:center; gap:20px;}
+    .founder-photo-lg{
+      width:min(360px,36vw); height:min(360px,36vw);
+      border-radius:16px; object-fit:cover; border:1px solid var(--line); flex:0 0 auto;
+    }
+    .founder-meta{ display:flex; flex-direction:column; gap:6px; min-width:0; }
     .founder-name{font-weight:700;font-size:1.1rem}
     .founder-quote-block{margin:0}
-    .founder-quote-block p{margin:0 0 .35rem 0;max-width:44ch;font-style:italic}
+    .founder-quote-block p{margin:0 0 .35rem 0; max-width:44ch; font-style:italic}
     .founder-quote-block footer{font-weight:600}
     .founder-role{margin-top:2px}
 
-    @media (max-width:720px){
-      .founder-split{flex-direction:column;align-items:flex-start}
+    @media (max-width: 720px){
+      .founder-split{flex-direction:column; align-items:flex-start}
       .founder-photo-lg{width:240px;height:240px}
       .founder-quote-block p{max-width:60ch}
     }
 
-    /* ===== Contact ===== */
-    #contact a{color:#eaeaf0;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.25)}
-    #contact a:hover{border-bottom-color:rgba(255,255,255,.55)}
+    /* ===== Contact section link color (only here) ===== */
+    #contact a{color:#eaeaf0;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.25);}
+    #contact a:hover{border-bottom-color:rgba(255,255,255,.55);}
 
-    #contact .contact-card{border-radius:20px;padding:20px}
-    #contact .contact-grid{display:grid;gap:14px;grid-template-columns:1fr}
-    @media (min-width:800px){
-      #contact .contact-grid{grid-template-columns:1fr 1fr}
-      #contact .contact-grid .span-2{grid-column:1 / -1}
+    /* ===== Contact form polish (only this card) ===== */
+    #contact .contact-card{border-radius:20px;padding:20px;}
+    #contact .contact-grid{display:grid; gap:14px; grid-template-columns:1fr;}
+    @media (min-width: 800px){
+      #contact .contact-grid{grid-template-columns:1fr 1fr;}
+      #contact .contact-grid .span-2{ grid-column:1 / -1; }
     }
-    #contact label{font-size:.9rem;color:var(--muted);margin-bottom:6px;display:block}
+    #contact label{font-size:.9rem;color:var(--muted);margin-bottom:6px;display:block;}
     #contact .req{color:#eaeaf0;margin-left:4px}
-
-    /* Inputs & selects (bright but dark background) */
-    :where(#contact input,#contact textarea,#contact select){
-      width:100%;border:1px solid var(--line);background:#0f0f12;color:#ffffff;
-      border-radius:14px;padding:12px 14px;outline:none;transition:border-color .2s,box-shadow .2s
+    #contact input,#contact textarea,#contact select{
+      width:100%; border:1px solid var(--line); background:#121216; color:var(--text);
+      border-radius:14px; padding:12px 14px; outline:none; transition:border-color .2s, box-shadow .2s;
     }
-    #contact input::placeholder,#contact textarea::placeholder{color:#d7d7de}
-    :where(#contact input,#contact textarea,#contact select):hover{border-color:#3a3a45}
-    :where(#contact input,#contact textarea,#contact select):focus{border-color:#4a4a55;box-shadow:0 0 0 3px rgba(255,255,255,.05)}
-
-    #contact .contact-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:6px}
-    #contact .btn-submit{border:1px solid var(--line);background:#1a1a20;color:#eaeaf0;border-radius:999px;padding:.6rem 1.1rem;font-size:.95rem;cursor:pointer;transition:transform .2s,background .2s}
-    #contact .btn-submit:hover{transform:translateY(-1px);background:#202028}
-    #contact .legal{font-size:.85rem;color:#9e9ea4;margin-top:10px}
-
-    /* Keep Chrome autofill dark */
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    textarea:-webkit-autofill,
-    textarea:-webkit-autofill:hover,
-    textarea:-webkit-autofill:focus{
-      -webkit-text-fill-color:#ffffff;
-      transition:background-color 99999s ease-in-out 0s;
-      box-shadow:0 0 0px 1000px #0f0f12 inset;
-      caret-color:#ffffff;
+    #contact input::placeholder,#contact textarea::placeholder{ color:#9b9ba2; }
+    #contact input:focus,#contact textarea:focus,#contact select:focus{
+      border-color:#3a3a45; box-shadow:0 0 0 3px rgba(255,255,255,.04);
     }
-    #contact input{background-image:none !important;background-repeat:no-repeat !important}
-
-    /* Nice selects */
-    .nice-select{
-      appearance:none;-webkit-appearance:none;-moz-appearance:none;
-      padding-right:48px !important;
-      background:#0f0f12 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%239b9ba2' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 14px center/18px 18px !important;
-      border:1px solid var(--line);color:#ffffff;border-radius:14px;transition:border-color .2s,box-shadow .2s,transform .15s
+    #contact .contact-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:6px;}
+    #contact .btn-submit{
+      border:1px solid var(--line); background:#1a1a20; color:#eaeaf0; border-radius:999px;
+      padding:.6rem 1.1rem; font-size:.95rem; cursor:pointer; transition:transform .2s, background .2s;
     }
-    .nice-select option{background:#0f0f12;color:#ffffff}
-    .nice-select:focus{outline:none;border-color:#4a4a55;box-shadow:0 0 0 3px rgba(255,255,255,.05),0 10px 25px rgba(0,0,0,.25);transform:translateY(-1px)}
+    #contact .btn-submit:hover{ transform:translateY(-1px); background:#202028; }
+    #contact .legal{ font-size:.85rem; color:#9e9ea4; margin-top:10px; }
 
-    /* Our custom address suggestions dropdown (dark) */
-    .pp-ac{
-      position:absolute;left:0;right:0;margin-top:6px;background:#0f0f12;border:1px solid var(--line);border-radius:12px;
-      box-shadow:0 10px 25px rgba(0,0,0,.35);z-index:10000;overflow:auto;max-height:260px;display:none
+    /* === Nice dropdowns (applies to all selects in #contact) === */
+    #contact select{
+      appearance:none; -webkit-appearance:none; -moz-appearance:none;
+      padding-right:48px;
+      background:
+        #121216
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%239b9ba2' d='M7 10l5 5 5-5z'/></svg>")
+        no-repeat right 14px center / 18px 18px;
+      border:1px solid var(--line);
+      color:var(--text);
+      border-radius:14px;
+      transition:border-color .2s, box-shadow .2s, transform .15s;
     }
-    .pp-ac-item{padding:10px 12px;border-top:1px solid rgba(255,255,255,.06);cursor:pointer}
-    .pp-ac-item:first-child{border-top:none}
-    .pp-ac-item:hover,.pp-ac-item.active{background:#191a20}
-    .pp-ac-muted{color:#9b9ba2;font-size:.9rem}
+    #contact select:hover{ border-color:#3a3a45; }
+    #contact select:focus{
+      outline:none; border-color:#4a4a55;
+      box-shadow:0 0 0 3px rgba(255,255,255,.05), 0 10px 25px rgba(0,0,0,.25);
+      transform:translateY(-1px);
+    }
+    #contact select:active{ transform:none; }
+    #contact select option{ background:#0f0f12; color:#f2f2f3; }
+    #contact select::-ms-expand{ display:none; }
+    @media (prefers-reduced-motion: reduce){ #contact select{ transition:none; } }
 
-    .pp-ac::-webkit-scrollbar{width:10px;height:10px}
-    .pp-ac::-webkit-scrollbar-track{background:#0f0f12}
-    .pp-ac::-webkit-scrollbar-thumb{background:#2a2a30;border-radius:10px;border:2px solid #0f0f12}
-    .pp-ac::-webkit-scrollbar-thumb:hover{background:#3a3a45}
-    .pp-ac{scrollbar-color:#2a2a30 #0f0f12;scrollbar-width:thin}
+    /* ===== Keep fields dark even during browser autofill/suggestions ===== */
+    #contact input,
+    #contact select,
+    #contact textarea { background-color:#121216; color:var(--text); }
+
+    #contact input:-webkit-autofill,
+    #contact select:-webkit-autofill,
+    #contact textarea:-webkit-autofill{
+      -webkit-text-fill-color: var(--text) !important;
+      caret-color: var(--text);
+      box-shadow: 0 0 0 1000px #121216 inset !important;
+      transition: background-color 9999s ease-in-out 0s;
+    }
+    #contact input:autofill,
+    #contact select:autofill,
+    #contact textarea:autofill{
+      -webkit-text-fill-color: var(--text) !important;
+      caret-color: var(--text);
+      box-shadow: 0 0 0 1000px #121216 inset !important;
+    }
+    #contact input:-moz-autofill,
+    #contact select:-moz-autofill,
+    #contact textarea:-moz-autofill{
+      box-shadow: 0 0 0 1000px #121216 inset !important;
+      color: var(--text) !important;
+    }
   </style>
 </head>
 <body>
@@ -248,6 +314,7 @@
         <div class="hero-left">
           <img class="hero-logo" src="assets/prime-paint-mark.png" alt="Prime Paint SRQ monogram">
         </div>
+
         <div class="hero-right">
           <div class="hero-right-inner">
             <div class="eyebrow">Top of the line</div>
@@ -261,6 +328,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -299,8 +367,9 @@
         </ul>
       </div>
       <div class="card">
+        <!-- Replaced image here -->
         <img src="assets/cinema-mural.jpeg"
-             alt="Custom cinema mural painted by Prime Paint SRQ"
+             alt="Cinematic grayscale mural in a living space"
              loading="lazy"
              style="width:100%;max-width:100%;height:220px;display:block;object-fit:cover;border-radius:12px;margin:0 auto">
       </div>
@@ -320,7 +389,7 @@
     </div>
   </section>
 
-  <!-- Promise -->
+  <!-- Promise (Left | Right split) -->
   <section id="promise">
     <div class="container reveal">
       <div class="promise-grid">
@@ -377,82 +446,90 @@
         </p>
       </div>
 
-      <!-- Form -->
-      <form id="form" class="card contact-card" aria-label="Quote request form" autocomplete="on">
+      <!-- Contact card -->
+      <form id="form" class="card contact-card" aria-label="Quote request form" autocomplete="off">
         <div class="contact-grid">
           <div>
             <label for="name">Name <span class="req">*</span></label>
-            <input id="name" name="name" placeholder="Your name" required aria-required="true"
-                   autocomplete="name" autocapitalize="words">
+            <input id="name" name="name" placeholder="Your name" required aria-required="true" autocomplete="name">
           </div>
           <div>
             <label for="phone">Phone <span class="req">*</span></label>
-            <input id="phone" name="phone" placeholder="(941) 222-1890" required aria-required="true"
-                   inputmode="tel" autocomplete="tel">
+            <input id="phone" name="phone" placeholder="(941) 222-1890" required aria-required="true" inputmode="tel" autocomplete="tel">
           </div>
 
+          <!-- Email + Address on the same row -->
           <div>
             <label for="email">Email</label>
             <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email">
           </div>
-          <div style="position:relative">
+          <div>
             <label for="address">Address</label>
-            <input id="address" name="address" placeholder="Street Address"
-                   autocomplete="street-address" aria-autocomplete="list" aria-expanded="false" aria-owns="pp-ac">
-            <!-- custom suggestions dropdown -->
-            <div id="pp-ac" class="pp-ac" role="listbox" aria-label="Address suggestions"></div>
+            <input id="address" name="address" placeholder="Street Address" autocomplete="street-address">
           </div>
 
+          <!-- City + State + Zip row -->
           <div class="span-2">
-            <div style="display:grid;gap:14px;grid-template-columns:repeat(3,1fr)">
+            <div style="display:grid; gap:14px; grid-template-columns:repeat(3,1fr)">
               <div>
                 <label for="city">City</label>
                 <input id="city" name="city" placeholder="City" autocomplete="address-level2">
               </div>
               <div>
                 <label for="state">State</label>
-                <select id="state" name="state" class="nice-select" required aria-required="true" autocomplete="address-level1">
+                <select id="state" name="state" autocomplete="address-level1">
                   <option value="">Select state…</option>
-                  <option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option>
-                  <option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option>
-                  <option value="DC">District of Columbia</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option>
-                  <option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option>
-                  <option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option>
-                  <option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option>
-                  <option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option>
-                  <option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option>
-                  <option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option>
-                  <option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option>
-                  <option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option>
-                  <option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option>
+                  <option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option>
+                  <option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option>
+                  <option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="DC">District of Columbia</option>
+                  <option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option>
+                  <option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option>
+                  <option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option>
+                  <option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option>
+                  <option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option>
+                  <option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option>
+                  <option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option>
+                  <option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option>
+                  <option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option>
+                  <option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option>
+                  <option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option>
+                  <option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option>
+                  <option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option>
                   <option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option>
                 </select>
               </div>
               <div>
                 <label for="zip">Zip</label>
-                <input id="zip" name="zip" placeholder="Zip" inputmode="numeric" pattern="[0-9]*" autocomplete="postal-code">
+                <input id="zip" name="zip" placeholder="Zip" inputmode="numeric" autocomplete="postal-code">
               </div>
             </div>
           </div>
 
           <div>
             <label for="projectType">Project Type</label>
-            <select id="projectType" name="projectType" class="nice-select" autocomplete="off">
+            <select id="projectType" name="projectType">
               <option value="">Select…</option>
-              <option>Interior</option><option>Exterior</option><option>Cabinets</option><option>Wall Mural</option><option>Multiple / Whole Home</option>
+              <option>Interior</option>
+              <option>Exterior</option>
+              <option>Cabinets</option>
+              <option>Wall Mural</option>
+              <option>Multiple / Whole Home</option>
             </select>
           </div>
           <div>
             <label for="timeframe">Preferred Timeframe</label>
-            <select id="timeframe" name="timeframe" class="nice-select" autocomplete="off">
+            <select id="timeframe" name="timeframe">
               <option value="">Select…</option>
-              <option>ASAP</option><option>Next 1–2 weeks</option><option>Next 1–2 months</option><option>Flexible</option>
+              <option>ASAP</option>
+              <option>Next 1–2 weeks</option>
+              <option>Next 1–2 months</option>
+              <option>Flexible</option>
             </select>
           </div>
 
           <div class="span-2">
             <label for="message">Message <span class="req">*</span></label>
-            <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…" required aria-required="true" autocomplete="off"></textarea>
+            <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…" required aria-required="true"></textarea>
           </div>
         </div>
 
@@ -533,126 +610,45 @@
         });
       }
     })();
+
+    // ===== Google Places Autocomplete (Address) =====
+    // Fills City / State / Zip when a place is chosen. Allows normal typing—no key blocking.
+    window.initPlaces = function(){
+      var input = document.getElementById('address');
+      if (!input || !window.google || !google.maps || !google.maps.places) return;
+
+      var ac = new google.maps.places.Autocomplete(input, {
+        types: ['address'],
+        fields: ['address_components','formatted_address','name'],
+        componentRestrictions: { country: ['us'] }
+      });
+
+      ac.addListener('place_changed', function(){
+        var place = ac.getPlace();
+        if (!place || !place.address_components) return;
+
+        // helper to get component by type
+        function get(types, short){
+          var comp = place.address_components.find(c => types.some(t => c.types.includes(t)));
+          return comp ? (short ? comp.short_name : comp.long_name) : '';
+        }
+
+        // If Google returns the formatted address, keep it (otherwise keep what user typed)
+        var formatted = place.formatted_address || '';
+        if (formatted) input.value = formatted;
+
+        var city = get(['locality','sublocality','postal_town']);
+        var state = get(['administrative_area_level_1'], true);
+        var zip = get(['postal_code']);
+
+        if (city) document.getElementById('city').value = city;
+        if (state) document.getElementById('state').value = state;
+        if (zip) document.getElementById('zip').value = zip;
+      });
+    };
   </script>
 
-  <!-- Google Places (custom suggestions) -->
-  <script>
-    (function(){
-      const addr = document.getElementById('address');
-      const panel = document.getElementById('pp-ac');
-      const cityEl = document.getElementById('city');
-      const stateEl = document.getElementById('state');
-      const zipEl = document.getElementById('zip');
-
-      let svc = null, detailsSvc = null, mapsLoaded = false, loading = false, activeIndex = -1, items = [];
-
-      // helpers
-      function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
-      function show(){ panel.style.display = items.length ? 'block' : 'none'; addr.setAttribute('aria-expanded', items.length? 'true':'false'); }
-      function hide(){ items=[]; panel.innerHTML=''; panel.style.display='none'; addr.setAttribute('aria-expanded','false'); activeIndex=-1; }
-      function get(comps, types, short){
-        const c = comps?.find(x => types.some(t => x.types.includes(t)));
-        return c ? (short ? c.short_name : c.long_name) : '';
-      }
-
-      function render(preds){
-        panel.innerHTML = '';
-        items = preds || [];
-        items.forEach((p, i)=>{
-          const el = document.createElement('div');
-          el.className = 'pp-ac-item';
-          el.setAttribute('role','option');
-          el.setAttribute('id','pp-ac-'+i);
-          el.innerHTML = p.structured_formatting
-            ? `<div>${p.structured_formatting.main_text}</div><div class="pp-ac-muted">${p.structured_formatting.secondary_text||''}</div>`
-            : p.description;
-          el.addEventListener('mousedown', (ev)=>{ ev.preventDefault(); choose(i); });
-          panel.appendChild(el);
-        });
-        show();
-      }
-
-      function choose(i){
-        const p = items[i]; if(!p) return;
-        addr.value = p.structured_formatting ? (p.structured_formatting.main_text + ' ' + (p.structured_formatting.secondary_text||'')) : p.description;
-        hide();
-
-        // fetch details to fill city/state/zip
-        try{
-          detailsSvc = detailsSvc || new google.maps.places.PlacesService(document.createElement('div'));
-          detailsSvc.getDetails({ placeId: p.place_id, fields:['address_components'] }, function(res, status){
-            if(status !== google.maps.places.PlacesServiceStatus.OK || !res) return;
-            const comps = res.address_components || [];
-            const streetNum = get(comps, ['street_number'], false);
-            const route     = get(comps, ['route'], false);
-            const city      = get(comps, ['locality','postal_town','sublocality','neighborhood'], false);
-            const state     = get(comps, ['administrative_area_level_1'], true);
-            const zip       = get(comps, ['postal_code'], false);
-
-            const line1 = [streetNum, route].filter(Boolean).join(' ').trim();
-            if(line1) addr.value = line1;
-            if(city && cityEl) cityEl.value = city;
-            if(state && stateEl) stateEl.value = state;
-            if(zip && zipEl) zipEl.value = zip;
-          });
-        }catch(e){}
-      }
-
-      function ensureMaps(cb){
-        if(mapsLoaded){ cb && cb(); return; }
-        if(loading){ document.addEventListener('pp_maps_ready2', cb, { once:true }); return; }
-        loading = true;
-        const s = document.createElement('script');
-        s.src = "https://maps.googleapis.com/maps/api/js?key=AlzaSyC1u9hVE7BjAbLSC12pyWYVDdTTRY8OZUk&libraries=places";
-        s.async = true; s.defer = true;
-        s.onload = function(){ mapsLoaded = true; loading = false; document.dispatchEvent(new Event('pp_maps_ready2')); cb && cb(); };
-        s.onerror = function(){ loading = false; /* stays plain input */ };
-        document.head.appendChild(s);
-      }
-
-      const query = debounce(function(txt){
-        if(!txt || txt.length < 3){ hide(); return; }
-        ensureMaps(function(){
-          try{
-            svc = svc || new google.maps.places.AutocompleteService();
-            svc.getPlacePredictions(
-              { input: txt, types:['address'], componentRestrictions:{ country:'us' } },
-              function(preds, status){
-                if(status !== google.maps.places.PlacesServiceStatus.OK || !preds || !preds.length){ hide(); return; }
-                render(preds.slice(0,8));
-              }
-            );
-          }catch(e){ hide(); }
-        });
-      }, 180);
-
-      // events
-      addr.addEventListener('focus', function(){
-        ensureMaps(); // warm up as soon as focused
-      });
-
-      addr.addEventListener('input', function(){
-        query(addr.value.trim());
-      }, { passive:true });
-
-      addr.addEventListener('keydown', function(e){
-        if(panel.style.display !== 'block') return;
-        if(e.key === 'ArrowDown'){ e.preventDefault(); activeIndex = Math.min(activeIndex+1, items.length-1); updateActive(); }
-        else if(e.key === 'ArrowUp'){ e.preventDefault(); activeIndex = Math.max(activeIndex-1, 0); updateActive(); }
-        else if(e.key === 'Enter'){ if(activeIndex>=0){ e.preventDefault(); choose(activeIndex); } }
-        else if(e.key === 'Escape'){ hide(); }
-      });
-
-      function updateActive(){
-        [...panel.children].forEach((el,i)=> el.classList.toggle('active', i===activeIndex));
-        const activeEl = panel.children[activeIndex];
-        if(activeEl){ activeEl.scrollIntoView({block:'nearest'}); }
-      }
-
-      document.addEventListener('click', function(e){
-        if(!panel.contains(e.target) && e.target !== addr){ hide(); }
-      });
-    })();
-  </script>
+  <!-- Google Maps JavaScript API (Places) -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AlzaSyC1u9hVE7BjAbLSC12pyWYVDdTTRY8OZUk&libraries=places&loading=async&callback=initPlaces" async defer></script>
 </body>
 </html>
