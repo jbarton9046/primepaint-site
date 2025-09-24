@@ -216,6 +216,8 @@
     }
     .footer-legal{
       display:flex;flex-direction:column;gap:2px;margin-top:8px;
+      /* fine print */
+      font-size:11px; opacity:.78; letter-spacing:.02em; line-height:1.5;
     }
 
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
@@ -423,22 +425,14 @@
 
       <!-- Social icons, right side -->
       <div class="nav-social" aria-label="Social links">
-        <a href="https://www.tiktok.com/@primepaintsrq" aria-label="TikTok" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path fill="#eaeaf0" d="M21 8.5a6.5 6.5 0 0 1-5.2-2.6V17a5.5 5.5 0 1 1-5.6-5.5c.2 0 .4 0 .6.1V14a2.7 2.7 0 1 0 1.9 2.6V2h3.1a6.6 6.6 0 0 0 5.2 2.6V8.5Z"/>
-          </svg>
-        </a>
-        <a href="https://www.linkedin.com/company/primepaintsrq" aria-label="LinkedIn" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path fill="#eaeaf0" d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.1c.5-.9 1.7-1.9 3.6-1.9 3.8 0 4.5 2.5 4.5 5.7V21h-4v-5.3c0-1.3 0-3-1.9-3s-2.2 1.5-2.2 2.9V21H10V9Z"/>
-          </svg>
-        </a>
-        <a href="https://www.facebook.com/primepaintsrq" aria-label="Facebook" target="_blank" rel="noopener">
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/primepaintll" aria-label="Facebook" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path fill="#eaeaf0" d="M13 10h3l.5-4H13V4c0-1 .2-1.5 1.6-1.5H17V0h-2.6C11.8 0 11 2 11 4v2H8v4h3v10h4V10Z"/>
           </svg>
         </a>
-        <a href="https://www.instagram.com/primepaintsrq" aria-label="Instagram" target="_blank" rel="noopener">
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/primepaintll" aria-label="Instagram" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="5" stroke="#eaeaf0" stroke-width="2"/>
             <circle cx="12" cy="12" r="4.2" stroke="#eaeaf0" stroke-width="2"/>
@@ -719,7 +713,7 @@
         </div>
       </div>
 
-      <!-- Legal -->
+      <!-- Legal (fine print) -->
       <div class="footer-legal">
         <div>© <span id="yr"></span> Prime Paint SRQ. All rights reserved.</div>
         <div>Licensed &amp; Insured • Sarasota, FL</div>
@@ -829,9 +823,9 @@
     (function(){
       function buildFancy(wrapper){
         var hidden = wrapper.querySelector('select');
-        var btn = wrapper.querySelector('.fs-btn');
-        var list = wrapper.querySelector('.fs-list');
-        var sr = wrapper.querySelector('.fs-sr');
+        var btn = wrapper.querySelector('fs-btn') || wrapper.querySelector('.fs-btn');
+        var list = wrapper.querySelector('fs-list') || wrapper.querySelector('.fs-list');
+        var sr = wrapper.querySelector('fs-sr') || wrapper.querySelector('.fs-sr');
 
         // Build options
         list.innerHTML = '';
