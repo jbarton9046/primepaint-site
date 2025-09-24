@@ -36,7 +36,7 @@
 
   <style>
     :root{
-      --bg:#0a0a0b; --bg2:#0f0f12; --text:#f2f2f3; --muted:#bdbdc2; --line:#232329;
+      --bg:#0a0a0b; --bg2:#0f0f12; --text:#f7f7f9; --muted:#c9c9cf; --line:#232329;
       --header-h:86px; --brand-h:50px; --header-pad-x:24px;
       --hero-gutter-left:14px; --hero-gutter-right:28px; --hero-gap:18px; --hero-text-max:60rem; --hero-right-extra:min(6vw,64px);
       --hero-nudge:14px; --pp-shift:-42px;
@@ -68,11 +68,14 @@
     .hero{position:relative;isolation:isolate;overflow:hidden;min-height:calc(100vh - var(--header-h))}
     .hero::before{
       content:"";position:absolute;inset:0;
-      background:linear-gradient(120deg,rgba(255,255,255,.06),transparent 30%),
+      background:linear-gradient(120deg,rgba(255,255,255,.10),transparent 30%),
                  url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center center/cover no-repeat;
-      opacity:.45;z-index:-2;
+      opacity:.55; /* slightly brighter image */
+      z-index:-2;
     }
-    .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.65));z-index:-1}
+    /* lighten the top/bottom shade so the image reads brighter */
+    .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.20),rgba(0,0,0,.45));z-index:-1}
+
     .hero-inner{padding:0}
     .hero-wrap{padding-left:var(--hero-gutter-left);padding-right:var(--hero-gutter-right);max-width:1180px;margin:0 auto;height:100%}
     .hero-grid{display:grid;grid-template-columns:.95fr 1.45fr;gap:var(--hero-gap);align-items:center;height:calc(100vh - var(--header-h) - var(--hero-nudge));position:relative;top:var(--hero-nudge)}
@@ -150,11 +153,10 @@
       .founder-quote-block p{max-width:60ch}
     }
 
-    /* ===== Contact link color only here ===== */
+    /* ===== Contact section styling ===== */
     #contact a{color:#eaeaf0;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.25)}
     #contact a:hover{border-bottom-color:rgba(255,255,255,.55)}
 
-    /* ===== Contact form polish ===== */
     #contact .contact-card{border-radius:20px;padding:20px}
     #contact .contact-grid{display:grid;gap:14px;grid-template-columns:1fr}
     @media (min-width:800px){
@@ -163,11 +165,16 @@
     }
     #contact label{font-size:.9rem;color:var(--muted);margin-bottom:6px;display:block}
     #contact .req{color:#eaeaf0;margin-left:4px}
-    #contact input,#contact textarea,#contact select{
-      width:100%;border:1px solid var(--line);background:#121216;color:#f2f2f3;border-radius:14px;padding:12px 14px;outline:none;transition:border-color .2s,box-shadow .2s
+
+    /* Make inputs match select brightness */
+    :where(#contact input,#contact textarea,#contact select){
+      width:100%;border:1px solid var(--line);background:#0f0f12;color:#ffffff;
+      border-radius:14px;padding:12px 14px;outline:none;transition:border-color .2s,box-shadow .2s
     }
-    #contact input::placeholder,#contact textarea::placeholder{color:#9b9ba2}
-    #contact input:focus,#contact textarea:focus,#contact select:focus{border-color:#3a3a45;box-shadow:0 0 0 3px rgba(255,255,255,.04)}
+    #contact input::placeholder,#contact textarea::placeholder{color:#d7d7de}
+    :where(#contact input,#contact textarea,#contact select):hover{border-color:#3a3a45}
+    :where(#contact input,#contact textarea,#contact select):focus{border-color:#4a4a55;box-shadow:0 0 0 3px rgba(255,255,255,.05)}
+
     #contact .contact-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:6px}
     #contact .btn-submit{border:1px solid var(--line);background:#1a1a20;color:#eaeaf0;border-radius:999px;padding:.6rem 1.1rem;font-size:.95rem;cursor:pointer;transition:transform .2s,background .2s}
     #contact .btn-submit:hover{transform:translateY(-1px);background:#202028}
@@ -180,39 +187,35 @@
     textarea:-webkit-autofill,
     textarea:-webkit-autofill:hover,
     textarea:-webkit-autofill:focus{
-      -webkit-text-fill-color:#f2f2f3;
+      -webkit-text-fill-color:#ffffff;
       transition:background-color 99999s ease-in-out 0s;
-      box-shadow:0 0 0px 1000px #121216 inset;
-      caret-color:#f2f2f3;
+      box-shadow:0 0 0px 1000px #0f0f12 inset;
+      caret-color:#ffffff;
     }
 
-    /* Prevent extensions adding icons into inputs */
+    /* Prevent extension overlay artifacts */
     #contact input{background-image:none !important;background-repeat:no-repeat !important}
 
-    /* === Nice dropdown look (opt-in via class) === */
+    /* Nice selects */
     .nice-select{
       appearance:none;-webkit-appearance:none;-moz-appearance:none;
       padding-right:48px !important;
-      background:#121216 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%239b9ba2' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 14px center/18px 18px !important;
-      border:1px solid var(--line);color:var(--text);border-radius:14px;transition:border-color .2s,box-shadow .2s,transform .15s
+      background:#0f0f12 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%239b9ba2' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 14px center/18px 18px !important;
+      border:1px solid var(--line);color:#ffffff;border-radius:14px;transition:border-color .2s,box-shadow .2s,transform .15s
     }
-    .nice-select:hover{border-color:#3a3a45}
+    .nice-select option{background:#0f0f12;color:#ffffff}
     .nice-select:focus{outline:none;border-color:#4a4a55;box-shadow:0 0 0 3px rgba(255,255,255,.05),0 10px 25px rgba(0,0,0,.25);transform:translateY(-1px)}
-    .nice-select:active{transform:none}
-    .nice-select option{background:#0f0f12;color:#f2f2f3}
-    .nice-select::-ms-expand{display:none}
 
-    /* === Google Places dropdown (dark & branded) === */
+    /* Google Places dropdown: dark theme + scrollbar */
     .pac-container{
-      background:#121216 !important;border:1px solid var(--line) !important;border-radius:12px !important;
-      box-shadow:0 10px 25px rgba(0,0,0,.35) !important;color:#f2f2f3 !important;
+      background:#0f0f12 !important;border:1px solid var(--line) !important;border-radius:12px !important;
+      box-shadow:0 10px 25px rgba(0,0,0,.35) !important;color:#ffffff !important;
       font-family:"Montserrat",system-ui,sans-serif !important;z-index:10000 !important
     }
     .pac-item{padding:8px 12px;border-top:1px solid rgba(255,255,255,.06)}
     .pac-item:hover{background:#191a20}
     .pac-item-query{color:#fff}
 
-    /* Scrollbar theming (Chrome/Edge/WebKit) */
     .pac-container::-webkit-scrollbar,
     .nice-select::-webkit-scrollbar{width:10px;height:10px}
     .pac-container::-webkit-scrollbar-track,
@@ -222,9 +225,7 @@
     .pac-container::-webkit-scrollbar-thumb:hover,
     .nice-select::-webkit-scrollbar-thumb:hover{background:#3a3a45}
 
-    /* Scrollbar theming (Firefox) */
-    .pac-container,
-    .nice-select{scrollbar-color:#2a2a30 #0f0f12;scrollbar-width:thin}
+    .pac-container,.nice-select{scrollbar-color:#2a2a30 #0f0f12;scrollbar-width:thin}
 
     @media (prefers-reduced-motion:reduce){
       .nice-select{transition:none}
@@ -341,7 +342,7 @@
   <section id="promise">
     <div class="container reveal">
       <div class="promise-grid">
-        <!-- LEFT: statement + pricing -->
+        <!-- LEFT -->
         <div>
           <h2>The Prime Paint Promise</h2>
           <div class="sub" style="max-width:70ch;margin-top:.6rem">
@@ -354,7 +355,7 @@
           </div>
         </div>
 
-        <!-- RIGHT: larger Tylor + quote first, proper attribution -->
+        <!-- RIGHT -->
         <div>
           <div class="card founder-split">
             <img class="founder-photo-lg" src="assets/ty-headshot.jpg" alt="Ty Christian headshot" width="1200" height="1500">
@@ -408,7 +409,7 @@
             <input id="phone" name="phone" placeholder="(941) 222-1890" required aria-required="true" autocomplete="off" inputmode="tel">
           </div>
 
-          <!-- Email + Address on the same row -->
+          <!-- Email + Address -->
           <div>
             <label for="email">Email</label>
             <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="off">
@@ -418,7 +419,7 @@
             <input id="address" name="address" placeholder="Street Address" autocomplete="off" aria-autocomplete="list">
           </div>
 
-          <!-- City + State (dropdown) + Zip row -->
+          <!-- City + State + Zip -->
           <div class="span-2">
             <div style="display:grid;gap:14px;grid-template-columns:repeat(3,1fr)">
               <div>
@@ -551,7 +552,7 @@
     })();
   </script>
 
-  <!-- Safe Google Places Autocomplete: lazy-load Maps only when Address is focused -->
+  <!-- Google Places Autocomplete — attaches after 3+ characters (prevents any typing freeze) -->
   <script>
     (function(){
       const addr = document.getElementById('address');
@@ -563,19 +564,12 @@
 
       function loadMaps(cb){
         if(mapsLoaded){ cb && cb(); return; }
-        if(mapsLoading){
-          document.addEventListener('pp_maps_ready', cb, { once:true });
-          return;
-        }
+        if(mapsLoading){ document.addEventListener('pp_maps_ready', cb, { once:true }); return; }
         mapsLoading = true;
         const s = document.createElement('script');
         s.src = "https://maps.googleapis.com/maps/api/js?key=AlzaSyC1u9hVE7BjAbLSC12pyWYVDdTTRY8OZUk&libraries=places";
         s.async = true; s.defer = true;
-        s.onload = function(){
-          mapsLoaded = true; mapsLoading = false;
-          document.dispatchEvent(new Event('pp_maps_ready'));
-          cb && cb();
-        };
+        s.onload = function(){ mapsLoaded = true; mapsLoading = false; document.dispatchEvent(new Event('pp_maps_ready')); cb && cb(); };
         s.onerror = function(){ mapsLoading = false; /* leave as plain input */ };
         document.head.appendChild(s);
       }
@@ -593,6 +587,7 @@
             componentRestrictions: { country: 'us' },
             fields: ['address_components','formatted_address']
           });
+
           ac.addListener('place_changed', function(){
             try{
               const place = ac.getPlace();
@@ -615,13 +610,23 @@
               if(zip && zipEl) zipEl.value = zip;
             }catch(e){ console.warn('place_changed handler error:', e); }
           });
+
+          // Prevent Enter from submitting while the Places panel is open
+          addr.addEventListener('keydown', function(ev){
+            const panel = document.querySelector('.pac-container');
+            if(ev.key === 'Enter' && panel && panel.style.display !== 'none'){ ev.preventDefault(); }
+          });
+
         }catch(err){ console.warn('Places init failed (leaving plain input):', err); ac = null; }
       }
 
-      // Load Maps on first focus; if it loads, attach autocomplete. Typing is never blocked.
-      addr.addEventListener('focus', function(){
-        loadMaps(function(){ attachAutocomplete(); });
-      }, { once:true });
+      // Only load Maps after user typed 3+ chars. Typing is never blocked.
+      addr.addEventListener('input', function(){
+        if(addr.value.length >= 3 && !mapsLoaded && !mapsLoading){
+          loadMaps(attachAutocomplete);
+        }
+      }, { passive:true });
+
     })();
   </script>
 </body>
