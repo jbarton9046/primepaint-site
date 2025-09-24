@@ -640,51 +640,47 @@
     })();
   </script>
 
-  <!-- Autocomplete hookup for Address; attaches after user types ≥3 chars -->
+  <!-- Autocomplete hookup for Address — attach immediately (no gating) -->
   <script>
     function initPlaces(){
       var addr = document.getElementById('address');
-      if (!addr) return;
+      if (!addr || !window.google || !google.maps || !google.maps.places) return;
 
-      var ac = null;
-
-      function attachAutocomplete(){
-        if (ac || !window.google || !google.maps || !google.maps.places) return;
-        try {
-          ac = new google.maps.places.Autocomplete(addr, {
-            types: ['address'],
-            componentRestrictions: { country: 'us' }
-          });
-          ac.addListener('place_changed', fillFromPlace);
-        } catch (err) {
-          console.warn('Places init failed:', err);
-        }
+      let ac;
+      try{
+        ac = new google.maps.places.Autocomplete(addr, {
+          types: ['address'],
+          componentRestrictions: { country: 'us' }
+        });
+        ac.addListener('place_changed', fillFromPlace);
+      }catch(err){
+        console.warn('Places init failed:', err);
+        return;
       }
 
       function get(comps, types, short){
-        var c = comps.find(x => types.some(t => x.types.includes(t)));
+        const c = comps.find(x => types.some(t => x.types.includes(t)));
         return c ? (short ? c.short_name : c.long_name) : '';
       }
 
       function fillFromPlace(){
         try{
-          if (!ac) return;
-          var place = ac.getPlace();
+          const place = ac.getPlace();
           if(!place || !place.address_components) return;
 
-          var comps = place.address_components;
-          var streetNum = get(comps, ['street_number'], false);
-          var route     = get(comps, ['route'], false);
-          var city      = get(comps, ['locality','postal_town','sublocality','neighborhood'], false);
-          var state     = get(comps, ['administrative_area_level_1'], true); // 2-letter
-          var zip       = get(comps, ['postal_code'], false);
+          const comps = place.address_components;
+          const streetNum = get(comps, ['street_number'], false);
+          const route     = get(comps, ['route'], false);
+          const city      = get(comps, ['locality','postal_town','sublocality','neighborhood'], false);
+          const state     = get(comps, ['administrative_area_level_1'], true); // 2-letter
+          const zip       = get(comps, ['postal_code'], false);
 
-          var line1 = [streetNum, route].filter(Boolean).join(' ').trim();
+          const line1 = [streetNum, route].filter(Boolean).join(' ').trim();
           if (line1) addr.value = line1;
 
-          var cityEl  = document.getElementById('city');
-          var stateEl = document.getElementById('state');
-          var zipEl   = document.getElementById('zip');
+          const cityEl  = document.getElementById('city');
+          const stateEl = document.getElementById('state');
+          const zipEl   = document.getElementById('zip');
 
           if (cityEl && city)  cityEl.value = city;
           if (stateEl && state){
@@ -696,18 +692,9 @@
           console.warn('place_changed handler error:', e);
         }
       }
-
-      // Delay attaching Places until real typing has begun
-      addr.addEventListener('input', function(){
-        if (addr.value.length >= 3) attachAutocomplete();
-      });
-
-      // Prevent any widget/extension from swallowing keystrokes
-      addr.addEventListener('keydown', function(e){
-        e.stopPropagation();
-      }, true);
     }
   </script>
+
   <!-- Google Maps JavaScript API (Places) — your key is included -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AlzaSyC1u9hVE7BjAbLSC12pyWYVDdTTRY8OZUk&libraries=places&callback=initPlaces" async defer></script>
 </body>
