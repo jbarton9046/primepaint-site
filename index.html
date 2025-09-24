@@ -51,8 +51,15 @@
       --hero-right-extra: min(6vw, 64px);
       --hero-nudge: 14px;
 
-      /* left shift for the PP mark */
+      /* PP mark offset desktop */
       --pp-shift: -42px;
+
+      /* Footer mark sizing (40% smaller than previous fix) */
+      --footer-mark-size: 54px;      /* monogram height */
+      --footer-side-gap: 22px;       /* space between text & logo */
+      --footer-above-gap: 22px;      /* space above logo (equals side gap for symmetry) */
+      --footer-side-text: 9.5px;     /* small flanking text */
+      --footer-side-tracking: .38em; /* letter spacing for flanking text */
     }
 
     *{box-sizing:border-box}
@@ -102,7 +109,6 @@
         url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center center / cover no-repeat;
       opacity:.45;z-index:-2;
     }
-    /* lightened tint a touch */
     .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.5));z-index:-1}
 
     .hero-inner{padding:0}
@@ -134,7 +140,6 @@
       font-size: clamp(2rem, 4.2vw, 3.2rem);max-width:48rem;letter-spacing:.01em;text-wrap:balance;
     }
     .hero-title .line{display:block; white-space:nowrap;}
-
     .lead{color:#ececf1;margin-top:.75rem;max-width:60ch}
 
     .pill{
@@ -143,66 +148,19 @@
     }
     .pill:hover{transform:translateY(-1px);background:#191a20}
 
-    /* ====== UPDATED MOBILE-ONLY BLOCK (centering & symmetry) ====== */
     @media (max-width: 960px){
-      :root{
-        --header-h:70px;
-        --brand-h:46px;
-        --hero-mobile-pad:18px; /* one number that drives all mobile edges */
-        --hero-gutter-left:var(--hero-mobile-pad);
-        --hero-gutter-right:var(--hero-mobile-pad);
-        --hero-gap:14px;
-        --hero-nudge:8px;
-        --pp-shift:0px;
-      }
-
-      .hero-wrap{
-        padding-left:var(--hero-mobile-pad);
-        padding-right:var(--hero-mobile-pad);
-      }
-
-      .hero-grid{
-        grid-template-columns:1fr;
-        gap:var(--hero-gap);
-        height:auto;
-        min-height:calc(100vh - var(--header-h) - var(--hero-nudge));
-      }
-
-      /* Center logo; top padding equals side paddings for symmetry */
-      .hero-left{
-        justify-content:center;
-        transform:none;
-        padding-top:var(--hero-mobile-pad); /* = L/R padding */
-      }
-      .hero-logo{
-        height:clamp(200px,44vh,360px);
-        max-width:calc(100% - (var(--hero-mobile-pad) * 2));
-        width:auto;
-        margin:0 auto;
-        display:block;
-      }
-
-      .hero-right{
-        justify-content:center;
-        padding-right:0;
-      }
-      .hero-right-inner{
-        margin:0;
-        width:100%;
-        text-align:center;
-      }
+      :root{--header-h:70px; --brand-h:46px; --hero-gutter-left:18px; --hero-gutter-right:18px; --hero-gap:14px; --hero-nudge: 8px; --pp-shift: 0px;}
+      .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h) - var(--hero-nudge))}
+      .hero-left{justify-content:center;transform:none}
+      .hero-logo{height:clamp(200px,44vh,360px)}
+      .hero-right{justify-content:center;padding-right:0}
+      .hero-right-inner{margin:0;width:100%;text-align:center}
       .lead{margin-left:auto;margin-right:auto}
-      .hero-right-inner a.pill{margin-left:auto;margin-right:auto}
-
-      .mainnav{
-        position:absolute;left:0;right:0;top:100%;
-        background:#0f0f12;border-bottom:1px solid var(--line);
-        display:none;flex-direction:column;gap:0;padding:10px 22px;
-      }
+      .mainnav{position:absolute;left:0;right:0;top:100%;background:#0f0f12;border-bottom:1px solid var(--line);display:none;flex-direction:column;gap:0;padding:10px 22px;}
       .mainnav a{padding:12px 2px;font-size:1rem}
       .mainnav.show{display:flex}
       .left{gap:12px}
-      .hero-title{max-width:26ch}
+      .hero-title{max-width: 26ch}
     }
 
     section{padding:72px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
@@ -225,8 +183,40 @@
     .list li{list-style:none;display:flex;align-items:center;gap:8px}
     .dot{width:7px;height:7px;border-radius:50%;background:#fff;display:inline-block}
 
-    /* Footer */
-    .footer{border-top:1px solid var(--line);padding:10px 0;color:#bdbdc3;font-size:.95rem}
+    /* Footer (reworked with centered mark + small side text) */
+    .footer{
+      border-top:1px solid var(--line);
+      padding:28px 0 24px;
+      color:#bdbdc3;font-size:.95rem;
+    }
+    .footer .container{
+      display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;
+    }
+    /* Brand row */
+    .footer-brand{
+      display:flex;flex-direction:column;align-items:center;width:100%;
+      margin-top:calc(-1 * var(--footer-above-gap)); /* snug toward the section line */
+    }
+    .footer-mark{
+      display:flex;align-items:center;justify-content:center;
+      gap:var(--footer-side-gap);
+      padding-top:var(--footer-above-gap); /* top spacing equals side spacing (symmetry) */
+    }
+    .footer-mark .foot-logo{
+      height:var(--footer-mark-size); width:auto; display:block; object-fit:contain;
+      filter:drop-shadow(0 3px 10px rgba(0,0,0,.25));
+    }
+    .footer-mark .foot-txt{
+      font-size:var(--footer-side-text);
+      letter-spacing:var(--footer-side-tracking);
+      text-transform:uppercase;
+      color:#d9d9dd;
+      white-space:nowrap;
+      opacity:.9;
+    }
+    .footer-legal{
+      display:flex;flex-direction:column;gap:2px;margin-top:8px;
+    }
 
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
@@ -235,7 +225,7 @@
     .call-fab{ display:none; }
 
     @media (max-width: 640px){
-      /* On-brand mobile call FAB — SMALL */
+      /* Mobile call FAB */
       .call-fab{
         position: fixed; right: 16px; bottom: 18px; z-index: 40;
         display:flex; align-items:center; justify-content:center;
@@ -312,7 +302,7 @@
     #contact .form-meta{ display:flex; justify-content:flex-end; }
     #contact .form-meta .req-note{ font-size:.85rem; color:#9b9ba2; opacity:.85; }
 
-    /* Native select tweaks (dark + arrow) — base look matches inputs */
+    /* Native select tweaks */
     #contact select{
       appearance:none; -webkit-appearance:none; -moz-appearance:none;
       padding-right:48px;
@@ -355,9 +345,9 @@
       color: var(--text) !important;
     }
 
-    /* ===== Fancy (glass) selects for State, Project Type & Timeframe ===== */
+    /* Fancy (glass) selects (State, Project Type, Timeframe) */
     .fs-wrap{ position:relative; }
-    .fs-hidden{ position:absolute; inset:0; width:0; height:0; opacity:0; pointer-events:none; } /* keep form values */
+    .fs-hidden{ position:absolute; inset:0; width:0; height:0; opacity:0; pointer-events:none; } /* keep values */
     .fs-btn{
       width:100%;
       border:1px solid var(--line);
@@ -476,7 +466,7 @@
               <span class="line">Elevating Spaces</span>
             </h1>
             <p class="lead">Interior &amp; exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;justify-content:flex-start">
               <a href="#contact" class="pill">Request a Quote</a>
             </div>
           </div>
@@ -623,7 +613,7 @@
             <input id="address" name="address" placeholder="Street Address" autocomplete="street-address">
           </div>
 
-          <!-- City + State (fancy) + Zip row -->
+          <!-- City + State + Zip row -->
           <div class="span-2">
             <div style="display:grid; gap:14px; grid-template-columns:repeat(3,1fr)">
               <div>
@@ -719,10 +709,18 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="container" style="display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center">
-      <!-- Larger logo, no background; tight spacing above/below -->
-      <img src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo" width="200" height="200" style="object-fit:contain">
-      <div style="display:flex;flex-direction:column;gap:2px">
+    <div class="container">
+      <!-- Brand row with centered mark + side text -->
+      <div class="footer-brand">
+        <div class="footer-mark" aria-label="Brand mark & tagline">
+          <span class="foot-txt">Transforming Walls</span>
+          <img class="foot-logo" src="assets/prime-paint-mark.png" alt="Prime Paint SRQ monogram">
+          <span class="foot-txt">Elevating Spaces</span>
+        </div>
+      </div>
+
+      <!-- Legal -->
+      <div class="footer-legal">
         <div>© <span id="yr"></span> Prime Paint SRQ. All rights reserved.</div>
         <div>Licensed &amp; Insured • Sarasota, FL</div>
       </div>
@@ -731,7 +729,6 @@
 
   <!-- Mobile floating call button (hidden on desktop) -->
   <a class="call-fab" href="tel:+19412221890" aria-label="Call Prime Paint SRQ">
-    <!-- iPhone-style icon (inline SVG, theme-matched) -->
     <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
       <rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="#eaeaf0" stroke-width="1.6"/>
       <rect x="9" y="5" width="6" height="0.9" rx="0.45" fill="#eaeaf0"/>
@@ -883,7 +880,7 @@
           hidden.dispatchEvent(new Event('change', {bubbles:true}));
         });
 
-        // keyboard basic
+        // keyboard
         btn.addEventListener('keydown', function(e){
           if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' '){
             e.preventDefault(); open();
@@ -893,7 +890,7 @@
           if (!wrapper.contains(e.target)) close();
         });
 
-        // Sync if value changes programmatically (e.g., Places fills State)
+        // Sync if value changes programmatically (Places fills State)
         hidden.addEventListener('change', function(){ setFromValue(hidden.value || ''); });
       }
 
@@ -905,4 +902,3 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AlzaSyC1u9hVE7BjAbLSC12pyWYVDdTTRY8OZUk&libraries=places&loading=async&callback=initPlaces" async defer></script>
 </body>
 </html>
-
