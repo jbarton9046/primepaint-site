@@ -54,7 +54,7 @@
       /* PP mark offset desktop */
       --pp-shift: -42px;
 
-      /* Footer mark sizing (40% smaller than previous fix) */
+      /* Footer mark sizing (base) */
       --footer-mark-size: 54px;      /* monogram height */
       --footer-side-gap: 22px;       /* space between text & logo */
       --footer-above-gap: 22px;      /* space above logo (equals side gap for symmetry) */
@@ -91,10 +91,10 @@
     .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.98rem;line-height:1;padding:.4rem 0}
     .menu-btn{display:none;align-items:center;justify-content:center;border:1px solid var(--line);background:#15151a;color:#eaeaf0;border-radius:10px;padding:8px 10px;font-size:.95rem;line-height:1;cursor:pointer}
 
-    /* Right-side social icons (bigger on desktop) */
+    /* Right-side social icons (bigger) */
     .nav-social{display:flex;align-items:center;gap:16px}
     .nav-social a{
-      width:30px;height:30px; /* was 22x22 */
+      width:34px;height:34px; /* was 30px */
       display:inline-flex;align-items:center;justify-content:center;
       opacity:.85;transition:opacity .2s, transform .2s; color:#eaeaf0;
     }
@@ -163,14 +163,16 @@
       .left{gap:12px}
       .hero-title{max-width: 26ch}
 
-      /* ===== requested mobile centering ===== */
       /* center the CTA row on mobile */
       #cta{ justify-content:center !important; }
-      /* center cards/tables and text-like blocks on mobile */
-      .card, .why, .promise-grid, .gallery, .grid, .container { text-align:center; }
-      table{ margin-left:auto; margin-right:auto; }
-      /* center contact form actions */
-      #contact .contact-actions{ justify-content:center; }
+
+      /* Center ONLY the Why section (title, text, bullets) */
+      #why .container{ text-align:center; }
+      #why .list{ justify-content:center; }
+      #why .list li{ justify-content:center; }
+
+      /* Keep contact form actions right-aligned on mobile */
+      #contact .contact-actions{ justify-content:flex-end; }
     }
 
     section{padding:72px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
@@ -193,7 +195,7 @@
     .list li{list-style:none;display:flex;align-items:center;gap:8px}
     .dot{width:7px;height:7px;border-radius:50%;background:#fff;display:inline-block}
 
-    /* Footer (reworked with centered mark + small side text) */
+    /* Footer (centered mark + side text) */
     .footer{
       border-top:1px solid var(--line);
       padding:28px 0 24px;
@@ -202,19 +204,19 @@
     .footer .container{
       display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;
     }
-    /* Brand row */
     .footer-brand{
       display:flex;flex-direction:column;align-items:center;width:100%;
-      margin-top:calc(-1 * var(--footer-above-gap)); /* snug toward the section line */
+      margin-top:calc(-1 * var(--footer-above-gap));
     }
     .footer-mark{
       display:flex;align-items:center;justify-content:center;
       gap:var(--footer-side-gap);
-      padding-top:var(--footer-above-gap); /* top spacing equals side spacing (symmetry) */
+      padding-top:var(--footer-above-gap);
     }
     .footer-mark .foot-logo{
       height:var(--footer-mark-size); width:auto; display:block; object-fit:contain;
       filter:drop-shadow(0 3px 10px rgba(0,0,0,.25));
+      max-width:100%;
     }
     .footer-mark .foot-txt{
       font-size:var(--footer-side-text);
@@ -226,22 +228,44 @@
     }
     .footer-legal{
       display:flex;flex-direction:column;gap:2px;margin-top:8px;
-      /* fine print */
       font-size:11px; opacity:.78; letter-spacing:.02em; line-height:1.5;
     }
 
+    /* Reveal animation */
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
+
+    /* ===== Mobile-only adjustments ===== */
+    @media (max-width: 720px){
+      /* Center Ty's photo + quote */
+      .founder-split{flex-direction:column; align-items:center}
+      .founder-photo-lg{width:240px;height:240px;margin:0 auto}
+      .founder-meta{ text-align:center; }
+
+      /* Slightly larger phone number in contact details */
+      #contact p[aria-label="Contact details"] a[href^="tel:"]{
+        font-size:1.08rem; font-weight:600;
+      }
+    }
+
+    @media (max-width: 520px){
+      /* Make the footer mark fit with side breathing room */
+      :root{
+        --footer-mark-size: 48px;
+        --footer-side-gap: 14px;
+      }
+      .footer-mark{ padding-inline:10px; }
+    }
 
     /* Hide call FAB by default (desktop/tablet) */
     .call-fab{ display:none; }
 
     @media (max-width: 640px){
-      /* Mobile call FAB */
+      /* Mobile call FAB (slightly bigger) */
       .call-fab{
         position: fixed; right: 16px; bottom: 18px; z-index: 40;
         display:flex; align-items:center; justify-content:center;
-        width:48px; height:48px; border-radius:12px;
+        width:54px; height:54px; border-radius:14px;          /* was 48 */
         background: rgba(255,255,255,0.06);
         border:1px solid var(--line);
         backdrop-filter: blur(10px) saturate(140%);
@@ -255,29 +279,7 @@
         background: rgba(255,255,255,0.10);
         box-shadow:0 12px 26px rgba(0,0,0,.42);
       }
-      .call-fab svg{ display:block; }
-    }
-
-    /* ===== Promise split layout ===== */
-    .promise-grid{display:grid; gap:20px; align-items:start;}
-    @media (min-width: 960px){ .promise-grid{ grid-template-columns:1.1fr .9fr; } }
-
-    .founder-split{display:flex; align-items:center; gap:20px;}
-    .founder-photo-lg{
-      width:min(360px,36vw); height:min(360px,36vw);
-      border-radius:16px; object-fit:cover; border:1px solid var(--line); flex:0 0 auto;
-    }
-    .founder-meta{ display:flex; flex-direction:column; gap:6px; min-width:0; }
-    .founder-name{font-weight:700;font-size:1.1rem}
-    .founder-quote-block{margin:0}
-    .founder-quote-block p{margin:0 0 .35rem 0; max-width:44ch; font-style:italic}
-    .founder-quote-block footer{font-weight:600}
-    .founder-role{margin-top:2px}
-
-    @media (max-width: 720px){
-      .founder-split{flex-direction:column; align-items:flex-start}
-      .founder-photo-lg{width:240px;height:240px}
-      .founder-quote-block p{max-width:60ch}
+      .call-fab svg{ width:24px; height:24px; display:block; } /* icon a touch bigger */
     }
 
     /* ===== Contact links ===== */
@@ -435,13 +437,13 @@
 
       <!-- Social icons, right side -->
       <div class="nav-social" aria-label="Social links">
-        <!-- Facebook (profile ID you provided) -->
+        <!-- Facebook -->
         <a href="https://www.facebook.com/profile.php?id=61579078334234" aria-label="Facebook" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path fill="#eaeaf0" d="M13 10h3l.5-4H13V4c0-1 .2-1.5 1.6-1.5H17V0h-2.6C11.8 0 11 2 11 4v2H8v4h3v10h4V10Z"/>
           </svg>
         </a>
-        <!-- Instagram (clean handle; removed tracking) -->
+        <!-- Instagram -->
         <a href="https://www.instagram.com/primepaintllc" aria-label="Instagram" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="5" stroke="#eaeaf0" stroke-width="2"/>
@@ -731,9 +733,9 @@
     </div>
   </footer>
 
-  <!-- Mobile floating call button (hidden on desktop) -->
+  <!-- Mobile floating call button -->
   <a class="call-fab" href="tel:+19412221890" aria-label="Call Prime Paint SRQ">
-    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
       <rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="#eaeaf0" stroke-width="1.6"/>
       <rect x="9" y="5" width="6" height="0.9" rx="0.45" fill="#eaeaf0"/>
       <circle cx="12" cy="17.6" r="0.85" fill="#eaeaf0"/>
