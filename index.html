@@ -444,17 +444,19 @@
           Phone: <a href="tel:+19412221890">(941) 222-1890</a> ·
           Email: <a href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
         </p>
+        <!-- Required fields legend -->
+        <p class="sub" aria-live="polite"><span class="req" aria-hidden="true">*</span> Required field</p>
       </div>
 
       <!-- Contact card -->
       <form id="form" class="card contact-card" aria-label="Quote request form" autocomplete="off">
         <div class="contact-grid">
           <div>
-            <label for="name">Name <span class="req">*</span></label>
+            <label for="name">Name <span class="req" aria-hidden="true">*</span></label>
             <input id="name" name="name" placeholder="Your name" required aria-required="true" autocomplete="name">
           </div>
           <div>
-            <label for="phone">Phone <span class="req">*</span></label>
+            <label for="phone">Phone <span class="req" aria-hidden="true">*</span></label>
             <input id="phone" name="phone" placeholder="(941) 222-1890" required aria-required="true" inputmode="tel" autocomplete="tel">
           </div>
 
@@ -528,7 +530,7 @@
           </div>
 
           <div class="span-2">
-            <label for="message">Message <span class="req">*</span></label>
+            <label for="message">Message <span class="req" aria-hidden="true">*</span></label>
             <textarea id="message" name="message" rows="5" placeholder="Tell us about your project…" required aria-required="true"></textarea>
           </div>
         </div>
@@ -627,13 +629,11 @@
         var place = ac.getPlace();
         if (!place || !place.address_components) return;
 
-        // helper to get component by type
         function get(types, short){
           var comp = place.address_components.find(c => types.some(t => c.types.includes(t)));
           return comp ? (short ? comp.short_name : comp.long_name) : '';
         }
 
-        // If Google returns the formatted address, keep it (otherwise keep what user typed)
         var formatted = place.formatted_address || '';
         if (formatted) input.value = formatted;
 
