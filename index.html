@@ -51,7 +51,7 @@
       --hero-right-extra: min(6vw, 64px);
       --hero-nudge: 14px;
 
-      /* left shift for the PP mark (visual balance) */
+      /* left shift for the PP mark */
       --pp-shift: -42px;
     }
 
@@ -180,7 +180,7 @@
         border:1px solid rgba(255,255,255,.25); box-shadow:0 10px 25px rgba(0,0,0,.35);}
     }
 
-    /* ===== Promise split layout (Left | Right) ===== */
+    /* ===== Promise split layout ===== */
     .promise-grid{display:grid; gap:20px; align-items:start;}
     @media (min-width: 960px){ .promise-grid{ grid-template-columns:1.1fr .9fr; } }
 
@@ -202,11 +202,11 @@
       .founder-quote-block p{max-width:60ch}
     }
 
-    /* ===== Contact section link color (only here) ===== */
+    /* ===== Contact links ===== */
     #contact a{color:#eaeaf0;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.25);}
     #contact a:hover{border-bottom-color:rgba(255,255,255,.55);}
 
-    /* ===== Contact form polish (only this card) ===== */
+    /* ===== Contact form ===== */
     #contact .contact-card{border-radius:20px;padding:20px;}
     #contact .contact-grid{display:grid; gap:14px; grid-template-columns:1fr;}
     @media (min-width: 800px){
@@ -222,6 +222,7 @@
     #contact input::placeholder,#contact textarea::placeholder{ color:#9b9ba2; }
     #contact input:focus,#contact textarea:focus,#contact select:focus{
       border-color:#3a3a45; box-shadow:0 0 0 3px rgba(255,255,255,.04);
+      outline: none;
     }
     #contact .contact-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:6px;}
     #contact .btn-submit{
@@ -231,7 +232,7 @@
     #contact .btn-submit:hover{ transform:translateY(-1px); background:#202028; }
     #contact .legal{ font-size:.85rem; color:#9e9ea4; margin-top:10px; }
 
-    /* === Nice dropdowns (applies to all selects in #contact) === */
+    /* Native select tweaks (dark + arrow) for State */
     #contact select{
       appearance:none; -webkit-appearance:none; -moz-appearance:none;
       padding-right:48px;
@@ -246,16 +247,16 @@
     }
     #contact select:hover{ border-color:#3a3a45; }
     #contact select:focus{
-      outline:none; border-color:#4a4a55;
+      border-color:#4a4a55;
       box-shadow:0 0 0 3px rgba(255,255,255,.05), 0 10px 25px rgba(0,0,0,.25);
       transform:translateY(-1px);
+      outline:none;
     }
-    #contact select:active{ transform:none; }
     #contact select option{ background:#0f0f12; color:#f2f2f3; }
     #contact select::-ms-expand{ display:none; }
     @media (prefers-reduced-motion: reduce){ #contact select{ transition:none; } }
 
-    /* ===== Keep fields dark even during browser autofill/suggestions ===== */
+    /* Keep fields dark during autofill */
     #contact input,
     #contact select,
     #contact textarea { background-color:#121216; color:var(--text); }
@@ -281,6 +282,62 @@
       box-shadow: 0 0 0 1000px #121216 inset !important;
       color: var(--text) !important;
     }
+
+    /* ===== Fancy (glass) selects for Project Type & Timeframe ===== */
+    .fs-wrap{ position:relative; }
+    .fs-hidden{ position:absolute; inset:0; width:0; height:0; opacity:0; pointer-events:none; } /* keep form values */
+    .fs-btn{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px 44px 12px 14px;
+      color:var(--text);
+      background:rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px) saturate(140%);
+      -webkit-backdrop-filter: blur(10px) saturate(140%);
+      text-align:left;
+      cursor:pointer;
+      transition:border-color .2s, box-shadow .2s, transform .15s;
+    }
+    .fs-btn:focus{ outline:none; border-color:#4a4a55; box-shadow:0 0 0 3px rgba(255,255,255,.05); transform:translateY(-1px); }
+    .fs-btn::after{
+      content:"";
+      position:absolute; right:14px; top:50%; transform:translateY(-50%);
+      width:18px; height:18px;
+      background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%239b9ba2' d='M7 10l5 5 5-5z'/></svg>") no-repeat center/18px 18px;
+      pointer-events:none;
+      opacity:.9;
+    }
+    .fs-list{
+      position:absolute; left:0; right:0; top:calc(100% + 6px);
+      max-height:240px; overflow:auto; z-index:20;
+      padding:6px;
+      border-radius:14px; border:1px solid var(--line);
+      background:rgba(20,20,24,0.78);
+      backdrop-filter: blur(12px) saturate(160%);
+      -webkit-backdrop-filter: blur(12px) saturate(160%);
+      box-shadow:0 12px 26px rgba(0,0,0,.45);
+      display:none;
+    }
+    .fs-wrap.open .fs-list{ display:block; }
+    .fs-option{
+      padding:10px 12px;
+      border-radius:10px;
+      color:#eaeaf0;
+      cursor:pointer;
+      user-select:none;
+    }
+    .fs-option:hover,
+    .fs-option[aria-selected="true"]{
+      background:rgba(255,255,255,0.08);
+    }
+    .fs-sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
+
+    /* Custom scrollbar in fancy list */
+    .fs-list::-webkit-scrollbar{ width:10px; }
+    .fs-list::-webkit-scrollbar-track{ background:rgba(255,255,255,0.05); border-radius:10px; }
+    .fs-list::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.18); border-radius:10px; }
+    .fs-list::-webkit-scrollbar-thumb:hover{ background:rgba(255,255,255,0.28); }
   </style>
 </head>
 <body>
@@ -367,7 +424,6 @@
         </ul>
       </div>
       <div class="card">
-        <!-- Replaced image here -->
         <img src="assets/cinema-mural.jpeg"
              alt="Cinematic grayscale mural in a living space"
              loading="lazy"
@@ -389,7 +445,7 @@
     </div>
   </section>
 
-  <!-- Promise (Left | Right split) -->
+  <!-- Promise -->
   <section id="promise">
     <div class="container reveal">
       <div class="promise-grid">
@@ -444,11 +500,9 @@
           Phone: <a href="tel:+19412221890">(941) 222-1890</a> ·
           Email: <a href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
         </p>
-        <!-- Required fields legend -->
-        <p class="sub" aria-live="polite"><span class="req" aria-hidden="true">*</span> Required field</p>
+        <p class="sub"><span class="req" aria-hidden="true">*</span> Required field</p>
       </div>
 
-      <!-- Contact card -->
       <form id="form" class="card contact-card" aria-label="Quote request form" autocomplete="off">
         <div class="contact-grid">
           <div>
@@ -460,7 +514,6 @@
             <input id="phone" name="phone" placeholder="(941) 222-1890" required aria-required="true" inputmode="tel" autocomplete="tel">
           </div>
 
-          <!-- Email + Address on the same row -->
           <div>
             <label for="email">Email</label>
             <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email">
@@ -507,26 +560,39 @@
             </div>
           </div>
 
+          <!-- Fancy Select: Project Type -->
           <div>
             <label for="projectType">Project Type</label>
-            <select id="projectType" name="projectType">
-              <option value="">Select…</option>
-              <option>Interior</option>
-              <option>Exterior</option>
-              <option>Cabinets</option>
-              <option>Wall Mural</option>
-              <option>Multiple / Whole Home</option>
-            </select>
+            <div class="fs-wrap" data-fancy-select="projectType">
+              <select id="projectType" name="projectType" class="fs-hidden" aria-hidden="true" tabindex="-1">
+                <option value="">Select…</option>
+                <option>Interior</option>
+                <option>Exterior</option>
+                <option>Cabinets</option>
+                <option>Wall Mural</option>
+                <option>Multiple / Whole Home</option>
+              </select>
+              <button type="button" class="fs-btn" aria-haspopup="listbox" aria-expanded="false">Select…</button>
+              <div class="fs-list" role="listbox" aria-label="Project Type"></div>
+              <span class="fs-sr" aria-live="polite"></span>
+            </div>
           </div>
+
+          <!-- Fancy Select: Preferred Timeframe -->
           <div>
             <label for="timeframe">Preferred Timeframe</label>
-            <select id="timeframe" name="timeframe">
-              <option value="">Select…</option>
-              <option>ASAP</option>
-              <option>Next 1–2 weeks</option>
-              <option>Next 1–2 months</option>
-              <option>Flexible</option>
-            </select>
+            <div class="fs-wrap" data-fancy-select="timeframe">
+              <select id="timeframe" name="timeframe" class="fs-hidden" aria-hidden="true" tabindex="-1">
+                <option value="">Select…</option>
+                <option>ASAP</option>
+                <option>Next 1–2 weeks</option>
+                <option>Next 3–4 weeks</option>
+                <option>Next 1–2 months</option>
+              </select>
+              <button type="button" class="fs-btn" aria-haspopup="listbox" aria-expanded="false">Select…</button>
+              <div class="fs-list" role="listbox" aria-label="Preferred Timeframe"></div>
+              <span class="fs-sr" aria-live="polite"></span>
+            </div>
           </div>
 
           <div class="span-2">
@@ -614,7 +680,6 @@
     })();
 
     // ===== Google Places Autocomplete (Address) =====
-    // Fills City / State / Zip when a place is chosen. Allows normal typing—no key blocking.
     window.initPlaces = function(){
       var input = document.getElementById('address');
       if (!input || !window.google || !google.maps || !google.maps.places) return;
@@ -646,6 +711,84 @@
         if (zip) document.getElementById('zip').value = zip;
       });
     };
+
+    // ===== Fancy (glass) select initializer =====
+    (function(){
+      function buildFancy(wrapper){
+        var hidden = wrapper.querySelector('select');
+        var btn = wrapper.querySelector('.fs-btn');
+        var list = wrapper.querySelector('.fs-list');
+        var sr = wrapper.querySelector('.fs-sr');
+
+        // Build options
+        list.innerHTML = '';
+        Array.from(hidden.options).forEach(function(opt, idx){
+          var div = document.createElement('div');
+          div.className = 'fs-option';
+          div.textContent = opt.textContent;
+          div.setAttribute('role','option');
+          div.setAttribute('data-value', opt.value);
+          if (opt.selected) div.setAttribute('aria-selected','true');
+          if (idx === 0) div.setAttribute('data-placeholder','true');
+          list.appendChild(div);
+        });
+
+        function setFromValue(v){
+          var current = list.querySelector('[aria-selected="true"]');
+          if (current) current.removeAttribute('aria-selected');
+          var match = list.querySelector('.fs-option[data-value="'+CSS.escape(v)+'"]');
+          if (match){ match.setAttribute('aria-selected','true'); }
+          var label = hidden.options[hidden.selectedIndex]?.text || 'Select…';
+          btn.textContent = label || 'Select…';
+          sr.textContent = 'Selected: ' + btn.textContent;
+        }
+
+        // Initialize label
+        setFromValue(hidden.value || '');
+
+        function open(){
+          wrapper.classList.add('open');
+          btn.setAttribute('aria-expanded','true');
+        }
+        function close(){
+          wrapper.classList.remove('open');
+          btn.setAttribute('aria-expanded','false');
+        }
+
+        btn.addEventListener('click', function(){
+          if (wrapper.classList.contains('open')) close(); else open();
+        });
+
+        list.addEventListener('click', function(e){
+          var item = e.target.closest('.fs-option');
+          if (!item) return;
+          var val = item.getAttribute('data-value');
+          // ignore placeholder row selection
+          if (item.hasAttribute('data-placeholder')) {
+            hidden.value = '';
+          } else {
+            hidden.value = val;
+          }
+          setFromValue(hidden.value || '');
+          close();
+        });
+
+        // keyboard basic
+        btn.addEventListener('keydown', function(e){
+          if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' '){
+            e.preventDefault(); open();
+          }
+        });
+        document.addEventListener('click', function(e){
+          if (!wrapper.contains(e.target)) close();
+        });
+
+        // Sync if value changes programmatically
+        hidden.addEventListener('change', function(){ setFromValue(hidden.value || ''); });
+      }
+
+      document.querySelectorAll('.fs-wrap').forEach(buildFancy);
+    })();
   </script>
 
   <!-- Google Maps JavaScript API (Places) -->
