@@ -91,11 +91,12 @@
     .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.98rem;line-height:1;padding:.4rem 0}
     .menu-btn{display:none;align-items:center;justify-content:center;border:1px solid var(--line);background:#15151a;color:#eaeaf0;border-radius:10px;padding:8px 10px;font-size:.95rem;line-height:1;cursor:pointer}
 
-    /* Right-side social icons */
-    .nav-social{display:flex;align-items:center;gap:14px}
+    /* Right-side social icons (bigger on desktop) */
+    .nav-social{display:flex;align-items:center;gap:16px}
     .nav-social a{
-      width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;
-      opacity:.82;transition:opacity .2s, transform .2s; color:#eaeaf0;
+      width:30px;height:30px; /* was 22x22 */
+      display:inline-flex;align-items:center;justify-content:center;
+      opacity:.85;transition:opacity .2s, transform .2s; color:#eaeaf0;
     }
     .nav-social a:hover{opacity:1; transform:translateY(-1px)}
     .nav-social svg{width:100%;height:100%;display:block}
@@ -161,6 +162,15 @@
       .mainnav.show{display:flex}
       .left{gap:12px}
       .hero-title{max-width: 26ch}
+
+      /* ===== requested mobile centering ===== */
+      /* center the CTA row on mobile */
+      #cta{ justify-content:center !important; }
+      /* center cards/tables and text-like blocks on mobile */
+      .card, .why, .promise-grid, .gallery, .grid, .container { text-align:center; }
+      table{ margin-left:auto; margin-right:auto; }
+      /* center contact form actions */
+      #contact .contact-actions{ justify-content:center; }
     }
 
     section{padding:72px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
@@ -425,14 +435,14 @@
 
       <!-- Social icons, right side -->
       <div class="nav-social" aria-label="Social links">
-        <!-- Facebook -->
-        <a href="https://www.facebook.com/primepaintll" aria-label="Facebook" target="_blank" rel="noopener">
+        <!-- Facebook (profile ID you provided) -->
+        <a href="https://www.facebook.com/profile.php?id=61579078334234" aria-label="Facebook" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path fill="#eaeaf0" d="M13 10h3l.5-4H13V4c0-1 .2-1.5 1.6-1.5H17V0h-2.6C11.8 0 11 2 11 4v2H8v4h3v10h4V10Z"/>
           </svg>
         </a>
-        <!-- Instagram -->
-        <a href="https://www.instagram.com/primepaintll" aria-label="Instagram" target="_blank" rel="noopener">
+        <!-- Instagram (clean handle; removed tracking) -->
+        <a href="https://www.instagram.com/primepaintllc" aria-label="Instagram" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="5" stroke="#eaeaf0" stroke-width="2"/>
             <circle cx="12" cy="12" r="4.2" stroke="#eaeaf0" stroke-width="2"/>
@@ -460,7 +470,7 @@
               <span class="line">Elevating Spaces</span>
             </h1>
             <p class="lead">Interior &amp; exterior painting, cabinet refinishing, and statement wall murals—crafted with professionalism, integrity, and cleanliness.</p>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;justify-content:flex-start">
+            <div id="cta" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;justify-content:flex-start">
               <a href="#contact" class="pill">Request a Quote</a>
             </div>
           </div>
@@ -861,8 +871,7 @@
         });
 
         list.addEventListener('click', function(e){
-          var item = e.target.closest('.fs-option');
-          if (!item) return;
+          var item = e.target.closest('.fs-option'); if (!item) return;
           var val = item.getAttribute('data-value');
           if (item.hasAttribute('data-placeholder')) {
             hidden.value = '';
@@ -880,9 +889,7 @@
             e.preventDefault(); open();
           }
         });
-        document.addEventListener('click', function(e){
-          if (!wrapper.contains(e.target)) close();
-        });
+        document.addEventListener('click', function(e){ if(!wrapper.contains(e.target)) close(); });
 
         // Sync if value changes programmatically (Places fills State)
         hidden.addEventListener('change', function(){ setFromValue(hidden.value || ''); });
