@@ -70,12 +70,11 @@
       content:"";position:absolute;inset:0;
       background:linear-gradient(120deg,rgba(255,255,255,.10),transparent 30%),
                  url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center center/cover no-repeat;
-      opacity:.55; /* brighter image */
+      opacity:.55; /* brighter */
       z-index:-2;
     }
     .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.20),rgba(0,0,0,.45));z-index:-1}
 
-    .hero-inner{padding:0}
     .hero-wrap{padding-left:var(--hero-gutter-left);padding-right:var(--hero-gutter-right);max-width:1180px;margin:0 auto;height:100%}
     .hero-grid{display:grid;grid-template-columns:.95fr 1.45fr;gap:var(--hero-gap);align-items:center;height:calc(100vh - var(--header-h) - var(--hero-nudge));position:relative;top:var(--hero-nudge)}
     .hero-left{display:flex;align-items:center;justify-content:flex-start;transform:translateX(var(--pp-shift))}
@@ -163,7 +162,7 @@
     #contact label{font-size:.9rem;color:var(--muted);margin-bottom:6px;display:block}
     #contact .req{color:#eaeaf0;margin-left:4px}
 
-    /* Inputs match select brightness */
+    /* Inputs & selects (bright like dropdowns) */
     :where(#contact input,#contact textarea,#contact select){
       width:100%;border:1px solid var(--line);background:#0f0f12;color:#ffffff;
       border-radius:14px;padding:12px 14px;outline:none;transition:border-color .2s,box-shadow .2s
@@ -201,27 +200,21 @@
     .nice-select option{background:#0f0f12;color:#ffffff}
     .nice-select:focus{outline:none;border-color:#4a4a55;box-shadow:0 0 0 3px rgba(255,255,255,.05),0 10px 25px rgba(0,0,0,.25);transform:translateY(-1px)}
 
-    /* Google Places dropdown: dark theme + scrollbar */
-    .pac-container{
-      background:#0f0f12 !important;border:1px solid var(--line) !important;border-radius:12px !important;
-      box-shadow:0 10px 25px rgba(0,0,0,.35) !important;color:#ffffff !important;
-      font-family:"Montserrat",system-ui,sans-serif !important;z-index:10000 !important
+    /* Our custom address suggestions dropdown (dark) */
+    .pp-ac{
+      position:absolute;left:0;right:0;margin-top:6px;background:#0f0f12;border:1px solid var(--line);border-radius:12px;
+      box-shadow:0 10px 25px rgba(0,0,0,.35);z-index:10000;overflow:auto;max-height:260px;display:none
     }
-    .pac-item{padding:8px 12px;border-top:1px solid rgba(255,255,255,.06)}
-    .pac-item:hover{background:#191a20}
-    .pac-item-query{color:#fff}
+    .pp-ac-item{padding:10px 12px;border-top:1px solid rgba(255,255,255,.06);cursor:pointer}
+    .pp-ac-item:first-child{border-top:none}
+    .pp-ac-item:hover,.pp-ac-item.active{background:#191a20}
+    .pp-ac-muted{color:#9b9ba2;font-size:.9rem}
 
-    .pac-container::-webkit-scrollbar,
-    .nice-select::-webkit-scrollbar{width:10px;height:10px}
-    .pac-container::-webkit-scrollbar-track,
-    .nice-select::-webkit-scrollbar-track{background:#0f0f12}
-    .pac-container::-webkit-scrollbar-thumb,
-    .nice-select::-webkit-scrollbar-thumb{background:#2a2a30;border-radius:10px;border:2px solid #0f0f12}
-    .pac-container::-webkit-scrollbar-thumb:hover,
-    .nice-select::-webkit-scrollbar-thumb:hover{background:#3a3a45}
-
-    .pac-container,.nice-select{scrollbar-color:#2a2a30 #0f0f12;scrollbar-width:thin}
-    @media (prefers-reduced-motion:reduce){.nice-select{transition:none}.reveal{transition:none}}
+    .pp-ac::-webkit-scrollbar{width:10px;height:10px}
+    .pp-ac::-webkit-scrollbar-track{background:#0f0f12}
+    .pp-ac::-webkit-scrollbar-thumb{background:#2a2a30;border-radius:10px;border:2px solid #0f0f12}
+    .pp-ac::-webkit-scrollbar-thumb:hover{background:#3a3a45}
+    .pp-ac{scrollbar-color:#2a2a30 #0f0f12;scrollbar-width:thin}
   </style>
 </head>
 <body>
@@ -399,9 +392,11 @@
             <label for="email">Email</label>
             <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="off">
           </div>
-          <div>
+          <div style="position:relative">
             <label for="address">Address</label>
-            <input id="address" name="address" placeholder="Street Address" autocomplete="off" aria-autocomplete="list">
+            <input id="address" name="address" placeholder="Street Address" autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-owns="pp-ac">
+            <!-- custom suggestions dropdown -->
+            <div id="pp-ac" class="pp-ac" role="listbox" aria-label="Address suggestions"></div>
           </div>
 
           <div class="span-2">
@@ -431,7 +426,7 @@
               </div>
               <div>
                 <label for="zip">Zip</label>
-                <input id="zip" name="zip" placeholder="Zip" autocomplete="off" inputmode="numeric">
+                <input id="zip" name="zip" placeholder="Zip" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
               </div>
             </div>
           </div>
@@ -536,105 +531,123 @@
     })();
   </script>
 
-  <!-- Google Places Autocomplete — debounced attach + watchdog to avoid freezes -->
+  <!-- Google Places (custom suggestions) -->
   <script>
     (function(){
       const addr = document.getElementById('address');
-      if(!addr) return;
+      const panel = document.getElementById('pp-ac');
+      const cityEl = document.getElementById('city');
+      const stateEl = document.getElementById('state');
+      const zipEl = document.getElementById('zip');
 
-      let ac = null, mapsLoaded = false, mapsLoading = false, pendingTimer = null, watchdog = null;
+      let svc = null, detailsSvc = null, mapsLoaded = false, loading = false, activeIndex = -1, items = [];
 
-      // Debounce helper
-      function debounce(fn, ms){
-        let t; return function(){ clearTimeout(t); t = setTimeout(fn, ms); };
-      }
-
-      function loadMaps(cb){
-        if(mapsLoaded){ cb && cb(); return; }
-        if(mapsLoading){ document.addEventListener('pp_maps_ready', cb, { once:true }); return; }
-        mapsLoading = true;
-
-        const s = document.createElement('script');
-        s.src = "https://maps.googleapis.com/maps/api/js?key=AlzaSyC1u9hVE7BjAbLSC12pyWYVDdTTRY8OZUk&libraries=places";
-        s.async = true; s.defer = true;
-
-        // If Google takes too long, bail out gracefully (plain input).
-        watchdog = setTimeout(function(){ mapsLoading = false; }, 4000);
-
-        s.onload = function(){
-          clearTimeout(watchdog);
-          mapsLoaded = true; mapsLoading = false;
-          document.dispatchEvent(new Event('pp_maps_ready'));
-          cb && cb();
-        };
-        s.onerror = function(){
-          clearTimeout(watchdog);
-          mapsLoading = false; // keep as plain input
-        };
-        document.head.appendChild(s);
-      }
-
+      // helpers
+      function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
+      function show(){ panel.style.display = items.length ? 'block' : 'none'; addr.setAttribute('aria-expanded', items.length? 'true':'false'); }
+      function hide(){ items=[]; panel.innerHTML=''; panel.style.display='none'; addr.setAttribute('aria-expanded','false'); activeIndex=-1; }
       function get(comps, types, short){
         const c = comps?.find(x => types.some(t => x.types.includes(t)));
         return c ? (short ? c.short_name : c.long_name) : '';
       }
 
-      function attachAutocomplete(){
-        if(!window.google || !google.maps?.places || ac) return;
-        try{
-          ac = new google.maps.places.Autocomplete(addr, {
-            types:['address'],
-            componentRestrictions:{ country:'us' },
-            fields:['address_components','formatted_address']
-          });
-
-          ac.addListener('place_changed', function(){
-            try{
-              const place = ac.getPlace();
-              if(!place || !place.address_components) return;
-              const comps = place.address_components;
-              const streetNum = get(comps, ['street_number'], false);
-              const route     = get(comps, ['route'], false);
-              const city      = get(comps, ['locality','postal_town','sublocality','neighborhood'], false);
-              const state     = get(comps, ['administrative_area_level_1'], true);
-              const zip       = get(comps, ['postal_code'], false);
-
-              const line1 = [streetNum, route].filter(Boolean).join(' ').trim();
-              if(line1) addr.value = line1;
-
-              const cityEl  = document.getElementById('city');
-              const stateEl = document.getElementById('state');
-              const zipEl   = document.getElementById('zip');
-              if(city && cityEl) cityEl.value = city;
-              if(state && stateEl) stateEl.value = state;
-              if(zip && zipEl) zipEl.value = zip;
-            }catch(e){}
-          });
-
-          // Don't submit when the suggestions panel is open
-          addr.addEventListener('keydown', function(ev){
-            const panel = document.querySelector('.pac-container');
-            if(ev.key === 'Enter' && panel && panel.style.display !== 'none'){ ev.preventDefault(); }
-          });
-
-        }catch(e){ ac = null; }
+      function render(preds){
+        panel.innerHTML = '';
+        items = preds || [];
+        items.forEach((p, i)=>{
+          const el = document.createElement('div');
+          el.className = 'pp-ac-item';
+          el.setAttribute('role','option');
+          el.setAttribute('id','pp-ac-'+i);
+          el.innerHTML = p.structured_formatting
+            ? `<div>${p.structured_formatting.main_text}</div><div class="pp-ac-muted">${p.structured_formatting.secondary_text||''}</div>`
+            : p.description;
+          el.addEventListener('mousedown', (ev)=>{ ev.preventDefault(); choose(i); });
+          panel.appendChild(el);
+        });
+        show();
       }
 
-      // Only after 3+ chars AND 500ms quiet do we even load Maps
-      const maybeInit = debounce(function(){
-        if(addr.value.length >= 3){
-          if(!mapsLoaded){
-            loadMaps(function(){ attachAutocomplete(); });
-          }else{
-            attachAutocomplete();
-          }
-        }
-      }, 500);
+      function choose(i){
+        const p = items[i]; if(!p) return;
+        addr.value = p.structured_formatting ? (p.structured_formatting.main_text + ' ' + (p.structured_formatting.secondary_text||'')) : p.description;
+        hide();
+
+        // fetch details to fill city/state/zip
+        try{
+          detailsSvc = detailsSvc || new google.maps.places.PlacesService(document.createElement('div'));
+          detailsSvc.getDetails({ placeId: p.place_id, fields:['address_components'] }, function(res, status){
+            if(status !== google.maps.places.PlacesServiceStatus.OK || !res) return;
+            const comps = res.address_components || [];
+            const streetNum = get(comps, ['street_number'], false);
+            const route     = get(comps, ['route'], false);
+            const city      = get(comps, ['locality','postal_town','sublocality','neighborhood'], false);
+            const state     = get(comps, ['administrative_area_level_1'], true);
+            const zip       = get(comps, ['postal_code'], false);
+
+            const line1 = [streetNum, route].filter(Boolean).join(' ').trim();
+            if(line1) addr.value = line1;
+            if(city && cityEl) cityEl.value = city;
+            if(state && stateEl) stateEl.value = state;
+            if(zip && zipEl) zipEl.value = zip;
+          });
+        }catch(e){}
+      }
+
+      function ensureMaps(cb){
+        if(mapsLoaded){ cb && cb(); return; }
+        if(loading){ document.addEventListener('pp_maps_ready2', cb, { once:true }); return; }
+        loading = true;
+        const s = document.createElement('script');
+        s.src = "https://maps.googleapis.com/maps/api/js?key=AlzaSyC1u9hVE7BjAbLSC12pyWYVDdTTRY8OZUk&libraries=places";
+        s.async = true; s.defer = true;
+        s.onload = function(){ mapsLoaded = true; loading = false; document.dispatchEvent(new Event('pp_maps_ready2')); cb && cb(); };
+        s.onerror = function(){ loading = false; /* stays plain input */ };
+        document.head.appendChild(s);
+      }
+
+      const query = debounce(function(txt){
+        if(!txt || txt.length < 3){ hide(); return; }
+        ensureMaps(function(){
+          try{
+            svc = svc || new google.maps.places.AutocompleteService();
+            svc.getPlacePredictions(
+              { input: txt, types:['address'], componentRestrictions:{ country:'us' } },
+              function(preds, status){
+                if(status !== google.maps.places.PlacesServiceStatus.OK || !preds || !preds.length){ hide(); return; }
+                render(preds.slice(0,8));
+              }
+            );
+          }catch(e){ hide(); }
+        });
+      }, 180);
+
+      // events
+      addr.addEventListener('focus', function(){
+        ensureMaps(); // warm up as soon as focused
+      });
 
       addr.addEventListener('input', function(){
-        // Keep typing responsive; we only consider init after a pause
-        maybeInit();
+        query(addr.value.trim());
       }, { passive:true });
+
+      addr.addEventListener('keydown', function(e){
+        if(panel.style.display !== 'block') return;
+        if(e.key === 'ArrowDown'){ e.preventDefault(); activeIndex = Math.min(activeIndex+1, items.length-1); updateActive(); }
+        else if(e.key === 'ArrowUp'){ e.preventDefault(); activeIndex = Math.max(activeIndex-1, 0); updateActive(); }
+        else if(e.key === 'Enter'){ if(activeIndex>=0){ e.preventDefault(); choose(activeIndex); } }
+        else if(e.key === 'Escape'){ hide(); }
+      });
+
+      function updateActive(){
+        [...panel.children].forEach((el,i)=> el.classList.toggle('active', i===activeIndex));
+        const activeEl = panel.children[activeIndex];
+        if(activeEl){ activeEl.scrollIntoView({block:'nearest'}); }
+      }
+
+      document.addEventListener('click', function(e){
+        if(!panel.contains(e.target) && e.target !== addr){ hide(); }
+      });
     })();
   </script>
 </body>
