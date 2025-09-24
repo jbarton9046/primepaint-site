@@ -217,7 +217,7 @@
     #contact label{font-size:.9rem;color:var(--muted);margin-bottom:6px;display:block;}
     #contact .req{color:#eaeaf0;margin-left:4px}
     #contact input,#contact textarea,#contact select{
-      width:100%; border:1px solid var(--line); background:#121216; color:var(--text);
+      width:100%; border:1px solid var(--line); background:#121216; color:#f2f2f3;
       border-radius:14px; padding:12px 14px; outline:none; transition:border-color .2s, box-shadow .2s;
     }
     #contact input::placeholder,#contact textarea::placeholder{ color:#9b9ba2; }
@@ -409,14 +409,32 @@
             <input id="phone" name="phone" placeholder="(941) 222-1890" required aria-required="true">
           </div>
 
-          <!-- Email + City on the same row -->
+          <!-- Email + Address on the same row (City replaced with Address) -->
           <div>
             <label for="email">Email</label>
             <input id="email" name="email" type="email" placeholder="you@example.com">
           </div>
           <div>
-            <label for="city">City</label>
-            <input id="city" name="city" placeholder="City">
+            <label for="address">Address</label>
+            <input id="address" name="address" placeholder="Street Address">
+          </div>
+
+          <!-- NEW: City + State + Zip row directly below -->
+          <div class="span-2">
+            <div style="display:grid; gap:14px; grid-template-columns:repeat(3,1fr)">
+              <div>
+                <label for="city">City</label>
+                <input id="city" name="city" placeholder="City">
+              </div>
+              <div>
+                <label for="state">State</label>
+                <input id="state" name="state" placeholder="State">
+              </div>
+              <div>
+                <label for="zip">Zip</label>
+                <input id="zip" name="zip" placeholder="Zip">
+              </div>
+            </div>
           </div>
 
           <div>
@@ -484,7 +502,13 @@
       var name = val('name');
       var phone = val('phone');
       var email = val('email');
+
+      // NEW fields
+      var address = val('address');
       var city = val('city');
+      var state = val('state');
+      var zip = val('zip');
+
       var projectType = val('projectType');
       var timeframe = val('timeframe');
       var message = val('message');
@@ -493,7 +517,10 @@
         'Name: ' + name,
         'Phone: ' + phone,
         email ? ('Email: ' + email) : '',
+        address ? ('Address: ' + address) : '',
         city ? ('City: ' + city) : '',
+        state ? ('State: ' + state) : '',
+        zip ? ('Zip: ' + zip) : '',
         projectType ? ('Project Type: ' + projectType) : '',
         timeframe ? ('Preferred Timeframe: ' + timeframe) : '',
         '',
