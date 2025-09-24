@@ -174,8 +174,11 @@
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
 
+    /* Hide call FAB by default (desktop/tablet) */
+    .call-fab{ display:none; }
+
     @media (max-width: 640px){
-      /* New on-brand mobile call FAB — SMALLER */
+      /* On-brand mobile call FAB — SMALL */
       .call-fab{
         position: fixed; right: 16px; bottom: 18px; z-index: 40;
         display:flex; align-items:center; justify-content:center;
@@ -193,7 +196,7 @@
         background: rgba(255,255,255,0.10);
         box-shadow:0 12px 26px rgba(0,0,0,.42);
       }
-      .call-fab svg{ display:block; width:22px; height:22px; }
+      .call-fab svg{ display:block; }
     }
 
     /* ===== Promise split layout ===== */
@@ -344,8 +347,6 @@
       background:rgba(255,255,255,0.08);
     }
     .fs-sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
-
-    /* Custom scrollbar in fancy list */
     .fs-list::-webkit-scrollbar{ width:10px; }
     .fs-list::-webkit-scrollbar-track{ background:rgba(255,255,255,0.05); border-radius:10px; }
     .fs-list::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.18); border-radius:10px; }
@@ -647,7 +648,7 @@
   <!-- Mobile floating call button -->
   <a class="call-fab" href="tel:+19412221890" aria-label="Call Prime Paint SRQ">
     <!-- iPhone-style icon (inline SVG, theme-matched) -->
-    <svg viewBox="0 0 24 24" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
       <rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="#eaeaf0" stroke-width="1.6"/>
       <rect x="9" y="5" width="6" height="0.9" rx="0.45" fill="#eaeaf0"/>
       <circle cx="12" cy="17.6" r="0.85" fill="#eaeaf0"/>
