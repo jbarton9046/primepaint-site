@@ -87,6 +87,7 @@
     .menu-btn{display:none;align-items:center;justify-content:center;border:1px solid var(--line);background:#15151a;color:#eaeaf0;border-radius:10px;padding:8px 10px;font-size:.95rem;line-height:1;cursor:pointer}
 
     /* ===== Hero ===== */
+    <style>/* keep existing hero styles unchanged */</style>
     .hero{position:relative;isolation:isolate;overflow:hidden;min-height:calc(100vh - var(--header-h))}
     .hero::before{
       content:"";position:absolute;inset:0;
@@ -232,31 +233,31 @@
     #contact .btn-submit:hover{ transform:translateY(-1px); background:#202028; }
     #contact .legal{ font-size:.85rem; color:#9e9ea4; margin-top:10px; }
 
-    /* === Nice dropdowns (applies to all selects in #contact) === */
-    #contact select{
+    /* === Nice dropdowns (only when class="nice-select") === */
+    .nice-select{
       appearance:none; -webkit-appearance:none; -moz-appearance:none;
-      padding-right:48px;
+      padding-right:48px !important;
       background:
         #121216
-        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%239b9ba2' d='M7 10l5 5 5-5z'/></svg>")
-        no-repeat right 14px center / 18px 18px;
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%239b9ba2' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E")
+        no-repeat right 14px center / 18px 18px !important;
       border:1px solid var(--line);
       color:var(--text);
       border-radius:14px;
       transition:border-color .2s, box-shadow .2s, transform .15s;
     }
-    #contact select:hover{ border-color:#3a3a45; }
-    #contact select:focus{
+    .nice-select:hover{ border-color:#3a3a45; }
+    .nice-select:focus{
       outline:none; border-color:#4a4a55;
       box-shadow:0 0 0 3px rgba(255,255,255,.05), 0 10px 25px rgba(0,0,0,.25);
       transform:translateY(-1px);
     }
-    #contact select:active{ transform:none; }
-    #contact select option{ background:#0f0f12; color:#f2f2f3; }
-    #contact select::-ms-expand{ display:none; }
-    @media (prefers-reduced-motion: reduce){ #contact select{ transition:none; } }
+    .nice-select:active{ transform:none; }
+    .nice-select option{ background:#0f0f12; color:#f2f2f3; }
+    .nice-select::-ms-expand{ display:none; }
+    @media (prefers-reduced-motion: reduce){ .nice-select{ transition:none; } }
 
-    /* === Google Places dropdown (dark theme to match the form) === */
+    /* === Google Places dropdown (dark theme) === */
     .pac-container{
       background:#121216 !important;
       border:1px solid var(--line) !important;
@@ -467,7 +468,7 @@
               <div>
                 <label for="state">State</label>
                 <!-- STATE DROPDOWN (required) -->
-                <select id="state" name="state" required aria-required="true">
+                <select id="state" name="state" class="nice-select" required aria-required="true">
                   <option value="">Select state…</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
@@ -531,7 +532,7 @@
 
           <div>
             <label for="projectType">Project Type</label>
-            <select id="projectType" name="projectType">
+            <select id="projectType" name="projectType" class="nice-select">
               <option value="">Select…</option>
               <option>Interior</option>
               <option>Exterior</option>
@@ -542,7 +543,7 @@
           </div>
           <div>
             <label for="timeframe">Preferred Timeframe</label>
-            <select id="timeframe" name="timeframe">
+            <select id="timeframe" name="timeframe" class="nice-select">
               <option value="">Select…</option>
               <option>ASAP</option>
               <option>Next 1–2 weeks</option>
