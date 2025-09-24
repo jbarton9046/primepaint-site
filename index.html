@@ -162,7 +162,7 @@
     #contact label{font-size:.9rem;color:var(--muted);margin-bottom:6px;display:block}
     #contact .req{color:#eaeaf0;margin-left:4px}
 
-    /* Inputs & selects (bright like dropdowns) */
+    /* Inputs & selects (bright but dark background) */
     :where(#contact input,#contact textarea,#contact select){
       width:100%;border:1px solid var(--line);background:#0f0f12;color:#ffffff;
       border-radius:14px;padding:12px 14px;outline:none;transition:border-color .2s,box-shadow .2s
@@ -176,7 +176,7 @@
     #contact .btn-submit:hover{transform:translateY(-1px);background:#202028}
     #contact .legal{font-size:.85rem;color:#9e9ea4;margin-top:10px}
 
-    /* Chrome autofill stays dark */
+    /* Keep Chrome autofill dark */
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
@@ -377,24 +377,28 @@
         </p>
       </div>
 
-      <form id="form" class="card contact-card" aria-label="Quote request form" autocomplete="off">
+      <!-- Form -->
+      <form id="form" class="card contact-card" aria-label="Quote request form" autocomplete="on">
         <div class="contact-grid">
           <div>
             <label for="name">Name <span class="req">*</span></label>
-            <input id="name" name="name" placeholder="Your name" required aria-required="true" autocomplete="off" autocapitalize="words">
+            <input id="name" name="name" placeholder="Your name" required aria-required="true"
+                   autocomplete="name" autocapitalize="words">
           </div>
           <div>
             <label for="phone">Phone <span class="req">*</span></label>
-            <input id="phone" name="phone" placeholder="(941) 222-1890" required aria-required="true" autocomplete="off" inputmode="tel">
+            <input id="phone" name="phone" placeholder="(941) 222-1890" required aria-required="true"
+                   inputmode="tel" autocomplete="tel">
           </div>
 
           <div>
             <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="off">
+            <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email">
           </div>
           <div style="position:relative">
             <label for="address">Address</label>
-            <input id="address" name="address" placeholder="Street Address" autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-owns="pp-ac">
+            <input id="address" name="address" placeholder="Street Address"
+                   autocomplete="street-address" aria-autocomplete="list" aria-expanded="false" aria-owns="pp-ac">
             <!-- custom suggestions dropdown -->
             <div id="pp-ac" class="pp-ac" role="listbox" aria-label="Address suggestions"></div>
           </div>
@@ -403,11 +407,11 @@
             <div style="display:grid;gap:14px;grid-template-columns:repeat(3,1fr)">
               <div>
                 <label for="city">City</label>
-                <input id="city" name="city" placeholder="City" autocomplete="off">
+                <input id="city" name="city" placeholder="City" autocomplete="address-level2">
               </div>
               <div>
                 <label for="state">State</label>
-                <select id="state" name="state" class="nice-select" required aria-required="true" autocomplete="off">
+                <select id="state" name="state" class="nice-select" required aria-required="true" autocomplete="address-level1">
                   <option value="">Select state…</option>
                   <option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option>
                   <option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option>
@@ -426,7 +430,7 @@
               </div>
               <div>
                 <label for="zip">Zip</label>
-                <input id="zip" name="zip" placeholder="Zip" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
+                <input id="zip" name="zip" placeholder="Zip" inputmode="numeric" pattern="[0-9]*" autocomplete="postal-code">
               </div>
             </div>
           </div>
