@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- Force desktop layout on mobile by fixing the viewport width -->
+  <meta name="viewport" content="width=1180"/>
   <title>Prime Paint SRQ – Ty Christian | Interior, Exterior & Cabinet Painting in Sarasota, FL</title>
 
   <!-- Primary SEO -->
@@ -143,6 +144,8 @@
     }
     .pill:hover{transform:translateY(-1px);background:#191a20}
 
+    /* We leave mobile @media rules in place, but with a fixed viewport width (1180px),
+       these will never trigger on phones — ensuring desktop layout on mobile. */
     @media (max-width: 960px){
       :root{--header-h:70px; --brand-h:46px; --hero-gutter-left:18px; --hero-gutter-right:18px; --hero-gap:14px; --hero-nudge: 8px; --pp-shift: 0px;}
       .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h) - var(--hero-nudge))}
@@ -184,30 +187,9 @@
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
 
-    /* Hide call FAB by default (desktop/tablet) */
+    /* Hide call FAB by default (desktop/tablet).
+       With fixed 1180px viewport on phones, this will remain hidden (desktop behavior). */
     .call-fab{ display:none; }
-
-    @media (max-width: 640px){
-      /* On-brand mobile call FAB — SMALL */
-      .call-fab{
-        position: fixed; right: 16px; bottom: 18px; z-index: 40;
-        display:flex; align-items:center; justify-content:center;
-        width:48px; height:48px; border-radius:12px;
-        background: rgba(255,255,255,0.06);
-        border:1px solid var(--line);
-        backdrop-filter: blur(10px) saturate(140%);
-        -webkit-backdrop-filter: blur(10px) saturate(140%);
-        color:#eaeaf0; text-decoration:none; font-weight:600;
-        box-shadow:0 8px 20px rgba(0,0,0,.32);
-        transition: transform .2s, background .2s, box-shadow .2s;
-      }
-      .call-fab:hover{
-        transform: translateY(-1px);
-        background: rgba(255,255,255,0.10);
-        box-shadow:0 12px 26px rgba(0,0,0,.42);
-      }
-      .call-fab svg{ display:block; }
-    }
 
     /* ===== Promise split layout ===== */
     .promise-grid{display:grid; gap:20px; align-items:start;}
@@ -682,7 +664,7 @@
     </div>
   </footer>
 
-  <!-- Mobile floating call button (hidden on desktop) -->
+  <!-- Mobile floating call button (hidden; fixed desktop layout also hides it on phones) -->
   <a class="call-fab" href="tel:+19412221890" aria-label="Call Prime Paint SRQ">
     <!-- iPhone-style icon (inline SVG, theme-matched) -->
     <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
