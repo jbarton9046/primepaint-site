@@ -53,6 +53,9 @@
 
       /* left shift for the PP mark */
       --pp-shift: -42px;
+
+      /* footer */
+      --footer-gap: 14px; /* equal space above and below the logo */
     }
 
     *{box-sizing:border-box}
@@ -180,8 +183,29 @@
     .list li{list-style:none;display:flex;align-items:center;gap:8px}
     .dot{width:7px;height:7px;border-radius:50%;background:#fff;display:inline-block}
 
-    /* Footer */
-    .footer{border-top:1px solid var(--line);padding:10px 0;color:#bdbdc3;font-size:.95rem}
+    /* ===== Footer (updated) ===== */
+    .footer{
+      border-top:1px solid var(--line);
+      padding-top:var(--footer-gap);  /* space above logo */
+      padding-bottom:18px;
+      color:#bdbdc3;
+      font-size:.95rem;
+    }
+    .footer .footer-wrap{
+      display:flex;flex-direction:column;align-items:center;gap:0;text-align:center;
+    }
+    .footer-logo{
+      display:block;
+      width:clamp(220px, 36vw, 400px); /* ~2x typical size, responsive */
+      height:auto;
+      margin:0 auto;
+    }
+    .footer .meta{
+      margin-top:var(--footer-gap);   /* space below logo equals above logo */
+      display:flex;flex-direction:column;gap:2px;
+      font-size:.82rem;               /* smaller, traditional footer size */
+      color:#bdbdc3;
+    }
 
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
@@ -672,12 +696,11 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Footer (updated) -->
   <footer class="footer">
-    <div class="container" style="display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center">
-      <!-- Larger logo, no background; tight spacing above/below -->
-      <img src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo" width="200" height="200" style="object-fit:contain">
-      <div style="display:flex;flex-direction:column;gap:2px">
+    <div class="container footer-wrap">
+      <img class="footer-logo" src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo">
+      <div class="meta">
         <div>© <span id="yr"></span> Prime Paint SRQ. All rights reserved.</div>
         <div>Licensed &amp; Insured • Sarasota, FL</div>
       </div>
