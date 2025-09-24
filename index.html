@@ -53,9 +53,6 @@
 
       /* left shift for the PP mark */
       --pp-shift: -42px;
-
-      /* footer */
-      --footer-gap: 14px; /* equal space above and below the logo */
     }
 
     *{box-sizing:border-box}
@@ -146,21 +143,66 @@
     }
     .pill:hover{transform:translateY(-1px);background:#191a20}
 
+    /* ====== UPDATED MOBILE-ONLY BLOCK (centering & symmetry) ====== */
     @media (max-width: 960px){
-      :root{--header-h:70px; --brand-h:46px; --hero-gutter-left:18px; --hero-gutter-right:18px; --hero-gap:14px; --hero-nudge: 8px; --pp-shift: 0px;}
-      .hero-grid{grid-template-columns:1fr;gap:var(--hero-gap);height:auto;min-height:calc(100vh - var(--header-h) - var(--hero-nudge))}
-      .hero-left{justify-content:center;transform:none}
-      .hero-logo{height:clamp(200px,44vh,360px);max-width:92vw;margin:0 auto;} /* ensure centered & no overflow */
-      .hero-right{justify-content:center;padding-right:0}
-      .hero-right-inner{margin:0;width:100%;text-align:center}
-      /* center the CTA row even though it has inline flex styles */
-      .hero-right-inner > div[style*="display:flex"]{justify-content:center !important;}
+      :root{
+        --header-h:70px;
+        --brand-h:46px;
+        --hero-mobile-pad:18px; /* one number that drives all mobile edges */
+        --hero-gutter-left:var(--hero-mobile-pad);
+        --hero-gutter-right:var(--hero-mobile-pad);
+        --hero-gap:14px;
+        --hero-nudge:8px;
+        --pp-shift:0px;
+      }
+
+      .hero-wrap{
+        padding-left:var(--hero-mobile-pad);
+        padding-right:var(--hero-mobile-pad);
+      }
+
+      .hero-grid{
+        grid-template-columns:1fr;
+        gap:var(--hero-gap);
+        height:auto;
+        min-height:calc(100vh - var(--header-h) - var(--hero-nudge));
+      }
+
+      /* Center logo; top padding equals side paddings for symmetry */
+      .hero-left{
+        justify-content:center;
+        transform:none;
+        padding-top:var(--hero-mobile-pad); /* = L/R padding */
+      }
+      .hero-logo{
+        height:clamp(200px,44vh,360px);
+        max-width:calc(100% - (var(--hero-mobile-pad) * 2));
+        width:auto;
+        margin:0 auto;
+        display:block;
+      }
+
+      .hero-right{
+        justify-content:center;
+        padding-right:0;
+      }
+      .hero-right-inner{
+        margin:0;
+        width:100%;
+        text-align:center;
+      }
       .lead{margin-left:auto;margin-right:auto}
-      .mainnav{position:absolute;left:0;right:0;top:100%;background:#0f0f12;border-bottom:1px solid var(--line);display:none;flex-direction:column;gap:0;padding:10px 22px;}
+      .hero-right-inner a.pill{margin-left:auto;margin-right:auto}
+
+      .mainnav{
+        position:absolute;left:0;right:0;top:100%;
+        background:#0f0f12;border-bottom:1px solid var(--line);
+        display:none;flex-direction:column;gap:0;padding:10px 22px;
+      }
       .mainnav a{padding:12px 2px;font-size:1rem}
       .mainnav.show{display:flex}
       .left{gap:12px}
-      .hero-title{max-width: 26ch}
+      .hero-title{max-width:26ch}
     }
 
     section{padding:72px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
@@ -183,29 +225,8 @@
     .list li{list-style:none;display:flex;align-items:center;gap:8px}
     .dot{width:7px;height:7px;border-radius:50%;background:#fff;display:inline-block}
 
-    /* ===== Footer (updated) ===== */
-    .footer{
-      border-top:1px solid var(--line);
-      padding-top:var(--footer-gap);  /* space above logo */
-      padding-bottom:18px;
-      color:#bdbdc3;
-      font-size:.95rem;
-    }
-    .footer .footer-wrap{
-      display:flex;flex-direction:column;align-items:center;gap:0;text-align:center;
-    }
-    .footer-logo{
-      display:block;
-      width:clamp(220px, 36vw, 400px); /* ~2x typical size, responsive */
-      height:auto;
-      margin:0 auto;
-    }
-    .footer .meta{
-      margin-top:var(--footer-gap);   /* space below logo equals above logo */
-      display:flex;flex-direction:column;gap:2px;
-      font-size:.82rem;               /* smaller, traditional footer size */
-      color:#bdbdc3;
-    }
+    /* Footer */
+    .footer{border-top:1px solid var(--line);padding:10px 0;color:#bdbdc3;font-size:.95rem}
 
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
     .reveal.show{opacity:1;transform:none}
@@ -696,11 +717,12 @@
     </div>
   </section>
 
-  <!-- Footer (updated) -->
+  <!-- Footer -->
   <footer class="footer">
-    <div class="container footer-wrap">
-      <img class="footer-logo" src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo">
-      <div class="meta">
+    <div class="container" style="display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center">
+      <!-- Larger logo, no background; tight spacing above/below -->
+      <img src="assets/ty-logo-tight.png" alt="Prime Paint SRQ logo" width="200" height="200" style="object-fit:contain">
+      <div style="display:flex;flex-direction:column;gap:2px">
         <div>© <span id="yr"></span> Prime Paint SRQ. All rights reserved.</div>
         <div>Licensed &amp; Insured • Sarasota, FL</div>
       </div>
