@@ -75,21 +75,35 @@
 
     /* ===== Header ===== */
     .header{
-      position:fixed; left:0; right:0; top:0; z-index:30;
+      position:fixed; left:0; right:0; top:0; z-index:40;
       background:rgba(10,10,11,.72);
       backdrop-filter:blur(10px);
       border-bottom:1px solid var(--line);
     }
     .header .container{max-width:none;padding-left:var(--header-pad-x);padding-right:var(--header-pad-x);position:relative}
     .h-inner{height:var(--header-h);display:flex;align-items:center;gap:16px}
-    .left{display:flex;align-items:center;gap:22px;flex:1}
+    .left{display:flex;align-items:center;gap:10px;flex:1}
 
+    .brand{display:flex;align-items:center;gap:8px}
     .brand-logo{display:flex;align-items:center;text-decoration:none}
     .brand-img{height:var(--brand-h);width:auto;display:block;object-fit:contain}
+    .brand-drop-toggle{
+      display:none; border:1px solid var(--line); background:#15151a; color:#eaeaf0;
+      border-radius:8px; padding:6px 8px; line-height:1; font-size:.85rem; cursor:pointer;
+    }
 
-    .mainnav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-left:2px}
+    .mainnav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-left:8px}
     .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.98rem;line-height:1;padding:.4rem 0}
     .menu-btn{display:none;align-items:center;justify-content:center;border:1px solid var(--line);background:#15151a;color:#eaeaf0;border-radius:10px;padding:8px 10px;font-size:.95rem;line-height:1;cursor:pointer}
+
+    /* Mobile brand dropdown */
+    .brand-menu{
+      position:absolute; left:var(--header-pad-x); right:var(--header-pad-x); top:100%;
+      background:#0f0f12; border:1px solid var(--line); border-top:none;
+      display:none; flex-direction:column; gap:0; padding:10px 14px; z-index:45;
+    }
+    .brand-menu a{ color:#eaeaf0; text-decoration:none; padding:10px 2px; }
+    .brand-menu.show{ display:flex; }
 
     /* Right-side social icons (bigger) */
     .nav-social{display:flex;align-items:center;gap:16px}
@@ -143,11 +157,12 @@
     .hero-title .line{display:block; white-space:nowrap;}
     .lead{color:#ececf1;margin-top:.75rem;max-width:60ch}
 
+    /* Lighter buttons globally */
     .pill{
-      display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);border-radius:999px;
-      padding:.55rem 1rem;background:#15151a;color:#e8e8ec;font-size:.95rem;text-decoration:none;transition:.25s;
+      display:inline-flex;align-items:center;gap:.5rem;border:1px solid #2d2d37;border-radius:999px;
+      padding:.6rem 1.05rem;background:#23232c;color:#e8e8ec;font-size:.98rem;text-decoration:none;transition:.25s;
     }
-    .pill:hover{transform:translateY(-1px);background:#191a20}
+    .pill:hover{transform:translateY(-1px);background:#2b2b34}
 
     @media (max-width: 960px){
       :root{--header-h:70px; --brand-h:46px; --hero-gutter-left:18px; --hero-gutter-right:18px; --hero-gap:14px; --hero-nudge: 8px; --pp-shift: 0px;}
@@ -160,22 +175,19 @@
       .mainnav{position:absolute;left:0;right:0;top:100%;background:#0f0f12;border-bottom:1px solid var(--line);display:none;flex-direction:column;gap:0;padding:10px 22px;}
       .mainnav a{padding:12px 2px;font-size:1rem}
       .mainnav.show{display:flex}
-      .left{gap:12px}
+      .brand-drop-toggle{display:inline-flex;}
       .hero-title{max-width: 26ch}
 
       /* CTA row centered on mobile */
       #cta{ justify-content:center !important; }
 
-      /* Center Why section on mobile */
-      #why .container{ text-align:center; }
+      /* Center Why, Promise, Services, Process on mobile */
+      #why .container, #promise .container, #services .container, #process .container{ text-align:center; }
       #why .list{ justify-content:center; }
       #why .list li{ justify-content:center; }
 
-      /* Center Promise section on mobile */
-      #promise .container{ text-align:center; }
-
-      /* Lighter pills on mobile for contrast */
-      .pill{ background:#1f1f26; border-color:#2b2b35; }
+      /* Make buttons a touch lighter on mobile too */
+      .pill{ background:#272732; border-color:#30303a; }
     }
 
     section{padding:72px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
@@ -228,12 +240,14 @@
 
     /* ===== Contact section: center headers & details on mobile, keep form text left ===== */
     @media (max-width: 960px){
-      #contact .container > div:first-child{ text-align:center; }
+      #contact .container > .contact-intro{ text-align:center; }
       #contact .legal{ text-align:center; }
       /* all cards centered except the contact card itself */
       .card{ margin-left:auto; margin-right:auto; text-align:center; }
       #contact .contact-card{ text-align:left; margin-left:0; margin-right:0; }
       #process .card, #services .card, #promise .card, #why .card{ margin-left:auto; margin-right:auto; }
+      /* Center the Send Request button on mobile */
+      #contact .contact-actions{ justify-content:center; }
     }
 
     /* ===== Contact form ===== */
@@ -256,10 +270,10 @@
     }
     #contact .contact-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:6px;}
     #contact .btn-submit{
-      border:1px solid var(--line); background:#1a1a20; color:#eaeaf0; border-radius:999px;
-      padding:.6rem 1.1rem; font-size:.95rem; cursor:pointer; transition:transform .2s, background .2s;
+      border:1px solid var(--line); background:#1f1f26; color:#eaeaf0; border-radius:999px;
+      padding:.7rem 1.25rem; font-size:1rem; cursor:pointer; transition:transform .2s, background .2s;
     }
-    #contact .btn-submit:hover{ transform:translateY(-1px); background:#202028; }
+    #contact .btn-submit:hover{ transform:translateY(-1px); background:#262633; }
     #contact .legal{ font-size:.85rem; color:#9e9ea4; margin-top:10px; }
 
     /* Subtle in-card required note */
@@ -272,8 +286,7 @@
       padding-right:48px;
       background:
         #121216
-        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%239b9ba2' d='M7 10l5 5 5-5z'/></svg>")
-        no-repeat right 14px center / 18px 18px;
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%239b9ba2' d='M7 10l5 5 5-5z'/></svg>") no-repeat right 14px center / 18px 18px;
       border:1px solid var(--line);
       color:var(--text);
       border-radius:14px;
@@ -312,7 +325,7 @@
     /* Footer (centered mark + side text) */
     .footer{
       border-top:1px solid var(--line);
-      padding:28px 0 28px; /* a bit more bottom padding to avoid clipping */
+      padding:28px 0 30px; /* extra bottom padding to avoid clipping */
       color:#bdbdc3;font-size:.95rem;
     }
     .footer .container{
@@ -323,9 +336,9 @@
       margin-top:calc(-1 * var(--footer-above-gap));
     }
     .footer-mark{
-      display:flex;align-items:center;justify-content:center;
+      display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
       gap:var(--footer-side-gap);
-      padding:var(--footer-above-gap) 10px 8px; /* add bottom padding to prevent crop */
+      padding:var(--footer-above-gap) 12px 10px; /* add bottom padding to prevent crop */
     }
     .footer-mark .foot-logo{
       height:var(--footer-mark-size); width:auto; display:block; object-fit:contain;
@@ -356,7 +369,7 @@
     .call-fab{ display:none; }
 
     @media (max-width: 640px){
-      /* Mobile call FAB: KEEP button size, make icon slightly larger */
+      /* Mobile call FAB: keep button size, make icon slightly larger */
       .call-fab{
         position: fixed; right: 16px; bottom: 18px; z-index: 40;
         display:flex; align-items:center; justify-content:center;
@@ -375,61 +388,14 @@
         box-shadow:0 12px 26px rgba(0,0,0,.42);
       }
       .call-fab svg{ width:26px; height:26px; display:block; } /* icon slightly larger */
-    }
 
-    /* Fancy (glass) selects (State, Project Type, Timeframe) */
-    .fs-wrap{ position:relative; }
-    .fs-hidden{ position:absolute; inset:0; width:0; height:0; opacity:0; pointer-events:none; }
-    .fs-btn{
-      width:100%;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 44px 12px 14px;
-      color:var(--text);
-      background:rgba(255,255,255,0.03);
-      backdrop-filter: blur(10px) saturate(140%);
-      -webkit-backdrop-filter: blur(10px) saturate(140%);
-      text-align:left;
-      cursor:pointer;
-      transition:border-color .2s, box-shadow .2s, transform .15s;
+      /* Footer logo safety for small iPhones */
+      :root{
+        --footer-mark-size: 48px;
+        --footer-side-gap: 14px;
+      }
+      .footer-mark{ padding-inline:10px; }
     }
-    .fs-btn:focus{ outline:none; border-color:#4a4a55; box-shadow:0 0 0 3px rgba(255,255,255,.05); transform:translateY(-1px); }
-    .fs-btn::after{
-      content:"";
-      position:absolute; right:14px; top:50%; transform:translateY(-50%);
-      width:18px; height:18px;
-      background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%239b9ba2' d='M7 10l5 5 5-5z'/></svg>") no-repeat center/18px 18px;
-      pointer-events:none;
-      opacity:.9;
-    }
-    .fs-list{
-      position:absolute; left:0; right:0; top:calc(100% + 6px);
-      max-height:240px; overflow:auto; z-index:20;
-      padding:6px;
-      border-radius:14px; border:1px solid var(--line);
-      background:rgba(20,20,24,0.78);
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
-      box-shadow:0 12px 26px rgba(0,0,0,.45);
-      display:none;
-    }
-    .fs-wrap.open .fs-list{ display:block; }
-    .fs-option{
-      padding:10px 12px;
-      border-radius:10px;
-      color:#eaeaf0;
-      cursor:pointer;
-      user-select:none;
-    }
-    .fs-option:hover,
-    .fs-option[aria-selected="true"]{
-      background:rgba(255,255,255,0.08);
-    }
-    .fs-sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
-    .fs-list::-webkit-scrollbar{ width:10px; }
-    .fs-list::-webkit-scrollbar-track{ background:rgba(255,255,255,0.05); border-radius:10px; }
-    .fs-list::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.18); border-radius:10px; }
-    .fs-list::-webkit-scrollbar-thumb:hover{ background:rgba(255,255,255,0.28); }
   </style>
 </head>
 <body>
@@ -439,12 +405,24 @@
   <header class="header">
     <div class="container h-inner">
       <div class="left">
-        <a class="brand-logo" href="#top" aria-label="Prime Paint SRQ home">
-          <img class="brand-img" src="assets/prime-paint-logo.png" alt="PRIME PAINT">
-        </a>
+        <div class="brand">
+          <a class="brand-logo" href="#top" aria-label="Prime Paint SRQ home">
+            <img class="brand-img" src="assets/prime-paint-logo.png" alt="PRIME PAINT">
+          </a>
+          <!-- Mobile dropdown trigger attached to brand -->
+          <button class="brand-drop-toggle" aria-controls="brand-menu" aria-expanded="false">Menu</button>
+        </div>
 
-        <button class="menu-btn" aria-controls="primary-nav" aria-expanded="false">Menu</button>
         <nav id="primary-nav" class="mainnav" aria-label="Primary">
+          <a href="#services">Services</a>
+          <a href="#why">Why Us</a>
+          <a href="#process">Process</a>
+          <a href="#promise">Promise</a>
+          <a href="#contact">Get Quote</a>
+        </nav>
+
+        <!-- Brand-attached dropdown (mobile) -->
+        <nav id="brand-menu" class="brand-menu" aria-label="Mobile menu">
           <a href="#services">Services</a>
           <a href="#why">Why Us</a>
           <a href="#process">Process</a>
@@ -588,22 +566,13 @@
     </div>
   </section>
 
-  <!-- CTA -->
-  <section>
-    <div class="container" style="text-align:center">
-      <h2>Ready to elevate your space?</h2>
-      <p class="sub">Call or email for a fast, friendly quote.</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px">
-        <a href="tel:+19412221890" class="pill">(Tap to Call)</a>
-        <a href="mailto:primepaintsrq@gmail.com?subject=Quote%20Request" class="pill">primepaintsrq@gmail.com</a>
-      </div>
-    </div>
-  </section>
+  <!-- (CTA section removed; message moved into Get a Quote below) -->
 
-  <!-- Contact -->
+  <!-- Contact / Get a Quote -->
   <section id="contact">
     <div class="container" style="display:grid;gap:2rem">
-      <div>
+      <div class="contact-intro">
+        <div class="sub" style="text-transform:none;margin-bottom:.4rem">Ready to elevate your space?</div>
         <h2>Get a Quote</h2>
         <p class="sub">Proudly serving Sarasota and surrounding areas.</p>
         <p class="sub" aria-label="Contact details">
@@ -728,6 +697,8 @@
         </div>
         <p class="legal">By submitting, you agree to be contacted about your project.</p>
       </form>
+      <!-- hidden anchor to ensure reliable mailto trigger -->
+      <a id="mailtoLink" href="#" style="display:none" rel="noopener noreferrer">mailto</a>
     </div>
   </section>
 
@@ -767,8 +738,10 @@
     }, {threshold:0.2});
     document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 
-    // year + mailto form
+    // year
     document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // form -> robust mailto
     document.getElementById('form').addEventListener('submit', function(e){
       e.preventDefault();
       function val(id){ return (document.getElementById(id)?.value || '').trim(); }
@@ -785,6 +758,12 @@
       var timeframe = val('timeframe');
       var message = val('message');
 
+      // basic requireds already enforced by HTML, but double-check
+      if(!name || !phone || !message){
+        alert('Please fill in Name, Phone, and Message.');
+        return;
+      }
+
       var lines = [
         'Name: ' + name,
         'Phone: ' + phone,
@@ -800,18 +779,29 @@
         message
       ].filter(Boolean);
 
-      var body = encodeURIComponent(lines.join('\n'));
-      window.location.href = 'mailto:primepaintsrq@gmail.com?subject=Quote%20Request&body=' + body;
+      var body = encodeURIComponent(lines.join('\\n'));
+      var subject = encodeURIComponent('Quote Request - ' + name);
+      var href = 'mailto:primepaintsrq@gmail.com?subject=' + subject + '&body=' + body;
+
+      var a = document.getElementById('mailtoLink');
+      a.setAttribute('href', href);
+      a.click();
     });
 
-    // Mobile nav toggle
+    // Mobile brand dropdown toggle
     (function(){
-      var btn = document.querySelector('.menu-btn');
-      var nav = document.getElementById('primary-nav');
-      if(btn && nav){
+      var btn = document.querySelector('.brand-drop-toggle');
+      var menu = document.getElementById('brand-menu');
+      if(btn && menu){
         btn.addEventListener('click', function(){
-          var open = nav.classList.toggle('show');
+          var open = menu.classList.toggle('show');
           btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        document.addEventListener('click', function(e){
+          if(!menu.contains(e.target) && !btn.contains(e.target)){
+            menu.classList.remove('show');
+            btn.setAttribute('aria-expanded', 'false');
+          }
         });
       }
     })();
