@@ -175,9 +175,25 @@
     .reveal.show{opacity:1;transform:none}
 
     @media (max-width: 640px){
-      .call-fab{position: fixed; right: 16px; bottom: 18px; z-index: 40;display:flex; align-items:center; justify-content:center;
-        width:56px; height:56px; border-radius:50%;background:#0df; color:#000; text-decoration:none; font-weight:800;
-        border:1px solid rgba(255,255,255,.25); box-shadow:0 10px 25px rgba(0,0,0,.35);}
+      /* New on-brand mobile call FAB */
+      .call-fab{
+        position: fixed; right: 16px; bottom: 18px; z-index: 40;
+        display:flex; align-items:center; justify-content:center;
+        width:56px; height:56px; border-radius:14px;
+        background: rgba(255,255,255,0.06);
+        border:1px solid var(--line);
+        backdrop-filter: blur(10px) saturate(140%);
+        -webkit-backdrop-filter: blur(10px) saturate(140%);
+        color:#eaeaf0; text-decoration:none; font-weight:600;
+        box-shadow:0 10px 25px rgba(0,0,0,.35);
+        transition: transform .2s, background .2s, box-shadow .2s;
+      }
+      .call-fab:hover{
+        transform: translateY(-1px);
+        background: rgba(255,255,255,0.10);
+        box-shadow:0 14px 30px rgba(0,0,0,.45);
+      }
+      .call-fab svg{ display:block; width:26px; height:26px; }
     }
 
     /* ===== Promise split layout ===== */
@@ -629,7 +645,14 @@
   </footer>
 
   <!-- Mobile floating call button -->
-  <a class="call-fab" href="tel:+19412221890" aria-label="Call Prime Paint SRQ">☎</a>
+  <a class="call-fab" href="tel:+19412221890" aria-label="Call Prime Paint SRQ">
+    <!-- iPhone-style icon (inline SVG, theme-matched) -->
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="#eaeaf0" stroke-width="1.6"/>
+      <rect x="9" y="5" width="6" height="0.9" rx="0.45" fill="#eaeaf0"/>
+      <circle cx="12" cy="17.6" r="0.85" fill="#eaeaf0"/>
+    </svg>
+  </a>
 
   <script>
     // reveal-on-scroll
