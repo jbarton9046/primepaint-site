@@ -94,7 +94,7 @@
     /* Right-side social icons (bigger) */
     .nav-social{display:flex;align-items:center;gap:16px}
     .nav-social a{
-      width:34px;height:34px; /* was 30px */
+      width:34px;height:34px;
       display:inline-flex;align-items:center;justify-content:center;
       opacity:.85;transition:opacity .2s, transform .2s; color:#eaeaf0;
     }
@@ -163,16 +163,19 @@
       .left{gap:12px}
       .hero-title{max-width: 26ch}
 
-      /* center the CTA row on mobile */
+      /* CTA row centered on mobile */
       #cta{ justify-content:center !important; }
 
-      /* Center ONLY the Why section (title, text, bullets) */
+      /* Center Why section on mobile */
       #why .container{ text-align:center; }
       #why .list{ justify-content:center; }
       #why .list li{ justify-content:center; }
 
-      /* Keep contact form actions right-aligned on mobile */
-      #contact .contact-actions{ justify-content:flex-end; }
+      /* Center Promise section on mobile */
+      #promise .container{ text-align:center; }
+
+      /* Lighter pills on mobile for contrast */
+      .pill{ background:#1f1f26; border-color:#2b2b35; }
     }
 
     section{padding:72px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
@@ -195,96 +198,43 @@
     .list li{list-style:none;display:flex;align-items:center;gap:8px}
     .dot{width:7px;height:7px;border-radius:50%;background:#fff;display:inline-block}
 
-    /* Footer (centered mark + side text) */
-    .footer{
-      border-top:1px solid var(--line);
-      padding:28px 0 24px;
-      color:#bdbdc3;font-size:.95rem;
-    }
-    .footer .container{
-      display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;
-    }
-    .footer-brand{
-      display:flex;flex-direction:column;align-items:center;width:100%;
-      margin-top:calc(-1 * var(--footer-above-gap));
-    }
-    .footer-mark{
-      display:flex;align-items:center;justify-content:center;
-      gap:var(--footer-side-gap);
-      padding-top:var(--footer-above-gap);
-    }
-    .footer-mark .foot-logo{
-      height:var(--footer-mark-size); width:auto; display:block; object-fit:contain;
-      filter:drop-shadow(0 3px 10px rgba(0,0,0,.25));
-      max-width:100%;
-    }
-    .footer-mark .foot-txt{
-      font-size:var(--footer-side-text);
-      letter-spacing:var(--footer-side-tracking);
-      text-transform:uppercase;
-      color:#d9d9dd;
-      white-space:nowrap;
-      opacity:.9;
-    }
-    .footer-legal{
-      display:flex;flex-direction:column;gap:2px;margin-top:8px;
-      font-size:11px; opacity:.78; letter-spacing:.02em; line-height:1.5;
-    }
+    /* ===== Promise split layout ===== */
+    .promise-grid{display:grid; gap:20px; align-items:start;}
+    @media (min-width: 960px){ .promise-grid{ grid-template-columns:1.1fr .9fr; } }
 
-    /* Reveal animation */
-    .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
-    .reveal.show{opacity:1;transform:none}
+    /* Center Ty + quote on desktop and mobile */
+    .promise-grid > :last-child{ display:flex; justify-content:center; }
+    .founder-split{display:flex; flex-direction:column; align-items:center; gap:20px;}
+    .founder-photo-lg{
+      width:min(360px,36vw); height:min(360px,36vw);
+      border-radius:16px; object-fit:cover; border:1px solid var(--line); flex:0 0 auto;
+      display:block; margin:0 auto;
+    }
+    .founder-meta{ display:flex; flex-direction:column; gap:6px; min-width:0; text-align:center; }
+    .founder-name{font-weight:700;font-size:1.1rem}
+    .founder-quote-block{margin:0}
+    .founder-quote-block p{margin:0 0 .35rem 0; max-width:44ch; font-style:italic}
+    .founder-quote-block footer{font-weight:600}
+    .founder-role{margin-top:2px}
 
-    /* ===== Mobile-only adjustments ===== */
     @media (max-width: 720px){
-      /* Center Ty's photo + quote */
-      .founder-split{flex-direction:column; align-items:center}
-      .founder-photo-lg{width:240px;height:240px;margin:0 auto}
-      .founder-meta{ text-align:center; }
-
-      /* Slightly larger phone number in contact details */
-      #contact p[aria-label="Contact details"] a[href^="tel:"]{
-        font-size:1.08rem; font-weight:600;
-      }
-    }
-
-    @media (max-width: 520px){
-      /* Make the footer mark fit with side breathing room */
-      :root{
-        --footer-mark-size: 48px;
-        --footer-side-gap: 14px;
-      }
-      .footer-mark{ padding-inline:10px; }
-    }
-
-    /* Hide call FAB by default (desktop/tablet) */
-    .call-fab{ display:none; }
-
-    @media (max-width: 640px){
-      /* Mobile call FAB (slightly bigger) */
-      .call-fab{
-        position: fixed; right: 16px; bottom: 18px; z-index: 40;
-        display:flex; align-items:center; justify-content:center;
-        width:54px; height:54px; border-radius:14px;          /* was 48 */
-        background: rgba(255,255,255,0.06);
-        border:1px solid var(--line);
-        backdrop-filter: blur(10px) saturate(140%);
-        -webkit-backdrop-filter: blur(10px) saturate(140%);
-        color:#eaeaf0; text-decoration:none; font-weight:600;
-        box-shadow:0 8px 20px rgba(0,0,0,.32);
-        transition: transform .2s, background .2s, box-shadow .2s;
-      }
-      .call-fab:hover{
-        transform: translateY(-1px);
-        background: rgba(255,255,255,0.10);
-        box-shadow:0 12px 26px rgba(0,0,0,.42);
-      }
-      .call-fab svg{ width:24px; height:24px; display:block; } /* icon a touch bigger */
+      .founder-photo-lg{width:240px;height:240px}
+      .founder-quote-block p{max-width:60ch}
     }
 
     /* ===== Contact links ===== */
     #contact a{color:#eaeaf0;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.25);}
     #contact a:hover{border-bottom-color:rgba(255,255,255,.55);}
+
+    /* ===== Contact section: center headers & details on mobile, keep form text left ===== */
+    @media (max-width: 960px){
+      #contact .container > div:first-child{ text-align:center; }
+      #contact .legal{ text-align:center; }
+      /* all cards centered except the contact card itself */
+      .card{ margin-left:auto; margin-right:auto; text-align:center; }
+      #contact .contact-card{ text-align:left; margin-left:0; margin-right:0; }
+      #process .card, #services .card, #promise .card, #why .card{ margin-left:auto; margin-right:auto; }
+    }
 
     /* ===== Contact form ===== */
     #contact .contact-card{border-radius:20px;padding:20px;}
@@ -359,9 +309,77 @@
       color: var(--text) !important;
     }
 
+    /* Footer (centered mark + side text) */
+    .footer{
+      border-top:1px solid var(--line);
+      padding:28px 0 28px; /* a bit more bottom padding to avoid clipping */
+      color:#bdbdc3;font-size:.95rem;
+    }
+    .footer .container{
+      display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;
+    }
+    .footer-brand{
+      display:flex;flex-direction:column;align-items:center;width:100%;
+      margin-top:calc(-1 * var(--footer-above-gap));
+    }
+    .footer-mark{
+      display:flex;align-items:center;justify-content:center;
+      gap:var(--footer-side-gap);
+      padding:var(--footer-above-gap) 10px 8px; /* add bottom padding to prevent crop */
+    }
+    .footer-mark .foot-logo{
+      height:var(--footer-mark-size); width:auto; display:block; object-fit:contain;
+      filter:drop-shadow(0 3px 10px rgba(0,0,0,.25));
+      max-width:100%;
+      margin-block:2px; /* tiny vertical breathing room */
+    }
+    .footer-mark .foot-txt{
+      font-size:var(--footer-side-text);
+      letter-spacing:var(--footer-side-tracking);
+      text-transform:uppercase;
+      color:#d9d9dd;
+      white-space:nowrap;
+      opacity:.9;
+      line-height:1.25;
+      padding-bottom:2px; /* guard against clipping of descenders */
+    }
+    .footer-legal{
+      display:flex;flex-direction:column;gap:2px;margin-top:8px;
+      font-size:11px; opacity:.78; letter-spacing:.02em; line-height:1.5;
+    }
+
+    /* Reveal animation */
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
+    .reveal.show{opacity:1;transform:none}
+
+    /* Hide call FAB by default (desktop/tablet) */
+    .call-fab{ display:none; }
+
+    @media (max-width: 640px){
+      /* Mobile call FAB: KEEP button size, make icon slightly larger */
+      .call-fab{
+        position: fixed; right: 16px; bottom: 18px; z-index: 40;
+        display:flex; align-items:center; justify-content:center;
+        width:48px; height:48px; border-radius:12px;
+        background: rgba(255,255,255,0.06);
+        border:1px solid var(--line);
+        backdrop-filter: blur(10px) saturate(140%);
+        -webkit-backdrop-filter: blur(10px) saturate(140%);
+        color:#eaeaf0; text-decoration:none; font-weight:600;
+        box-shadow:0 8px 20px rgba(0,0,0,.32);
+        transition: transform .2s, background .2s, box-shadow .2s;
+      }
+      .call-fab:hover{
+        transform: translateY(-1px);
+        background: rgba(255,255,255,0.10);
+        box-shadow:0 12px 26px rgba(0,0,0,.42);
+      }
+      .call-fab svg{ width:26px; height:26px; display:block; } /* icon slightly larger */
+    }
+
     /* Fancy (glass) selects (State, Project Type, Timeframe) */
     .fs-wrap{ position:relative; }
-    .fs-hidden{ position:absolute; inset:0; width:0; height:0; opacity:0; pointer-events:none; } /* keep values */
+    .fs-hidden{ position:absolute; inset:0; width:0; height:0; opacity:0; pointer-events:none; }
     .fs-btn{
       width:100%;
       border:1px solid var(--line);
@@ -431,7 +449,7 @@
           <a href="#why">Why Us</a>
           <a href="#process">Process</a>
           <a href="#promise">Promise</a>
-          <a href="#contact">Contact</a>
+          <a href="#contact">Get Quote</a>
         </nav>
       </div>
 
@@ -494,7 +512,7 @@
       <div class="grid g-4 reveal" style="margin-top:16px">
         <article class="card"><h3>Interior Painting</h3><p class="sub">Walls, ceilings, trim, feature walls, staircases. Low-VOC options available.</p></article>
         <article class="card"><h3>Exterior Painting</h3><p class="sub">Stucco/wood exteriors, entry doors, shutters, pool decks, lanai ceilings.</p></article>
-        <article class="card"><h3>Cabinet Painting</h3><p class="sub">Factory-smooth finishes for kitchens & baths with durable 2K coatings.</p></article>
+        <article class="card"><h3>Cabinet Painting</h3><p class="sub">Factory-smooth finishes for kitchens &amp; bathrooms with durable 2K coatings.</p></article>
         <article class="card"><h3>Wall Murals</h3><p class="sub">Custom murals and decorative finishes that make a statement.</p></article>
       </div>
     </div>
@@ -532,7 +550,7 @@
         <div class="card"><div class="sub">Step 1</div><h3>Consultation</h3><p class="sub">We review your space, discuss goals, and provide a detailed written quote.</p></div>
         <div class="card"><div class="sub">Step 2</div><h3>Prep</h3><p class="sub">Protection, patching, caulking, sanding, and priming.</p></div>
         <div class="card"><div class="sub">Step 3</div><h3>Paint</h3><p class="sub">Premium coatings applied with precision for a flawless finish.</p></div>
-        <div class="card"><div class="sub">Step 4</div><h3>Clean & Inspect</h3><p class="sub">Thorough cleanup and final walkthrough to ensure perfection.</p></div>
+        <div class="card"><div class="sub">Step 4</div><h3>Clean &amp; Inspect</h3><p class="sub">Thorough cleanup and final walkthrough to ensure perfection.</p></div>
       </div>
     </div>
   </section>
@@ -548,7 +566,7 @@
           </div>
 
           <div class="card" style="margin-top:14px">
-            <strong>Pricing & Free Estimates</strong>
+            <strong>Pricing &amp; Free Estimates</strong>
             <p class="sub" style="margin:6px 0 0">Submit the contact form and we’ll reach out to schedule a free, no-obligation estimate at your home.</p>
           </div>
         </div>
@@ -586,7 +604,7 @@
   <section id="contact">
     <div class="container" style="display:grid;gap:2rem">
       <div>
-        <h2>Contact Us</h2>
+        <h2>Get a Quote</h2>
         <p class="sub">Proudly serving Sarasota and surrounding areas.</p>
         <p class="sub" aria-label="Contact details">
           Phone: <a href="tel:+19412221890">(941) 222-1890</a> ·
@@ -718,7 +736,7 @@
     <div class="container">
       <!-- Brand row with centered mark + side text -->
       <div class="footer-brand">
-        <div class="footer-mark" aria-label="Brand mark & tagline">
+        <div class="footer-mark" aria-label="Brand mark &amp; tagline">
           <span class="foot-txt">Transforming Walls</span>
           <img class="foot-logo" src="assets/prime-paint-mark.png" alt="Prime Paint SRQ monogram">
           <span class="foot-txt">Elevating Spaces</span>
