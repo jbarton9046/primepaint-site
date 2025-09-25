@@ -119,16 +119,29 @@
     .brand-logo{display:flex;align-items:center;text-decoration:none;position:relative}
     .brand-img{height:var(--brand-h);width:auto;display:block;object-fit:contain;cursor:pointer}
 
-    /* brand-attached dropdown (mobile) */
+    /* brand-attached dropdown (mobile) — GLASS + BLUR */
     .brand-dd{
       position:absolute; left:0; top:100%; margin-top:10px; z-index:35;
-      background:#0f0f12; border:1px solid var(--line); border-radius:12px;
-      padding:8px; display:none; min-width:180px;
-      box-shadow:0 10px 24px rgba(0,0,0,.4);
+      background:rgba(20,20,24,.72);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px;
+      padding:8px; display:none; min-width:200px;
+      box-shadow:0 12px 26px rgba(0,0,0,.45);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
     }
-    .brand-dd a{display:block;color:#eaeaf0;text-decoration:none;padding:10px 12px;border-radius:8px}
-    .brand-dd a:hover{background:#141419}
+    .brand-dd a{display:block;color:#eaeaf0;text-decoration:none;padding:10px 12px;border-radius:10px}
+    .brand-dd a:hover{background:rgba(255,255,255,.06)}
     .brand-logo.open + .brand-dd{display:block}
+
+    /* backdrop for dropdown to blur page */
+    .dd-backdrop{
+      position:fixed; inset:0; z-index:34; display:none;
+      background:rgba(0,0,0,.25);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .dd-backdrop.show{display:block}
 
     .mainnav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-left:2px}
     .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.98rem;line-height:1;padding:.4rem 0}
@@ -264,16 +277,19 @@
     #contact a{color:#eaeaf0;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.25);}
     #contact a:hover{border-bottom-color:rgba(255,255,255,.55);}
 
-    /* ===== Contact section: center headers & details on mobile, keep form text left ===== */
+    /* Make phone/email stack on mobile only */
+    .mobile-br{display:none}
+    .dot-sep{display:inline}
     @media (max-width: 960px){
       #contact .container > div:first-child{ text-align:center; }
       #contact .legal{ text-align:center; }
-      /* all cards centered except the contact card itself */
       .card{ margin-left:auto; margin-right:auto; text-align:center; }
       #contact .contact-card{ text-align:left; margin-left:0; margin-right:0; }
       #process .card, #services .card, #promise .card, #why .card{ margin-left:auto; margin-right:auto; }
-      /* center the send button on mobile (stronger rule + full row) */
       #contact .contact-actions{ justify-content:center !important; width:100%; }
+
+      .mobile-br{display:block}
+      .dot-sep{display:none}
     }
 
     /* ===== Contact form ===== */
@@ -501,6 +517,32 @@
       }
       .call-fab svg{ width:28px; height:28px; display:block; }
     }
+
+    /* ===== Thank-you modal ===== */
+    .modal-backdrop{
+      position:fixed; inset:0; z-index:70; display:none;
+      background:rgba(0,0,0,.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .modal-backdrop.show{display:block}
+    .modal-card{
+      position:fixed; z-index:71; inset:auto 0 0 0; margin:auto; top:15vh; width:min(520px,92vw);
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(22,22,28,.78);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      border-radius:18px; padding:18px 18px 16px;
+      color:#eaeaf0; box-shadow:0 18px 40px rgba(0,0,0,.45);
+      display:none;
+    }
+    .modal-card.show{display:block}
+    .modal-card h3{margin:0 0 6px 0}
+    .modal-actions{display:flex;justify-content:flex-end;margin-top:10px}
+    .btn-close{
+      border:1px solid var(--line); background:#21212a; color:#eaeaf0;
+      border-radius:999px; padding:.5rem .9rem; cursor:pointer;
+    }
   </style>
 </head>
 <body>
@@ -551,6 +593,9 @@
       </div>
     </div>
   </header>
+
+  <!-- dropdown page-blur backdrop -->
+  <div id="dd-backdrop" class="dd-backdrop" aria-hidden="true"></div>
 
   <!-- ===== Hero ===== -->
   <section class="hero">
@@ -675,7 +720,7 @@
         <h2>Get a Quote</h2>
         <p class="sub">Proudly serving Sarasota and surrounding areas.</p>
         <p class="sub" aria-label="Contact details">
-          Phone: <a href="tel:+19412221890">(941) 222-1890</a> ·
+          Phone: <a href="tel:+19412221890">(941) 222-1890</a><span class="dot-sep"> · </span><br class="mobile-br">
           Email: <a href="mailto:primepaintsrq@gmail.com">primepaintsrq@gmail.com</a>
         </p>
       </div>
@@ -854,6 +899,16 @@
     </svg>
   </a>
 
+  <!-- Thank-you modal -->
+  <div id="thanks-backdrop" class="modal-backdrop" aria-hidden="true"></div>
+  <div id="thanks-card" class="modal-card" role="dialog" aria-modal="true" aria-labelledby="thanks-title" aria-describedby="thanks-desc">
+    <h3 id="thanks-title">Thanks! Your request was sent.</h3>
+    <p id="thanks-desc" class="sub" style="margin:6px 0 0">We’ll get back to you shortly.</p>
+    <div class="modal-actions">
+      <button type="button" class="btn-close" id="thanks-close">Close</button>
+    </div>
+  </div>
+
   <script>
     // reveal-on-scroll
     var io = new IntersectionObserver(function(entries){
@@ -864,10 +919,26 @@
     // year
     document.getElementById('yr').textContent = new Date().getFullYear();
 
-    // ===== Netlify AJAX submit =====
+    // ===== Netlify AJAX submit (success -> custom modal) =====
     (function(){
       const form = document.getElementById('form');
       if(!form) return;
+
+      const thanksBackdrop = document.getElementById('thanks-backdrop');
+      const thanksCard = document.getElementById('thanks-card');
+      const thanksClose = document.getElementById('thanks-close');
+
+      function showThanks(){
+        thanksBackdrop.classList.add('show');
+        thanksCard.classList.add('show');
+      }
+      function hideThanks(){
+        thanksBackdrop.classList.remove('show');
+        thanksCard.classList.remove('show');
+      }
+      thanksBackdrop.addEventListener('click', hideThanks);
+      thanksClose.addEventListener('click', hideThanks);
+      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') hideThanks(); });
 
       function encodeFormData(fd){
         const obj = {};
@@ -896,7 +967,7 @@
 
           if ((res.status >= 200 && res.status < 300) || (res.status >= 300 && res.status < 400)){
             form.reset();
-            alert('Thanks! Your request was sent. We’ll get back to you shortly.');
+            showThanks();
           } else {
             alert('Hmm, there was an issue sending. Please try again in a moment or call us.');
           }
@@ -918,6 +989,86 @@
       }
     })();
 
+    // brand dropdown (mobile): tap logo toggles quick links + glass + page blur, auto-hide on actions
+    (function(){
+      var brand = document.querySelector('.brand-logo');
+      var dd = document.querySelector('.brand-dd');
+      var backdrop = document.getElementById('dd-backdrop');
+
+      if(brand && dd && backdrop){
+        function isMobile(){ return window.matchMedia('(max-width: 960px)').matches; }
+
+        function openDD(){
+          brand.classList.add('open');
+          dd.style.display = 'block';
+          backdrop.classList.add('show');
+        }
+        function closeDD(){
+          brand.classList.remove('open');
+          dd.style.display = 'none';
+          backdrop.classList.remove('show');
+        }
+        function toggleDD(){
+          if(brand.classList.contains('open')) closeDD(); else openDD();
+        }
+
+        brand.addEventListener('click', function(ev){
+          if(isMobile()){
+            ev.preventDefault(); toggleDD();
+          }
+        });
+
+        // Hide on click-away
+        document.addEventListener('click', function(e){
+          if(!brand.contains(e.target) && !dd.contains(e.target)) closeDD();
+        });
+
+        // Hide on any key press
+        document.addEventListener('keydown', function(){ closeDD(); });
+
+        // Hide on scroll / wheel / touchmove
+        ['scroll','wheel','touchmove'].forEach(evt => {
+          window.addEventListener(evt, function(){ closeDD(); }, {passive:true});
+        });
+
+        // Hide when choosing a link
+        dd.querySelectorAll('a').forEach(a=>{
+          a.addEventListener('click', function(){ closeDD(); });
+        });
+
+        // Hide when backdrop clicked
+        backdrop.addEventListener('click', closeDD);
+      }
+    })();
+
+    // ===== Phone input formatter ( (###) ###-#### ) =====
+    (function(){
+      const phone = document.getElementById('phone');
+      if(!phone) return;
+
+      const format = (val) => {
+        const digits = val.replace(/\D/g,'').slice(0,10);
+        const len = digits.length;
+        if(len < 4) return digits;
+        if(len < 7) return `(${digits.slice(0,3)}) ${digits.slice(3)}`;
+        return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6,10)}`;
+      };
+
+      phone.addEventListener('input', (e)=>{
+        const pos = phone.selectionStart;
+        const before = phone.value;
+        phone.value = format(phone.value);
+        // keep caret near end for simple UX
+        if(document.activeElement === phone){
+          const delta = phone.value.length - before.length;
+          phone.setSelectionRange(pos + (delta > 0 ? delta : 0), pos + (delta > 0 ? delta : 0));
+        }
+      });
+
+      // On paste, format as well
+      phone.addEventListener('blur', ()=>{ phone.value = format(phone.value); });
+    })();
+
     // ===== Fancy (glass) select initializer =====
     (function(){
       function buildFancy(wrapper){
@@ -935,7 +1086,7 @@
           div.setAttribute('role','option');
           div.setAttribute('data-value', opt.value);
           if (opt.selected) div.setAttribute('aria-selected','true');
-          if (idx === 0) div.setAttribute('data-placeholder','true');
+          if (idx === 0) div.setAttribute('data-placeholder','true'); // placeholder
           list.appendChild(div);
         });
 
