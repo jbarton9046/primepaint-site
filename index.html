@@ -67,6 +67,8 @@
   <style>
     :root{
       --bg:#0a0a0b; --bg2:#0f0f12; --text:#f2f2f3; --muted:#bdbdc2; --line:#232329;
+      /* darker, unified text color inside fields */
+      --field-text:#d0d0d6;
 
       /* header */
       --header-h:86px;
@@ -132,10 +134,10 @@
     .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.98rem;line-height:1;padding:.4rem 0}
     .menu-btn{display:none;align-items:center;justify-content:center;border:1px solid var(--line);background:#1d1d24;color:#eaeaf0;border-radius:10px;padding:8px 10px;font-size:.95rem;line-height:1;cursor:pointer}
 
-    /* Right-side social icons (bigger) */
+    /* Right-side social icons (larger) */
     .nav-social{display:flex;align-items:center;gap:16px}
     .nav-social a{
-      width:34px;height:34px;
+      width:42px;height:42px; /* up from 34px */
       display:inline-flex;align-items:center;justify-content:center;
       opacity:.85;transition:opacity .2s, transform .2s; color:#eaeaf0;
     }
@@ -281,10 +283,12 @@
       #contact .contact-grid{grid-template-columns:1fr 1fr;}
       #contact .contact-grid .span-2{ grid-column:1 / -1; }
     }
-    #contact label{font-size:.9rem;color:var(--muted);margin-bottom:6px;display:block;}
+    /* Labels bright white */
+    #contact label{font-size:.9rem;color:var(--text);margin-bottom:6px;display:block;}
     #contact .req{color:#eaeaf0;margin-left:4px}
+    /* Inputs/textarea/select unified darker text */
     #contact input,#contact textarea,#contact select{
-      width:100%; border:1px solid var(--line); background:#121216; color:var(--text);
+      width:100%; border:1px solid var(--line); background:#121216; color:var(--field-text);
       border-radius:14px; padding:12px 14px; outline:none; transition:border-color .2s, box-shadow .2s;
     }
     #contact input::placeholder,#contact textarea::placeholder{ color:#9b9ba2; }
@@ -313,7 +317,7 @@
         url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%239b9ba2' d='M7 10l5 5 5-5z'/></svg>")
         no-repeat right 14px center / 18px 18px;
       border:1px solid var(--line);
-      color:var(--text);
+      color:var(--field-text);
       border-radius:14px;
       transition:border-color .2s, box-shadow .2s, transform .15s;
     }
@@ -331,12 +335,12 @@
     /* Keep fields dark during autofill */
     #contact input,
     #contact select,
-    #contact textarea { background-color:#121216; color:var(--text); }
+    #contact textarea { background-color:#121216; color:var(--field-text); }
     #contact input:-webkit-autofill,
     #contact select:-webkit-autofill,
     #contact textarea:-webkit-autofill{
-      -webkit-text-fill-color: var(--text) !important;
-      caret-color: var(--text);
+      -webkit-text-fill-color: var(--field-text) !important;
+      caret-color: var(--field-text);
       box-shadow: 0 0 0 1000px #121216 inset !important;
       transition: background-color 9999s ease-in-out 0s;
     }
@@ -344,7 +348,7 @@
     #contact select:-moz-autofill,
     #contact textarea:-moz-autofill{
       box-shadow: 0 0 0 1000px #121216 inset !important;
-      color: var(--text) !important;
+      color: var(--field-text) !important;
     }
 
     /* Fancy (glass) selects (State, Project Type, Timeframe) */
@@ -358,7 +362,7 @@
       border:1px solid var(--line);
       border-radius:14px;
       padding:12px 44px 12px 14px;
-      color:var(--text);
+      color:var(--field-text); /* unify with inputs */
       background:rgba(255,255,255,0.03);
       backdrop-filter: blur(10px) saturate(140%);
       -webkit-backdrop-filter: blur(10px) saturate(140%);
@@ -459,6 +463,14 @@
         --footer-side-text: 9px;
       }
       .footer-mark{ padding-inline:10px; }
+    }
+
+    /* Mobile footer: inset ~1/4" each side & prevent clipping */
+    @media (max-width: 640px){
+      .footer-mark{
+        padding-inline:24px;  /* ≈ 0.25in on each side */
+        overflow:visible;     /* keep the "T" from clipping */
+      }
     }
 
     /* Reveal animation */
@@ -692,13 +704,22 @@
         </div>
 
         <div class="contact-grid">
-          <div>
-            <label for="name">Name <span class="req" aria-hidden="true">*</span></label>
-            <input id="name" name="name" placeholder="Your name" required aria-required="true" autocomplete="name">
-          </div>
-          <div>
-            <label for="phone">Phone <span class="req" aria-hidden="true">*</span></label>
-            <input id="phone" name="phone" placeholder="(941) 222-1890" required aria-required="true" inputmode="tel" autocomplete="tel">
+          <!-- First + Last + Phone on the same row (desktop) -->
+          <div class="span-2">
+            <div style="display:grid; gap:14px; grid-template-columns:repeat(3,1fr)">
+              <div>
+                <label for="firstName">First Name <span class="req" aria-hidden="true">*</span></label>
+                <input id="firstName" name="firstName" placeholder="First name" required aria-required="true" autocomplete="given-name">
+              </div>
+              <div>
+                <label for="lastName">Last Name <span class="req" aria-hidden="true">*</span></label>
+                <input id="lastName" name="lastName" placeholder="Last name" required aria-required="true" autocomplete="family-name">
+              </div>
+              <div>
+                <label for="phone">Phone <span class="req" aria-hidden="true">*</span></label>
+                <input id="phone" name="phone" placeholder="(941) 222-1890" required aria-required="true" inputmode="tel" autocomplete="tel">
+              </div>
+            </div>
           </div>
 
           <div>
@@ -843,13 +864,12 @@
     // year
     document.getElementById('yr').textContent = new Date().getFullYear();
 
-    // ===== Netlify AJAX submit (replaces mailto) =====
+    // ===== Netlify AJAX submit =====
     (function(){
       const form = document.getElementById('form');
       if(!form) return;
 
       function encodeFormData(fd){
-        // Convert FormData -> plain object -> URL-encoded string
         const obj = {};
         fd.forEach((v, k) => { obj[k] = v; });
         return Object.keys(obj).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k])).join('&');
@@ -859,13 +879,12 @@
         e.preventDefault();
         const fd = new FormData(form);
 
-        // Basic required validation (Name, Phone, Message)
-        if(!fd.get('name')?.trim() || !fd.get('phone')?.trim() || !fd.get('message')?.trim()){
-          alert('Please fill in Name, Phone, and Message.'); return;
+        // Required validation (First, Last, Phone, Message)
+        if(!fd.get('firstName')?.trim() || !fd.get('lastName')?.trim() || !fd.get('phone')?.trim() || !fd.get('message')?.trim()){
+          alert('Please fill in First Name, Last Name, Phone, and Message.'); return;
         }
 
         try{
-          // Ensure the form-name field is present for Netlify parsing even via JS
           if(!fd.get('form-name')) fd.set('form-name', form.getAttribute('name') || 'quote');
 
           const body = encodeFormData(fd);
@@ -875,7 +894,6 @@
             body
           });
 
-          // Treat 2xx or 3xx as success for Netlify
           if ((res.status >= 200 && res.status < 300) || (res.status >= 300 && res.status < 400)){
             form.reset();
             alert('Thanks! Your request was sent. We’ll get back to you shortly.');
@@ -900,28 +918,7 @@
       }
     })();
 
-    // brand dropdown (mobile): tap logo toggles quick links
-    (function(){
-      var brand = document.querySelector('.brand-logo');
-      var dd = document.querySelector('.brand-dd');
-      if(brand && dd){
-        brand.addEventListener('click', function(ev){
-          // only toggle on narrow screens; otherwise follow link
-          if(window.matchMedia('(max-width: 960px)').matches){
-            ev.preventDefault();
-            brand.classList.toggle('open');
-          }
-        });
-        // click-away
-        document.addEventListener('click', function(e){
-          if(!brand.contains(e.target) && !dd.contains(e.target)){
-            brand.classList.remove('open');
-          }
-        });
-      }
-    })();
-
-    // ===== Fancy (glass) select initializer (State, Project Type, Timeframe) =====
+    // ===== Fancy (glass) select initializer =====
     (function(){
       function buildFancy(wrapper){
         var hidden = wrapper.querySelector('select');
@@ -938,7 +935,7 @@
           div.setAttribute('role','option');
           div.setAttribute('data-value', opt.value);
           if (opt.selected) div.setAttribute('aria-selected','true');
-          if (idx === 0) div.setAttribute('data-placeholder','true'); // placeholder
+          if (idx === 0) div.setAttribute('data-placeholder','true');
           list.appendChild(div);
         });
 
