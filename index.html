@@ -609,18 +609,12 @@
 
       <!-- Social icons, right side -->
       <div class="nav-social" aria-label="Social links">
-        <!-- Facebook (white icon, transparent bg; 2x for retina) -->
+        <!-- Facebook (inline SVG to avoid broken image) -->
         <a href="https://www.facebook.com/profile.php?id=61579078334234" aria-label="Facebook" target="_blank" rel="noopener">
-          <img
-            src="assets/icons/facebook-classic-white-32.png"
-            srcset="assets/icons/facebook-classic-white-64.png 2x"
-            width="32" height="32"
-            alt="Facebook"
-            style="display:inline-block;vertical-align:middle"
-            loading="lazy"
-          />
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path fill="#eaeaf0" d="M13 10h3l.5-4H13V4c0-1 .2-1.5 1.6-1.5H17V0h-2.6C11.8 0 11 2 11 4v2H8v4h3v10h4V10Z"/>
+          </svg>
         </a>
-
 
         <!-- Instagram -->
         <a href="https://www.instagram.com/primepaintllc" aria-label="Instagram" target="_blank" rel="noopener">
@@ -784,11 +778,6 @@
           <label>Don’t fill this out: <input name="bot-field"></label>
         </p>
 
-        <!-- subtle in-card required legend -->
-        <div class="form-meta">
-          <div class="req-note"><span class="req" aria-hidden="true">*</span> Required field</div>
-        </div>
-
         <div class="contact-grid">
           <!-- First + Last + Phone on the same row (desktop) -->
           <div class="span-2">
@@ -905,6 +894,10 @@
 
         <div class="contact-actions">
           <button class="btn-submit" type="submit">Get My Quote</button>
+        </div>
+        <!-- subtle in-card required legend (moved to bottom-right) -->
+        <div class="form-meta">
+          <div class="req-note"><span class="req" aria-hidden="true">*</span> Required field</div>
         </div>
         <p class="legal">By submitting, you agree to be contacted about your project.</p>
       </form>
