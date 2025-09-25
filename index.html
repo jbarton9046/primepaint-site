@@ -679,7 +679,7 @@
         method="POST"
         action="/"
         data-netlify="true"
-        data-netlify-honeypot="bot-field"
+        netlify-honeypot="bot-field"
       >
         <input type="hidden" name="form-name" value="quote">
         <p style="display:none">
@@ -865,6 +865,9 @@
         }
 
         try{
+          // Ensure the form-name field is present for Netlify parsing even via JS
+          if(!fd.get('form-name')) fd.set('form-name', form.getAttribute('name') || 'quote');
+
           const body = encodeFormData(fd);
           const res = await fetch(form.getAttribute('action') || '/', {
             method:'POST',
@@ -872,7 +875,7 @@
             body
           });
 
-          // Netlify may 303-redirect on success in non-AJAX flows — treat 2xx OR 3xx as success here.
+          // Treat 2xx or 3xx as success for Netlify
           if ((res.status >= 200 && res.status < 300) || (res.status >= 300 && res.status < 400)){
             form.reset();
             alert('Thanks! Your request was sent. We’ll get back to you shortly.');
