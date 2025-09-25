@@ -509,7 +509,10 @@
         color:#eaeaf0; text-decoration:none; font-weight:600;
         box-shadow:0 8px 20px rgba(0,0,0,.32);
         transition: transform .2s, background .2s, box-shadow .2s;
+        /* Draggable affordances */
+        touch-action: none; user-select: none; cursor: grab;
       }
+      .call-fab:active{ cursor: grabbing; }
       .call-fab:hover{
         transform: translateY(-1px);
         background: rgba(255,255,255,0.16);
@@ -542,6 +545,28 @@
     .btn-close{
       border:1px solid var(--line); background:#21212a; color:#eaeaf0;
       border-radius:999px; padding:.5rem .9rem; cursor:pointer;
+    }
+
+    /* ---------- ADDED: card that “fits the words” (applied to the first Services card only) ---------- */
+    .auto-fit-card{
+      display:inline-block;
+      width:fit-content;
+      max-width:min(100%, 36rem);
+      padding:18px; /* match .card padding for consistency */
+      text-align:left;
+    }
+    @media (max-width:640px){
+      .auto-fit-card{ display:block; width:100%; max-width:100%; }
+    }
+
+    /* ---------- ADDED: mobile-only fix to prevent full-page blur when dropdown opens ---------- */
+    @media (max-width:960px){
+      .dd-backdrop{
+        /* keep a subtle dim, but kill blur on mobile so the page stays sharp */
+        background:rgba(0,0,0,.25);
+        backdrop-filter:none !important;
+        -webkit-backdrop-filter:none !important;
+      }
     }
   </style>
 </head>
@@ -634,7 +659,8 @@
         </div>
       </div>
       <div class="grid g-4 reveal" style="margin-top:16px">
-        <article class="card"><h3>Interior Painting</h3><p class="sub">Walls, ceilings, trim, feature walls, staircases. Low-VOC options available.</p></article>
+        <!-- ADDED .auto-fit-card ONLY to the first card -->
+        <article class="card auto-fit-card"><h3>Interior Painting</h3><p class="sub">Walls, ceilings, trim, feature walls, staircases. Low-VOC options available.</p></article>
         <article class="card"><h3>Exterior Painting</h3><p class="sub">Stucco/wood exteriors, entry doors, shutters, pool decks, lanai ceilings.</p></article>
         <article class="card"><h3>Cabinet Painting</h3><p class="sub">Factory-smooth finishes for kitchens &amp; bathrooms with durable 2K coatings.</p></article>
         <article class="card"><h3>Wall Murals</h3><p class="sub">Custom murals and decorative finishes that make a statement.</p></article>
@@ -1136,6 +1162,80 @@
       }
 
       document.querySelectorAll('.fs-wrap').forEach(buildFancy);
+    })();
+
+    /* ===== ADDED: draggable phone FAB (mobile & desktop). Remembers position. ===== */
+    (function(){
+      const fab = document.querySelector('.call-fab');
+      if(!fab) return;
+
+      const KEY = 'pp_fab_pos';
+      // load position if available
+      try{
+        const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+        if(saved && typeof saved.x === 'number' && typeof saved.y === 'number'){
+          fab.style.right = 'auto';
+          fab.style.bottom = 'auto';
+          fab.style.left = saved.x + 'px';
+          fab.style.top = saved.y + 'px';
+        }
+      }catch(e){ /* ignore */ }
+
+      let startX=0, startY=0, elX=0, elY=0, dragging=false;
+
+      const onStart = (e) => {
+        dragging = true;
+        const pt = getPoint(e);
+        const rect = fab.getBoundingClientRect();
+        startX = pt.x;
+        startY = pt.y;
+        elX = rect.left + window.scrollX;
+        elY = rect.top + window.scrollY;
+
+        fab.style.right = 'auto';
+        fab.style.bottom = 'auto';
+      };
+
+      const onMove = (e) => {
+        if(!dragging) return;
+        e.preventDefault();
+        const pt = getPoint(e);
+        let nx = elX + (pt.x - startX);
+        let ny = elY + (pt.y - startY);
+
+        // keep inside viewport
+        const vw = document.documentElement.clientWidth;
+        const vh = window.innerHeight;
+        const r = fab.getBoundingClientRect();
+        const w = r.width, h = r.height;
+
+        nx = Math.max(6, Math.min(nx, vw - w - 6));
+        ny = Math.max(6 + window.scrollY, Math.min(ny, window.scrollY + vh - h - 6));
+
+        fab.style.left = nx + 'px';
+        fab.style.top  = ny + 'px';
+      };
+
+      const onEnd = () => {
+        if(!dragging) return;
+        dragging = false;
+        const rect = fab.getBoundingClientRect();
+        const pos = { x: rect.left + window.scrollX, y: rect.top + window.scrollY };
+        try{ localStorage.setItem(KEY, JSON.stringify(pos)); }catch(e){}
+      };
+
+      const getPoint = (e) => {
+        if(e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        return { x: e.clientX, y: e.clientY };
+      };
+
+      fab.addEventListener('touchstart', onStart, {passive:false});
+      window.addEventListener('touchmove', onMove, {passive:false});
+      window.addEventListener('touchend', onEnd);
+
+      fab.addEventListener('mousedown', (e)=>{ onStart(e); });
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onEnd);
     })();
   </script>
 
