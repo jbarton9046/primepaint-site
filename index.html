@@ -591,7 +591,13 @@ h2{font-size:1.95rem;margin:0}
     -webkit-backdrop-filter:none !important;
   }
 }
-  </style>
+/* Visually bump Facebook icon size to match Instagram */
+.nav-social a[aria-label="Facebook"] svg{
+  transform: scale(1.28);   /* tweak 1.20–1.35 to taste */
+  transform-origin: 50% 50%;
+}
+
+</style>
 </head>
 <body>
   <div id="top"></div>
