@@ -659,7 +659,7 @@
         </div>
       </div>
       <div class="grid g-4 reveal" style="margin-top:16px">
-        <!-- ADDED .auto-fit-card ONLY to the first card -->
+        <!-- First card uses auto-fit so it hugs the text nicely -->
         <article class="card auto-fit-card"><h3>Interior Painting</h3><p class="sub">Walls, ceilings, trim, feature walls, staircases. Low-VOC options available.</p></article>
         <article class="card"><h3>Exterior Painting</h3><p class="sub">Stucco/wood exteriors, entry doors, shutters, pool decks, lanai ceilings.</p></article>
         <article class="card"><h3>Cabinet Painting</h3><p class="sub">Factory-smooth finishes for kitchens &amp; bathrooms with durable 2K coatings.</p></article>
@@ -952,9 +952,13 @@
 
       const thanksBackdrop = document.getElementById('thanks-backdrop');
       const thanksCard = document.getElementById('thanks-card');
+      const thanksTitle = document.getElementById('thanks-title');
+      const thanksDesc = document.getElementById('thanks-desc');
       const thanksClose = document.getElementById('thanks-close');
 
       function showThanks(){
+        // Resize card neatly around text by letting height auto and nudging into view
+        thanksCard.style.maxHeight = 'none';
         thanksBackdrop.classList.add('show');
         thanksCard.classList.add('show');
       }
@@ -992,6 +996,16 @@
           });
 
           if ((res.status >= 200 && res.status < 300) || (res.status >= 300 && res.status < 400)){
+            // personalize thank-you with first name
+            const first = (fd.get('firstName') || '').toString().trim();
+            if(first){
+              thanksTitle.textContent = `Thank you, ${first}!`;
+              thanksDesc.textContent = 'We received your request and will reach out shortly.';
+            } else {
+              thanksTitle.textContent = 'Thanks! Your request was sent.';
+              thanksDesc.textContent = 'We’ll get back to you shortly.';
+            }
+
             form.reset();
             showThanks();
           } else {
@@ -1164,7 +1178,7 @@
       document.querySelectorAll('.fs-wrap').forEach(buildFancy);
     })();
 
-    /* ===== ADDED: draggable phone FAB (mobile & desktop). Remembers position. ===== */
+    /* ===== Draggable phone FAB (mobile & desktop). Remembers position. ===== */
     (function(){
       const fab = document.querySelector('.call-fab');
       if(!fab) return;
