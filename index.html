@@ -489,9 +489,6 @@
       }
       .call-fab svg{ width:28px; height:28px; display:block; }
     }
-
-    /* ===== Places error overlay guard (prevents "!" icons & lockups) ===== */
-    .gm-err-container, .gm-err-autocomplete { display: none !important; }
   </style>
 </head>
 <body>
@@ -924,52 +921,6 @@
       }
     })();
 
-    // ===== Google Places Autocomplete (Address) with fail-safe guards =====
-    window.initPlaces = function(){
-      try{
-        var input = document.getElementById('address');
-        if (!input || !window.google || !google.maps || !google.maps.places) return;
-
-        var ac = new google.maps.places.Autocomplete(input, {
-          types: ['address'],
-          fields: ['address_components','formatted_address','name'],
-          componentRestrictions: { country: ['us'] }
-        });
-
-        ac.addListener('place_changed', function(){
-          try{
-            var place = ac.getPlace();
-            if (!place || !place.address_components) return;
-
-            function get(types, short){
-              var comp = place.address_components.find(c => types.some(t => c.types.includes(t)));
-              return comp ? (short ? comp.short_name : comp.long_name) : '';
-            }
-
-            var formatted = place.formatted_address || '';
-            if (formatted) input.value = formatted;
-
-            var city = get(['locality','sublocality','postal_town']);
-            var state = get(['administrative_area_level_1'], true);
-            var zip = get(['postal_code']);
-
-            if (city) document.getElementById('city').value = city;
-            if (state) document.getElementById('state').value = state;
-            if (zip) document.getElementById('zip').value = zip;
-          }catch(err){ console.warn('place_changed handler error', err); }
-        });
-      }catch(e){
-        console.warn('initPlaces error', e);
-      }
-    };
-
-    // Watchdog: if Maps script fails (bad key/restrictions), keep field normal and avoid UI lockups
-    setTimeout(function(){
-      if(!window.google || !google.maps || !google.maps.places){
-        console.warn('Google Maps Places did not load. Check API key, billing, Places API enablement, and HTTP referrer restrictions.');
-      }
-    }, 6000);
-
     // ===== Fancy (glass) select initializer (State, Project Type, Timeframe) =====
     (function(){
       function buildFancy(wrapper){
@@ -1032,16 +983,13 @@
         });
         document.addEventListener('click', function(e){ if(!wrapper.contains(e.target)) close(); });
 
-        // Sync if value changes programmatically (Places fills State)
+        // Sync if value changes programmatically
         hidden.addEventListener('change', function(){ setFromValue(hidden.value || ''); });
       }
 
       document.querySelectorAll('.fs-wrap').forEach(buildFancy);
     })();
   </script>
-
-  <!-- Google Maps JavaScript API (Places) -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AlzaSyC1u9hVE7BjAbLSC12pyWYVDdTTRY8OZUk&libraries=places&loading=async&callback=initPlaces" async defer></script>
 
   <!--
     If Netlify Forms isn't available in the deploy context,
