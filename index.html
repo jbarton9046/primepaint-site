@@ -153,18 +153,19 @@ body{
 /* Right-side social icons (larger) */
 .nav-social{display:flex;align-items:center;gap:16px}
 .nav-social a{
-  width:42px;height:42px; /* up from 34px */
+  width:56px;               /* larger button box */
+  height:56px;
   display:inline-flex;align-items:center;justify-content:center;
   opacity:.85;transition:opacity .2s, transform .2s;
   color:#eaeaf0;
 }
 .nav-social a:hover{opacity:1; transform:translateY(-1px)}
-.nav-social svg{width:100%;height:100%;display:block}
 
-/* Unified size/fit for both icons inside the 42×42 buttons */
-.nav-social .nav-icon{
-  width:26px;
-  height:26px;
+/* Make both SVG (Instagram) and IMG (Facebook PNG) fill nicely */
+.nav-social svg,
+.nav-social img{
+  width:72%;
+  height:72%;
   display:block;
   object-fit:contain;
 }
@@ -634,12 +635,12 @@ h2{font-size:1.95rem;margin:0}
       <div class="nav-social" aria-label="Social links">
         <!-- Facebook (PNG) -->
         <a href="https://www.facebook.com/profile.php?id=61579078334234" aria-label="Facebook" target="_blank" rel="noopener">
-          <img class="nav-icon" src="assets/icons/facebook-classic-white-32.png" alt="Facebook">
+          <img src="assets/icons/facebook-classic-white-32.png" alt="Facebook">
         </a>
 
         <!-- Instagram (SVG) -->
         <a href="https://www.instagram.com/primepaintllc" aria-label="Instagram" target="_blank" rel="noopener">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="5" stroke="#eaeaf0" stroke-width="2"/>
             <circle cx="12" cy="12" r="4.2" stroke="#eaeaf0" stroke-width="2"/>
             <circle cx="17.5" cy="6.5" r="1.2" fill="#eaeaf0"/>
