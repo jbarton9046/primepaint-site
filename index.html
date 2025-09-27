@@ -342,8 +342,12 @@ h2{font-size:1.95rem;margin:0}
 }
 #contact .btn-submit:hover{ transform:translateY(-1px); background:#282835; }
 
-/* Legal */
-#contact .legal{ font-size:.85rem; color:#9e9ea4; margin-top:10px; }
+/* Legal (disclaimer) — brighten to match button/required */
+#contact .legal{
+  font-size:.85rem;
+  color: var(--text);   /* same bright white used elsewhere */
+  margin-top:10px;
+}
 
 /* Required note block (LEFT under the textarea) */
 #contact .form-meta{
