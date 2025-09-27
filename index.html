@@ -605,6 +605,17 @@ h2{font-size:1.95rem;margin:0}
     -webkit-backdrop-filter:none !important;
   }
 }
+
+/* === Tweaks: Facebook closer + slightly larger; keep Instagram unchanged === */
+.nav-social{ gap:10px; } /* FB sits closer to IG */
+
+.nav-social a[aria-label="Facebook"] img,
+.nav-social a[aria-label="Facebook"] svg{
+  width:88%;
+  height:88%;            /* FB slightly larger than IG */
+  transform:none;        /* remove previous 1px nudge so it's vertically centered */
+}
+
   </style>
 </head>
 <body>
