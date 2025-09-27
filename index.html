@@ -170,6 +170,14 @@ body{
   object-fit:contain;
 }
 
+/* Facebook a touch larger but still centered & aligned */
+.nav-social a[aria-label="Facebook"] img,
+.nav-social a[aria-label="Facebook"] svg{
+  width:80%;
+  height:80%;
+  transform: translateY(1px); /* tiny baseline nudge for symmetry */
+}
+
 /* ===== Hero ===== */
 .hero{position:relative;isolation:isolate;overflow:hidden;min-height:calc(100vh - var(--header-h))}
 .hero::before{
