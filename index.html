@@ -350,7 +350,6 @@ h2{font-size:1.95rem;margin:0}
   display:flex;
   justify-content:flex-start; /* left side */
 }
-/* Make "Required field" match header white */
 #contact .form-meta .req-note{
   font-size:.85rem;
   color: var(--text);
@@ -413,6 +412,9 @@ h2{font-size:1.95rem;margin:0}
   transition:border-color .2s, box-shadow .2s, transform .15s;
   position:relative;
 }
+/* PLACEHOLDER COLOR MATCH */
+.fs-btn.is-placeholder{ color:#9b9ba2; }
+
 .fs-btn:focus{
   outline:none; border-color:#4a4a55; box-shadow:0 0 0 3px rgba(255,255,255,.05);
   transform:translateY(-1px);
@@ -1182,6 +1184,10 @@ h2{font-size:1.95rem;margin:0}
         var label = hidden.options[hidden.selectedIndex]?.text || 'Select…';
         btn.textContent = label || 'Select…';
         sr.textContent = 'Selected: ' + btn.textContent;
+
+        // mark placeholder state for color
+        var isPlaceholder = (hidden.selectedIndex === 0) || !hidden.value;
+        btn.classList.toggle('is-placeholder', isPlaceholder);
       }
 
       // Initialize label
