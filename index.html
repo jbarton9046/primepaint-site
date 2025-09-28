@@ -159,7 +159,24 @@ body{
 .mainnav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-left:2px}
 .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.98rem;line-height:1;padding:.4rem 0}
 
-/* >>> ADDED: active nav link bright white (no underline) <<< */
+/* >>> ADDED/EXPANDED: nav hover/active color + opacity (matches social hover) <<< */
+.header .mainnav a,
+.brand-dd a{
+  opacity:.85;
+  transition: opacity .2s ease, color .2s ease;
+}
+.header .mainnav a:hover,
+.brand-dd a:hover{
+  color:#ffffff !important;
+  opacity:1 !important;
+}
+.header .mainnav a.active,
+.brand-dd a.active{
+  color:#ffffff !important;
+  opacity:1 !important;
+}
+
+/* keep existing active rule for specificity backup */
 .header .mainnav a.active{ color:#ffffff !important; }
 
 .menu-btn{display:none;align-items:center;justify-content:center;border:1px solid var(--line);background:#1d1d24;color:#eaeaf0;border-radius:10px;padding:8px 10px;font-size:.95rem;line-height:1;cursor:pointer}
@@ -1326,38 +1343,84 @@ a.pill:hover {
     }
   })();
 
-  /* >>> ADDED: Bright-white active link in navbar while scrolling/clicking <<< */
+  /* >>> REPLACED: Simple ScrollSpy for active nav (bright white + full opacity) <<< */
   (function(){
-    var nav = document.getElementById('primary-nav');
-    if(!nav) return;
-    var links = Array.from(nav.querySelectorAll('a[href^="#"]'));
+    var header = document.querySelector('.header');
+    var mainNav = document.getElementById('primary-nav');
+    var dd = document.querySelector('.brand-dd');
+
+    // Combine links from main nav and brand dropdown (mobile)
+    var linkSelector = 'a[href^="#"]';
+    var links = Array.from((mainNav ? mainNav.querySelectorAll(linkSelector) : []))
+      .concat(Array.from(dd ? dd.querySelectorAll(linkSelector) : []));
+
+    if(!links.length) return;
+
+    // Map of id -> section element
     var sections = links
-      .map(function(a){
-        var id = a.getAttribute('href').slice(1);
-        return document.getElementById(id);
-      })
+      .map(function(a){ return (a.getAttribute('href') || '').slice(1); })
+      .filter(Boolean)
+      .map(function(id){ return document.getElementById(id); })
       .filter(Boolean);
 
-    function setActive(id){
-      links.forEach(function(a){
-        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+    // Helper to get numeric header height from CSS var
+    function headerH(){
+      var h = getComputedStyle(document.documentElement).getPropertyValue('--header-h') || '0';
+      var n = parseInt(h.replace('px','').trim(), 10);
+      return isNaN(n) ? 0 : n;
+    }
+
+    // Cache of section top offsets (account for header)
+    var offsets = {};
+    function recalc(){
+      var hh = headerH();
+      sections.forEach(function(sec){
+        offsets[sec.id] = sec.getBoundingClientRect().top + window.scrollY - hh - 12; // 12px matches scroll-margin-top buffer
       });
     }
 
-    // Highlight on scroll (center-ish viewport)
-    var obs = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ setActive(e.target.id); }
+    function setActive(id){
+      links.forEach(function(a){
+        var match = (a.getAttribute('href') === '#' + id);
+        a.classList.toggle('active', match);
       });
-    }, { root: null, rootMargin: '-45% 0px -50% 0px', threshold: 0.01 });
+    }
 
-    sections.forEach(function(sec){ obs.observe(sec); });
+    // Choose the current section based on scroll position
+    var ticking = false;
+    function onScroll(){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        var hh = headerH();
+        var pos = window.scrollY + hh + 20; // point slightly below header
+        var current = sections[0] ? sections[0].id : null;
+        for(var i=0;i<sections.length;i++){
+          var id = sections[i].id;
+          if(pos >= (offsets[id] - 80)){ current = id; } else { break; }
+        }
+        if(current){ setActive(current); }
+        ticking = false;
+      });
+    }
 
-    // Also update immediately on click
+    // Initialize
+    recalc();
+    onScroll();
+
+    // Recalc on load/resize/orientation/font swap
+    window.addEventListener('load', recalc);
+    window.addEventListener('resize', function(){ recalc(); onScroll(); });
+    window.addEventListener('orientationchange', function(){ recalc(); onScroll(); });
+
+    // Scroll listener
+    window.addEventListener('scroll', onScroll, {passive:true});
+
+    // Also update immediately on link click (both navs)
     links.forEach(function(a){
       a.addEventListener('click', function(){
-        var id = a.getAttribute('href').slice(1);
-        setActive(id);
+        var id = (a.getAttribute('href') || '').slice(1);
+        if(id){ setActive(id); }
       });
     });
   })();
