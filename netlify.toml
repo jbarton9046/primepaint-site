@@ -1,22 +1,17 @@
-# netlify.toml — place this file at the REPO ROOT
-
+# netlify.toml
 [build]
-  # Your site is a static site in the repo root
   publish = "."
-  command = ""   # no build step needed
+  command = ""   # static site, no build step
 
-# If you have an `_redirects` file in the repo root, Netlify will use it automatically.
-
-# HTML minification via netlify-plugin-minify-html
+# HTML minification plugin (works only if it's installed — see package.json)
 [[plugins]]
   package = "netlify-plugin-minify-html"
 
   [plugins.inputs]
-    # Run plugin in these deploy contexts (optional; remove to default to production)
+    # Which deploy contexts to run on
     contexts = ["production", "deploy-preview", "branch-deploy"]
 
-    # Options forwarded to html-minifier-terser
-    # NOTE: must be nested under "minifierOptions" in TOML
+    # Options must live under "minifierOptions"
     minifierOptions = {
       collapseWhitespace = true,
       removeComments = true,
