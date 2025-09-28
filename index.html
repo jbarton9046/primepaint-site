@@ -130,29 +130,44 @@ body{
 .brand-logo{display:flex;align-items:center;text-decoration:none;position:relative}
 .brand-img{height:var(--brand-h);width:auto;display:block;object-fit:contain;cursor:pointer}
 
-/* brand-attached dropdown (mobile) — GLASS + BLUR */
+/* brand-attached dropdown (mobile) — FROSTED GLASS + STRONGER BLUR */
 .brand-dd{
   position:absolute; left:0; top:100%; margin-top:10px; z-index:35;
-  background:rgba(20,20,24,.72);
-  border:1px solid rgba(255,255,255,.08);
+  background:rgba(15,15,18,.38);                    /* darker base for contrast */
+  border:1px solid rgba(255,255,255,.10);
   border-radius:14px;
-  padding:8px;
+  padding:10px;
   display:none;
-  min-width:200px;
-  box-shadow:0 12px 26px rgba(0,0,0,.45);
-  backdrop-filter: blur(14px) saturate(160%);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  min-width:220px;
+  box-shadow:0 14px 28px rgba(0,0,0,.5);
+  backdrop-filter: blur(22px) saturate(160%);        /* strong blur behind the panel */
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  overflow:hidden;                                   /* contain ::before radius */
 }
-.brand-dd a{display:block;color:#eaeaf0;text-decoration:none;padding:10px 12px;border-radius:10px}
-.brand-dd a:hover{background:rgba(255,255,255,.06)}
+.brand-dd::before{                                   /* subtle internal gradient & extra blur layer */
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  pointer-events:none;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+.brand-dd a{
+  display:block;color:#ffffff;text-decoration:none;
+  padding:12px 14px;border-radius:10px;
+  opacity:.95;
+  text-shadow:0 1px 10px rgba(0,0,0,.35);           /* light glow for readability on images */
+  transition: background .2s ease, opacity .2s ease, color .2s ease;
+}
+.brand-dd a:hover{background:rgba(255,255,255,.10);opacity:1}
 .brand-logo.open + .brand-dd{display:block}
 
 /* backdrop for dropdown to blur page */
 .dd-backdrop{
   position:fixed; inset:0; z-index:34; display:none;
-  background:rgba(0,0,0,.25);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background:rgba(0,0,0,.30);
+  backdrop-filter: blur(8px);                        /* blur the page behind on open */
+  -webkit-backdrop-filter: blur(8px);
 }
 .dd-backdrop.show{display:block}
 
@@ -541,12 +556,12 @@ h2{font-size:1.95rem;margin:0}
   }
 }
 
-/* ---------- Mobile-only: prevent heavy page blur on dropdown ---------- */
+/* ---------- Mobile-only: page backdrop keeps a *light* blur for readability ---------- */
 @media (max-width:960px){
   .dd-backdrop{
-    background:rgba(0,0,0,.25);
-    backdrop-filter:none !important;
-    -webkit-backdrop-filter:none !important;
+    background:rgba(0,0,0,.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
 }
 
@@ -650,13 +665,7 @@ h2{font-size:1.95rem;margin:0}
 }
 
 /* ---------- Mobile-only: prevent heavy page blur on dropdown ---------- */
-@media (max-width:960px){
-  .dd-backdrop{
-    background:rgba(0,0,0,.25);
-    backdrop-filter:none !important;
-    -webkit-backdrop-filter:none !important;
-  }
-}
+/* (Replaced above with a lighter blur so the menu still pops) */
 
 /* === Tweaks: Facebook closer + slightly larger; keep Instagram unchanged === */
 .nav-social{ gap:4px; }
