@@ -143,6 +143,7 @@ body{
   backdrop-filter: blur(22px) saturate(160%);
   -webkit-backdrop-filter: blur(22px) saturate(160%);
   overflow:hidden;
+  will-change: transform;
 }
 .brand-dd::before{
   content:""; position:absolute; inset:0;
@@ -1438,6 +1439,7 @@ a.pill:hover {
       if(!target) return;
       var top = target.getBoundingClientRect().top + window.scrollY - headerH() - 8;
       window.scrollTo({ top: top, behavior: 'smooth' });
+      try { history.replaceState(null, '', '#' + id); } catch(e){}
       setActive(id);
     }
 
@@ -1446,12 +1448,16 @@ a.pill:hover {
         var href = a.getAttribute('href') || '';
         if(href.startsWith('#') && href.length > 1){
           ev.preventDefault();
+          ev.stopPropagation(); // ensure our navigation runs before any click-away close
           var id = href.slice(1);
           smoothScrollTo(id);
-          // close dropdown if open
-          document.querySelector('.brand-logo')?.classList.remove('open');
-          document.querySelector('.brand-dd')?.style && (document.querySelector('.brand-dd').style.display = 'none');
-          document.getElementById('dd-backdrop')?.classList.remove('show');
+          // close dropdown if open (do it after we kick off scrolling)
+          setTimeout(function(){
+            document.querySelector('.brand-logo')?.classList.remove('open');
+            var ddel = document.querySelector('.brand-dd');
+            if(ddel && ddel.style) ddel.style.display = 'none';
+            document.getElementById('dd-backdrop')?.classList.remove('show');
+          }, 0);
         }
       });
     });
@@ -1481,12 +1487,12 @@ a.pill:hover {
       document.addEventListener('keydown', function(){ closeDD(); });
 
       // Hide on scroll / wheel / touchmove
-      ['scroll','wheel','touchmove'].forEach(evt => {
+      ['scroll','wheel','touchmove'].forEach(function(evt){
         window.addEventListener(evt, function(){ closeDD(); }, {passive:true});
       });
 
       // Hide when choosing a link (navigation handled in smooth scroll above)
-      dd.querySelectorAll('a').forEach(a=>{
+      dd.querySelectorAll('a').forEach(function(a){
         a.addEventListener('click', function(){ closeDD(); });
       });
 
