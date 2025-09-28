@@ -244,6 +244,16 @@ body{
   #why .list{ justify-content:center; }
   #why .list li{ justify-content:center; }
   .pill{ background:#262631; border-color:#2b2b35; }
+
+  /* === NEW (mobile): make brand dropdown flush with header === */
+  .brand-dd{
+    position:fixed;           /* detach from logo, anchor to viewport */
+    top:var(--header-h);      /* sits directly under the header */
+    left:var(--header-pad-x); /* same left inset as header content */
+    margin-top:0;             /* remove the gap */
+    border-top-left-radius:0; /* visually seamless against header edge */
+    border-top-right-radius:0;
+  }
 }
 
 section{padding:72px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
@@ -312,7 +322,7 @@ h2{font-size:1.95rem;margin:0}
 
 /* Labels bright white */
 #contact label{font-size:.9rem;color:var(--text);margin-bottom:6px;display:block;}
-#contact .req{color:#eaeaf0;margin-left:4px}
+#contact .req{color:var(--eaeaf0);margin-left:4px}
 
 /* === UPDATED: unify field backgrounds with dropdowns === */
 #contact input,
@@ -658,6 +668,11 @@ h2{font-size:1.95rem;margin:0}
 #faq details.card{ padding:16px 18px; }
 @media (max-width: 960px){
   #faq .grid{ grid-template-columns:1fr; }
+
+  /* === NEW (mobile): center FAQ section like the rest === */
+  #faq .container{ text-align:center; }
+  #faq h2, #faq > .container > .sub{ margin-left:auto; margin-right:auto; }
+  #faq details.card{ margin-left:auto; margin-right:auto; text-align:left; }
 }
 
 /* Make FAQ links match contact link styling */
