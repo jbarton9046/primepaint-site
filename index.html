@@ -181,7 +181,6 @@ body{
   width:78%; height:78%;
   display:block; object-fit:contain;
 }
-/* tiny optical nudge for the FB mark */
 .nav-social a[aria-label="Facebook"] img,
 .nav-social a[aria-label="Facebook"] svg{
   transform: translateY(1px);
@@ -240,13 +239,10 @@ body{
   .mainnav.show{display:flex}
   .left{gap:12px}
   .hero-title{max-width: 26ch}
-  /* CTA row centered on mobile */
   #cta{ justify-content:center !important; }
-  /* Center Why, Process, Services, Promise on mobile */
   #why .container, #process .container, #services .container, #promise .container { text-align:center; }
   #why .list{ justify-content:center; }
   #why .list li{ justify-content:center; }
-  /* Lighter pills on mobile for contrast */
   .pill{ background:#262631; border-color:#2b2b35; }
 }
 
@@ -270,7 +266,6 @@ h2{font-size:1.95rem;margin:0}
 /* ===== Promise split layout ===== */
 .promise-grid{display:grid; gap:20px; align-items:start;}
 @media (min-width: 960px){ .promise-grid{ grid-template-columns:1.1fr .9fr; } }
-/* Center Ty + quote on desktop and mobile */
 .promise-grid > :last-child{ display:flex; justify-content:center; }
 .founder-split{display:flex; flex-direction:column; align-items:center; gap:20px;}
 .founder-photo-lg{
@@ -425,9 +420,7 @@ h2{font-size:1.95rem;margin:0}
   transition:border-color .2s, box-shadow .2s, transform .15s;
   position:relative;
 }
-/* PLACEHOLDER COLOR MATCH */
 .fs-btn.is-placeholder{ color:#9b9ba2; }
-
 .fs-btn:focus{
   outline:none; border-color:#4a4a55; box-shadow:0 0 0 3px rgba(255,255,255,.05);
   transform:translateY(-1px);
@@ -585,7 +578,6 @@ h2{font-size:1.95rem;margin:0}
 /* Hide call FAB by default (desktop/tablet) */
 .call-fab{ display:none; }
 @media (max-width: 640px){
-  /* Mobile call FAB — larger & brighter */
   .call-fab{
     position: fixed; right: 16px; bottom: 18px; z-index: 40;
     display:flex; align-items:center; justify-content:center;
@@ -648,6 +640,25 @@ h2{font-size:1.95rem;margin:0}
 
 /* bring Facebook slightly closer to Instagram */
 .nav-social{ gap:4px; }
+
+/* ===== FAQ (scoped styles so nothing else is touched) ===== */
+#faq details{ text-align:left; }
+#faq details summary{
+  list-style:none;
+  cursor:pointer;
+  outline:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+#faq details summary::-webkit-details-marker{ display:none; }
+#faq details summary strong{ font-weight:700; }
+#faq details .sub{ margin-top:8px; }
+#faq details.card{ padding:16px 18px; }
+@media (max-width: 960px){
+  #faq .grid{ grid-template-columns:1fr; }
+}
   </style>
 </head>
 <body>
@@ -667,6 +678,7 @@ h2{font-size:1.95rem;margin:0}
           <a href="#why">Why Us</a>
           <a href="#process">Process</a>
           <a href="#promise">Promise</a>
+          <a href="#faq">FAQ</a>
           <a href="#contact">Get Quote</a>
         </div>
 
@@ -677,6 +689,7 @@ h2{font-size:1.95rem;margin:0}
           <a href="#why">Why Us</a>
           <a href="#process">Process</a>
           <a href="#promise">Promise</a>
+          <a href="#faq">FAQ</a>
           <a href="#contact">Get Quote</a>
         </nav>
       </div>
@@ -966,6 +979,161 @@ h2{font-size:1.95rem;margin:0}
       </form>
     </div>
   </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq">
+    <div class="container">
+      <h2>FAQ</h2>
+      <p class="sub">Quick answers to common questions about our painting services in Sarasota.</p>
+
+      <div class="grid g-4" style="margin-top:16px">
+        <details class="card" open>
+          <summary><strong>Which areas do you serve?</strong></summary>
+          <p class="sub">We’re based in Sarasota and serve the surrounding areas (Siesta Key, Lakewood Ranch, Venice, Osprey, Bradenton). If you’re nearby, we’ll make it work—just ask.</p>
+        </details>
+
+        <details class="card">
+          <summary><strong>Do you offer free estimates?</strong></summary>
+          <p class="sub">Yes. Submit the form above or call <a href="tel:+19412221890">(941) 222-1890</a> and we’ll schedule a free, no-obligation estimate at your home.</p>
+        </details>
+
+        <details class="card">
+          <summary><strong>What paint brands and finishes do you use?</strong></summary>
+          <p class="sub">We recommend premium, low-VOC coatings from top manufacturers and select finishes based on the surface and traffic (e.g., washable matte for walls, satin or semi-gloss for trim, 2K systems for cabinets).</p>
+        </details>
+
+        <details class="card">
+          <summary><strong>How soon can you start?</strong></summary>
+          <p class="sub">Availability varies with season and project size. Typical lead time is 1–3 weeks. Tell us your ideal timeframe in the form and we’ll do our best to accommodate.</p>
+        </details>
+
+        <details class="card">
+          <summary><strong>How long will my project take?</strong></summary>
+          <p class="sub">Most interior rooms are 1–2 days; whole-home interiors or exteriors vary by size and scope. We’ll give you a clear schedule with your written quote.</p>
+        </details>
+
+        <details class="card">
+          <summary><strong>Do you protect furniture and floors?</strong></summary>
+          <p class="sub">Absolutely. We move/cover furniture, mask floors and fixtures, and keep a clean, organized jobsite from prep to final walkthrough.</p>
+        </details>
+
+        <details class="card">
+          <summary><strong>Can you match existing colors?</strong></summary>
+          <p class="sub">Yes—bring a sample or let us scan a wall/cabinet door. We can also provide color guidance and sample swatches before we begin.</p>
+        </details>
+
+        <details class="card">
+          <summary><strong>Do you repair drywall and caulk before painting?</strong></summary>
+          <p class="sub">Yes. Surface prep is a core part of our process: patching, sanding, priming, and caulking for crisp lines and durable results.</p>
+        </details>
+
+        <details class="card">
+          <summary><strong>Are you licensed and insured?</strong></summary>
+          <p class="sub">Yes—licensed &amp; insured in Florida. Documentation is available with your quote upon request.</p>
+        </details>
+
+        <details class="card">
+          <summary><strong>What guarantees do you provide?</strong></summary>
+          <p class="sub">We stand behind our workmanship. Your written quote will outline coverage specifics for your project and products used.</p>
+        </details>
+
+        <details class="card">
+          <summary><strong>How do I get started?</strong></summary>
+          <p class="sub">Fill out the form above with a few details about your project, or call/text <a href="tel:+19412221890">(941) 222-1890</a>. We’ll confirm a visit and get your estimate over quickly.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQPage JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Which areas do you serve?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We’re based in Sarasota and serve the surrounding areas (Siesta Key, Lakewood Ranch, Venice, Osprey, Bradenton). If you’re nearby, we’ll make it work—just ask."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you offer free estimates?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Submit the form or call (941) 222-1890 and we’ll schedule a free, no-obligation estimate at your home."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What paint brands and finishes do you use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We recommend premium, low-VOC coatings and select finishes based on the surface and traffic (washable matte for walls, satin/semi-gloss for trim, 2K systems for cabinets)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How soon can you start?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Availability varies with season and project size. Typical lead time is 1–3 weeks. Tell us your ideal timeframe and we’ll do our best to accommodate."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long will my project take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most interior rooms are 1–2 days; whole-home interiors or exteriors vary by size and scope. We’ll give you a clear schedule with your written quote."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you protect furniture and floors?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. We move/cover furniture, mask floors and fixtures, and keep a clean, organized jobsite from prep to final walkthrough."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you match existing colors?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes—bring a sample or let us scan a wall/cabinet door. We can also provide color guidance and samples."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you repair drywall and caulk before painting?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Surface prep is a core part of our process: patching, sanding, priming, and caulking for crisp lines and durable results."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are you licensed and insured?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes—licensed & insured in Florida. Documentation is available with your quote upon request."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What guarantees do you provide?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We stand behind our workmanship. Your written quote will outline coverage specifics for your project and products used."
+        }
+      }
+    ]
+  }
+  </script>
 
   <!-- Footer -->
   <footer class="footer">
