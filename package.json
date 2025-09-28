@@ -1,8 +1,0 @@
-{
-  "name": "primepaint-site",
-  "version": "1.0.0",
-  "private": true,
-  "dependencies": {
-    "netlify-plugin-minify-html": "^0.7.0"
-  }
-}

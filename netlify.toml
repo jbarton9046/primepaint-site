@@ -1,4 +1,14 @@
-# netlify.toml (minimal, static site)
 [build]
-  publish = "."
-  command = ""
+# static site in the repo root; no build step
+publish = "."
+
+# HTML minify plugin (managed by Netlify, not package.json)
+[[plugins]]
+package = "netlify-plugin-minify-html"
+
+  # Optional: uncomment to be explicit
+  # [plugins.inputs.minifierOptions]
+  # collapseWhitespace = true
+  # removeComments = true
+  # minifyCSS = true
+  # minifyJS = true
