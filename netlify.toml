@@ -1,0 +1,10 @@
+[build]
+  publish = "."
+  # no build command needed for a plain static site
+
+[[plugins]]
+  package = "netlify-plugin-minify-html"
+  # optional: tweak minifier (minifies inline CSS/JS too)
+  [plugins.inputs]
+    removeComments = true
+    collapseWhitespace = true

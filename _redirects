@@ -1,0 +1,7 @@
+# Force HTTPS and one canonical host
+http://primepaint.org/*         https://primepaint.org/:splat   301!
+http://www.primepaint.org/*     https://primepaint.org/:splat   301!
+https://www.primepaint.org/*    https://primepaint.org/:splat   301!
+
+# Send Netlify subdomain to your domain
+https://aesthetic-licorice-7a4bfc.netlify.app/*  https://primepaint.org/:splat  301!
