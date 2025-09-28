@@ -513,7 +513,6 @@ h2{font-size:1.95rem;margin:0}
   }
   .footer-mark{ padding-inline:10px; }
 }
-/* Mobile footer: inset ~1/4" each side & prevent clipping */
 @media (max-width: 640px){
   .footer-mark{
     padding-inline:24px;
@@ -652,27 +651,23 @@ h2{font-size:1.95rem;margin:0}
 .nav-social{ gap:4px; }
 
 /* ===== FAQ (scoped styles so nothing else is touched) ===== */
-#faq details{ text-align:left; }
+#faq details{ text-align:center; }           /* centered Q&A */
 #faq details summary{
   list-style:none;
   cursor:pointer;
   outline:none;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
+  display:block;                              /* center the question text */
+  text-align:center;
 }
 #faq details summary::-webkit-details-marker{ display:none; }
 #faq details summary strong{ font-weight:700; }
 #faq details .sub{ margin-top:8px; }
-#faq details.card{ padding:16px 18px; }
+#faq details.card{ padding:16px 18px; text-align:center; }  /* ensure card centers */
 @media (max-width: 960px){
   #faq .grid{ grid-template-columns:1fr; }
-
-  /* === NEW (mobile): center FAQ section like the rest === */
   #faq .container{ text-align:center; }
   #faq h2, #faq > .container > .sub{ margin-left:auto; margin-right:auto; }
-  #faq details.card{ margin-left:auto; margin-right:auto; text-align:left; }
+  #faq details.card{ margin-left:auto; margin-right:auto; }
 }
 
 /* Make FAQ links match contact link styling */
@@ -941,7 +936,7 @@ a[href*="#contact"]:hover{
                 <label for="state">State</label>
                 <div class="fs-wrap" data-fancy-select="state">
                   <select id="state" name="state" class="fs-hidden" aria-hidden="true" tabindex="-1" autocomplete="address-level1">
-                    <option value="">Select state…</option>
+                    <option value="">Select…</option>
                     <option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option>
                     <option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option>
                     <option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="DC">District of Columbia</option>
@@ -960,7 +955,7 @@ a[href*="#contact"]:hover{
                     <option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option>
                     <option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option>
                   </select>
-                  <button type="button" class="fs-btn" aria-haspopup="listbox" aria-expanded="false">Select state…</button>
+                  <button type="button" class="fs-btn" aria-haspopup="listbox" aria-expanded="false">Select…</button>
                   <div class="fs-list" role="listbox" aria-label="State"></div>
                   <span class="fs-sr" aria-live="polite"></span>
                 </div>
@@ -1038,7 +1033,7 @@ a[href*="#contact"]:hover{
       <div class="grid g-4" style="margin-top:16px">
         <details class="card" open>
           <summary><strong>Which areas do you serve?</strong></summary>
-          <p class="sub">We’re based in Sarasota and serve the surrounding areas (Siesta Key, Lakewood Ranch, Venice, Osprey, Bradenton). If you’re nearby, we’ll make it work—just ask.</p>
+          <p class="sub">We’re based in Sarasota and serve the surrounding areas (Siesta Key, Lakewood Ranch, Venice, Osprey, Bradenton, Anna Maria Island, Longboat Key, Lido Key, Casey Key, Nokomis, Myakka). If you’re nearby, we’ll make it work—just ask.</p>
         </details>
 
         <details class="card" open>
@@ -1105,7 +1100,7 @@ a[href*="#contact"]:hover{
         "name": "Which areas do you serve?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We’re based in Sarasota and serve the surrounding areas (Siesta Key, Lakewood Ranch, Venice, Osprey, Bradenton). If you’re nearby, we’ll make it work—just ask."
+          "text": "We’re based in Sarasota and serve the surrounding areas (Siesta Key, Lakewood Ranch, Venice, Osprey, Bradenton, Anna Maria Island, Longboat Key, Lido Key, Casey Key, Nokomis, Myakka). If you’re nearby, we’ll make it work—just ask."
         }
       },
       {
