@@ -668,19 +668,30 @@ h2{font-size:1.95rem;margin:0}
 }
 #faq a:hover{ border-bottom-color:rgba(255,255,255,.55); }
 
-/* ===== NEW: Bright white for phone/email links + form links (global), with professional hover ===== */
+/* ===== NEW: Bright white for phone/email/form links (GLOBAL), with professional hover ===== */
 a[href^="tel:"],
 a[href^="mailto:"],
 a[href*="#contact"]{
-  color: var(--text) !important; /* bright, same as headers */
-  border-bottom:1px dotted rgba(255,255,255,.40);
+  color: var(--text) !important;
+  border-bottom:1px dotted rgba(255,255,255,.45);
+  text-decoration:none;
+  transition: border-color .2s ease, text-shadow .2s ease;
 }
 a[href^="tel:"]:hover,
 a[href^="mailto:"]:hover,
 a[href*="#contact"]:hover{
-  border-bottom-color: rgba(255,255,255,.90);
-  text-decoration: none;
-  opacity: 1;
+  border-bottom-color: rgba(255,255,255,.95);
+  text-shadow: 0 0 12px rgba(255,255,255,.22);
+}
+
+/* === IMPORTANT: Never underline links in the NAV (top nav + brand dropdown) === */
+.header .mainnav a,
+.header .mainnav a:hover,
+.brand-dd a,
+.brand-dd a:hover{
+  border-bottom:none !important;
+  text-decoration:none !important;
+  text-shadow:none !important;
 }
   </style>
 </head>
@@ -719,12 +730,12 @@ a[href*="#contact"]:hover{
 
       <!-- Social icons, right side -->
       <div class="nav-social" aria-label="Social links">
-        <!-- Facebook (SVG) -->
+        <!-- Facebook -->
         <a href="https://www.facebook.com/profile.php?id=61579078334234" aria-label="Facebook" target="_blank" rel="noopener">
           <img class="nav-icon" src="assets/icons/facebook-f-white.svg" alt="Facebook">
         </a>
 
-        <!-- Instagram (SVG) -->
+        <!-- Instagram -->
         <a href="https://www.instagram.com/primepaintllc" aria-label="Instagram" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="5" stroke="#eaeaf0" stroke-width="2"/>
