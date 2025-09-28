@@ -668,10 +668,19 @@ h2{font-size:1.95rem;margin:0}
 }
 #faq a:hover{ border-bottom-color:rgba(255,255,255,.55); }
 
-/* === MAKE PHONE/EMAIL LINKS BRIGHT WHITE (like headers) === */
+/* ===== NEW: Bright white for phone/email links + form links (global), with professional hover ===== */
 a[href^="tel:"],
-a[href^="mailto:"]{
-  color: var(--text) !important;
+a[href^="mailto:"],
+a[href*="#contact"]{
+  color: var(--text) !important; /* bright, same as headers */
+  border-bottom:1px dotted rgba(255,255,255,.40);
+}
+a[href^="tel:"]:hover,
+a[href^="mailto:"]:hover,
+a[href*="#contact"]:hover{
+  border-bottom-color: rgba(255,255,255,.90);
+  text-decoration: none;
+  opacity: 1;
 }
   </style>
 </head>
@@ -821,7 +830,7 @@ a[href^="mailto:"]{
 
           <div class="card" style="margin-top:14px">
             <strong>Pricing &amp; Free Estimates</strong>
-            <p class="sub" style="margin:6px 0 0">Submit the contact form and we’ll reach out to schedule a free, no-obligation estimate at your home.</p>
+            <p class="sub" style="margin:6px 0 0">Submit the <a href="#contact">form</a> and we’ll reach out to schedule a free, no-obligation estimate at your home.</p>
           </div>
         </div>
 
@@ -1008,7 +1017,7 @@ a[href^="mailto:"]{
 
         <details class="card" open>
           <summary><strong>Do you offer free estimates?</strong></summary>
-          <p class="sub">Yes. Submit the form above or call <a href="tel:+19412221890">(941) 222-1890</a> and we’ll schedule a free, no-obligation estimate at your home.</p>
+          <p class="sub">Yes. Submit the <a href="#contact">form</a> above or call <a href="tel:+19412221890">(941) 222-1890</a> and we’ll schedule a free, no-obligation estimate at your home.</p>
         </details>
 
         <details class="card" open>
@@ -1018,7 +1027,7 @@ a[href^="mailto:"]{
 
         <details class="card" open>
           <summary><strong>How soon can you start?</strong></summary>
-          <p class="sub">Availability varies with season and project size. Typical lead time is 1–3 weeks. Tell us your ideal timeframe in the form and we’ll do our best to accommodate.</p>
+          <p class="sub">Availability varies with season and project size. Typical lead time is 1–3 weeks. Tell us your ideal timeframe in the <a href="#contact">form</a> and we’ll do our best to accommodate.</p>
         </details>
 
         <details class="card" open>
@@ -1053,7 +1062,7 @@ a[href^="mailto:"]{
 
         <details class="card" open>
           <summary><strong>How do I get started?</strong></summary>
-          <p class="sub">Fill out the form above with a few details about your project, or call/text <a href="tel:+19412221890">(941) 222-1890</a>. We’ll confirm a visit and get your estimate over quickly.</p>
+          <p class="sub">Fill out the <a href="#contact">form</a> above with a few details about your project, or call/text <a href="tel:+19412221890">(941) 222-1890</a>. We’ll confirm a visit and get your estimate over quickly.</p>
         </details>
       </div>
     </div>
@@ -1110,12 +1119,12 @@ a[href^="mailto:"]{
         "name": "Do you protect furniture and floors?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. We move/cover furniture, mask floors and fixtures, and keep a clean, organized jobsite from prep to final walkthrough."
+          "text": "Absolutely. We move/cover furniture, mask floors and fixtures, and keep a clean, organized jobsite from prep to final walkthrough."
         }
       },
       {
         "@type": "Question",
-        "name": "Can you match existing colors?",
+          "name": "Can you match existing colors?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Yes—bring a sample or let us scan a wall/cabinet door. We can also provide color guidance and samples."
@@ -1341,7 +1350,8 @@ a[href^="mailto:"]{
       phone.value = format(phone.value);
       if(document.activeElement === phone){
         const delta = phone.value.length - before.length;
-        phone.setSelectionRange(pos + (delta > 0 ? delta : 0), pos + (delta > 0 ? delta : 0));
+        const np = pos + (delta > 0 ? delta : 0);
+        phone.setSelectionRange(np, np);
       }
     });
 
