@@ -694,6 +694,14 @@ a[href*="#contact"]:hover{
   text-shadow: 0 0 12px rgba(255,255,255,.22);
 }
 
+/* Remove dotted underline from the CTA button only */
+a.pill,
+a.pill:hover {
+  border-bottom: none !important;
+  text-decoration: none !important;
+  text-shadow: none !important;
+}
+
 /* === IMPORTANT: Never underline links in the NAV (top nav + brand dropdown) === */
 .header .mainnav a,
 .header .mainnav a:hover,
