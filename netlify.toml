@@ -1,22 +1,4 @@
-# netlify.toml
+# netlify.toml (minimal, static site)
 [build]
   publish = "."
-  command = ""   # static site, no build step
-
-# HTML minification plugin (works only if it's installed — see package.json)
-[[plugins]]
-  package = "netlify-plugin-minify-html"
-
-  [plugins.inputs]
-    # Which deploy contexts to run on
-    contexts = ["production", "deploy-preview", "branch-deploy"]
-
-    # Options must live under "minifierOptions"
-    minifierOptions = {
-      collapseWhitespace = true,
-      removeComments = true,
-      removeRedundantAttributes = true,
-      useShortDoctype = true,
-      minifyCSS = true,
-      minifyJS = true
-    }
+  command = ""
