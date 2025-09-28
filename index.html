@@ -53,6 +53,15 @@
   }
   </script>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVSM6R8ES1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-RVSM6R8ES1');
+  </script>
+
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="assets/prime-paint-favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/prime-paint-favicon-16.png">
@@ -65,6 +74,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
+/* ——— all your styles exactly as provided ——— */
 :root{
   --bg:#0a0a0b;
   --bg2:#0f0f12;
@@ -153,14 +163,14 @@ body{
 /* Right-side social icons (larger, equal edge spacing, small top/bottom inset) */
 .nav-social{
   display:flex; align-items:center;
-  gap:16px;                                 /* FB ↔ IG spacing */
-  height: calc(var(--header-h) - 18px);     /* small top/bottom breathing room */
-  margin-right: calc(-1 * var(--header-pad-x)); /* cancel container right padding */
-  padding-right:16px;                        /* IG ↔ right edge equals the icon gap */
+  gap:16px;
+  height: calc(var(--header-h) - 18px);
+  margin-right: calc(-1 * var(--header-pad-x));
+  padding-right:16px;
   color:#eaeaf0;
 }
 .nav-social a{
-  width: calc(var(--header-h) - 18px);      /* larger hit area, fills header vertically */
+  width: calc(var(--header-h) - 18px);
   height: calc(var(--header-h) - 18px);
   display:inline-flex; align-items:center; justify-content:center;
   opacity:.85; transition:opacity .2s, transform .2s;
@@ -168,7 +178,7 @@ body{
 .nav-social a:hover{opacity:1; transform:translateY(-1px)}
 .nav-social svg,
 .nav-social img{
-  width:78%; height:78%;                     /* make the glyphs nice and bold */
+  width:78%; height:78%;
   display:block; object-fit:contain;
 }
 /* tiny optical nudge for the FB mark */
@@ -319,7 +329,6 @@ h2{font-size:1.95rem;margin:0}
   padding:12px 14px;
   outline:none;
   color:var(--field-text);
-  /* lighter “glass” like .fs-btn */
   background-color: rgba(255,255,255,0.03);
   backdrop-filter: blur(10px) saturate(140%);
   -webkit-backdrop-filter: blur(10px) saturate(140%);
@@ -345,14 +354,14 @@ h2{font-size:1.95rem;margin:0}
 /* Legal (disclaimer) — brighten to match button/required */
 #contact .legal{
   font-size:.85rem;
-  color: var(--text);   /* same bright white used elsewhere */
+  color: var(--text);
   margin-top:10px;
 }
 
 /* Required note block (LEFT under the textarea) */
 #contact .form-meta{
   display:flex;
-  justify-content:flex-start; /* left side */
+  justify-content:flex-start;
 }
 #contact .form-meta .req-note{
   font-size:.85rem;
@@ -407,7 +416,7 @@ h2{font-size:1.95rem;margin:0}
   border:1px solid var(--line);
   border-radius:14px;
   padding:12px 44px 12px 14px;
-  color:var(--field-text); /* unify with inputs */
+  color:var(--field-text);
   background:rgba(255,255,255,0.03);
   backdrop-filter: blur(10px) saturate(140%);
   -webkit-backdrop-filter: blur(10px) saturate(140%);
@@ -504,8 +513,8 @@ h2{font-size:1.95rem;margin:0}
 /* Mobile footer: inset ~1/4" each side & prevent clipping */
 @media (max-width: 640px){
   .footer-mark{
-    padding-inline:24px; /* ≈ 0.25in on each side */
-    overflow:visible; /* keep the "T" from clipping */
+    padding-inline:24px;
+    overflow:visible;
   }
 }
 
@@ -549,9 +558,9 @@ h2{font-size:1.95rem;margin:0}
 }
 .modal-card h3{
   margin:0 0 .35rem 0;
-  font-size:1.25rem; /* same size we had */
+  font-size:1.25rem;
   line-height:1.25;
-  color: var(--text);     /* ← white like form headers */
+  color: var(--text);
 }
 .modal-card .sub{ color:#c9c9cf; margin:0; }
 .modal-actions{ margin-top:14px; display:flex; justify-content:center; }
@@ -588,7 +597,6 @@ h2{font-size:1.95rem;margin:0}
     color:#eaeaf0; text-decoration:none; font-weight:600;
     box-shadow:0 8px 20px rgba(0,0,0,.32);
     transition: transform .2s, background .2s, box-shadow .2s;
-    /* Draggable affordances */
     touch-action: none; user-select: none; cursor: grab;
   }
   .call-fab:active{ cursor: grabbing; }
@@ -605,7 +613,7 @@ h2{font-size:1.95rem;margin:0}
   display:inline-block;
   width:fit-content;
   max-width:min(100%, 36rem);
-  padding:18px; /* match .card padding for consistency */
+  padding:18px;
   text-align:left;
 }
 @media (max-width:640px){
@@ -613,8 +621,8 @@ h2{font-size:1.95rem;margin:0}
     display:block;
     width:100%;
     max-width:100%;
-    text-align:center; /* center title + paragraph */
-    margin-left:auto; /* ensure the card itself centers */
+    text-align:center;
+    margin-left:auto;
     margin-right:auto;
   }
 }
@@ -629,17 +637,17 @@ h2{font-size:1.95rem;margin:0}
 }
 
 /* === Tweaks: Facebook closer + slightly larger; keep Instagram unchanged === */
-.nav-social{ gap:4px; } /* FB sits closer to IG */
+.nav-social{ gap:4px; }
 
 .nav-social a[aria-label="Facebook"] img,
 .nav-social a[aria-label="Facebook"] svg{
   width:88%;
-  height:88%;            /* FB slightly larger than IG */
-  transform:none;        /* remove previous 1px nudge so it's vertically centered */
+  height:88%;
+  transform:none;
 }
 
 /* bring Facebook slightly closer to Instagram */
-.nav-social{ gap:4px; }  /* try 8px; use 6px if you want even closer */
+.nav-social{ gap:4px; }
   </style>
 </head>
 <body>
@@ -962,7 +970,6 @@ h2{font-size:1.95rem;margin:0}
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <!-- Brand row with centered mark + side text -->
       <div class="footer-brand">
         <div class="footer-mark" aria-label="Brand mark &amp; tagline">
           <span class="foot-txt">Transforming Walls</span>
@@ -971,7 +978,6 @@ h2{font-size:1.95rem;margin:0}
         </div>
       </div>
 
-      <!-- Legal (fine print) -->
       <div class="footer-legal">
         <div>© <span id="yr"></span> Prime Paint SRQ. All rights reserved.</div>
         <div>Licensed &amp; Insured • Sarasota, FL</div>
@@ -1025,6 +1031,9 @@ h2{font-size:1.95rem;margin:0}
       thanksCard.style.maxHeight = 'none';
       thanksBackdrop.classList.add('show');
       thanksCard.classList.add('show');
+
+      // Fire GA4 conversion event
+      try { gtag('event', 'generate_lead', { method: 'Netlify Form' }); } catch(e){}
     }
     function hideThanks(){
       thanksBackdrop.classList.remove('show');
@@ -1148,14 +1157,12 @@ h2{font-size:1.95rem;margin:0}
       const pos = phone.selectionStart;
       const before = phone.value;
       phone.value = format(phone.value);
-      // keep caret near end for simple UX
       if(document.activeElement === phone){
         const delta = phone.value.length - before.length;
         phone.setSelectionRange(pos + (delta > 0 ? delta : 0), pos + (delta > 0 ? delta : 0));
       }
     });
 
-    // On blur, format as well
     phone.addEventListener('blur', ()=>{ phone.value = format(phone.value); });
   })();
 
