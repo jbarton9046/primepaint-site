@@ -133,24 +133,33 @@ body{
 /* brand-attached dropdown (mobile) — FROSTED GLASS, ONLY THE PANEL BLURS */
 .brand-dd{
   position:absolute; left:0; top:100%; margin-top:10px; z-index:35;
-  background:rgba(15,15,18,.38);
+  /* keep a transparent base; glass is drawn by ::after so the blur is clipped perfectly */
+  background: transparent;
   border:1px solid rgba(255,255,255,.10);
   border-radius:14px;
   padding:10px;
   display:none;
   min-width:220px;
   box-shadow:0 14px 28px rgba(0,0,0,.5);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
   overflow:hidden;                        /* clip the blur to the rounded panel */
   clip-path: inset(0 round 14px);         /* iOS/Safari: ensure blur is clipped to radius */
-  will-change: transform;
+  will-change: transform, left, top;
+}
+.brand-dd::after{
+  content:"";
+  position:absolute; inset:0;
+  background:rgba(15,15,18,.38);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  z-index:0;
 }
 .brand-dd::before{
   content:""; position:absolute; inset:0;
   background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  z-index:1;
   pointer-events:none;
 }
+.brand-dd > *{ position:relative; z-index:2; } /* keep links above the glass layers */
 .brand-dd a{
   display:block;color:#ffffff;text-decoration:none;
   padding:12px 14px;border-radius:10px;
@@ -286,7 +295,7 @@ body{
   #why .list li{ justify-content:center; }
   .pill{ background:#262631; border-color:#2b2b35; }
 
-  /* Mobile: make brand dropdown flush with header */
+  /* Mobile: make brand dropdown flush with header (JS will still portal it for proper blur) */
   .brand-dd{
     position:fixed;
     top:var(--header-h);
@@ -1464,40 +1473,85 @@ a.pill:hover {
     });
   })();
 
-  // brand dropdown (mobile)
+  // brand dropdown (mobile & desktop) — portal to <body> while open so the blur samples the page behind
   (function(){
     var brand = document.querySelector('.brand-logo');
     var dd = document.querySelector('.brand-dd');
     var backdrop = document.getElementById('dd-backdrop');
     if(brand && dd && backdrop){
+      var originalParent = dd.parentNode;
+      var placeholder = document.createComment('brand-dd-placeholder'); // to restore position
+
       function isMobile(){ return window.matchMedia('(max-width: 960px)').matches; }
-      function openDD(){ brand.classList.add('open'); dd.style.display = 'block'; backdrop.classList.add('show'); }
-      function closeDD(){ brand.classList.remove('open'); dd.style.display = 'none'; backdrop.classList.remove('show'); }
+
+      function positionDropdown(){
+        // position next to/under the logo regardless of scroll
+        var rect = brand.getBoundingClientRect();
+        dd.style.position = 'fixed';
+        dd.style.top = (rect.bottom + 10) + 'px';
+        dd.style.left = rect.left + 'px';
+        dd.style.right = 'auto';
+      }
+
+      function openDD(){
+        // move to body so backdrop-filter blurs the actual page (not header background)
+        if (dd.parentNode !== document.body){
+          originalParent.insertBefore(placeholder, dd);
+          document.body.appendChild(dd);
+        }
+        positionDropdown();
+        brand.classList.add('open');
+        dd.style.display = 'block';
+        backdrop.classList.add('show');
+        window.addEventListener('resize', positionDropdown);
+        window.addEventListener('scroll', positionDropdown, {passive:true});
+      }
+
+      function closeDD(){
+        brand.classList.remove('open');
+        dd.style.display = 'none';
+        backdrop.classList.remove('show');
+        window.removeEventListener('resize', positionDropdown);
+        window.removeEventListener('scroll', positionDropdown);
+
+        // restore to original parent/flow
+        if (placeholder.parentNode){
+          originalParent.insertBefore(dd, placeholder);
+          placeholder.remove();
+        }
+        // remove inline positioning so your responsive CSS still applies when closed
+        dd.style.position = '';
+        dd.style.top = '';
+        dd.style.left = '';
+        dd.style.right = '';
+      }
+
       function toggleDD(){ if(brand.classList.contains('open')) closeDD(); else openDD(); }
 
       brand.addEventListener('click', function(ev){
-        if(isMobile()){ ev.preventDefault(); toggleDD(); }
+        ev.preventDefault();
+        toggleDD();
       });
 
-      // Hide on click-away
+      // Click-away
       document.addEventListener('click', function(e){
         if(!brand.contains(e.target) && !dd.contains(e.target)) closeDD();
       });
 
-      // Hide on any key press
+      // Any key press closes
       document.addEventListener('keydown', function(){ closeDD(); });
 
-      // Hide on scroll / wheel / touchmove
-      ['scroll','wheel','touchmove'].forEach(function(evt){
+      // Hide on scroll / wheel / touchmove (we still reposition while open, but close on intentional page moves)
+      ['wheel','touchmove'].forEach(function(evt){
         window.addEventListener(evt, function(){ closeDD(); }, {passive:true});
       });
 
-      // Hide when choosing a link (navigation handled in smooth scroll above)
+      // Close when choosing a link (navigation handled in smooth scroll above)
       dd.querySelectorAll('a').forEach(function(a){
         a.addEventListener('click', function(){ closeDD(); });
       });
 
-      // Hide when backdrop clicked
+      // Close when backdrop clicked
       backdrop.addEventListener('click', closeDD);
     }
   })();
