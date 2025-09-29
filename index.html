@@ -130,79 +130,53 @@ body{
 .brand-logo{display:flex;align-items:center;text-decoration:none;position:relative}
 .brand-img{height:var(--brand-h);width:auto;display:block;object-fit:contain;cursor:pointer}
 
-/* brand-attached dropdown (mobile) — FROSTED GLASS, ONLY THE PANEL BLURS */
+/* brand-attached dropdown (mobile) — blur only what's behind the panel */
 .brand-dd{
   position:absolute; left:0; top:100%; margin-top:10px; z-index:35;
-  /* keep a transparent base; glass is drawn by ::after so the blur is clipped perfectly */
-  background: transparent;
+  background:rgba(20,20,24,.45);             /* translucent so the blur shows through */
   border:1px solid rgba(255,255,255,.10);
   border-radius:14px;
   padding:10px;
   display:none;
   min-width:220px;
   box-shadow:0 14px 28px rgba(0,0,0,.5);
-  overflow:hidden;                        /* clip the blur to the rounded panel */
-  clip-path: inset(0 round 14px);         /* iOS/Safari: ensure blur is clipped to radius */
-  will-change: transform, left, top;
+  backdrop-filter: blur(18px) saturate(160%); /* <— this blurs *only* what's behind the dropdown */
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
 }
-.brand-dd::after{
-  content:"";
-  position:absolute; inset:0;
-  background:rgba(15,15,18,.38);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  z-index:0;
-}
-.brand-dd::before{
-  content:""; position:absolute; inset:0;
-  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-  z-index:1;
-  pointer-events:none;
-}
-.brand-dd > *{ position:relative; z-index:2; } /* keep links above the glass layers */
 .brand-dd a{
-  display:block;color:#ffffff;text-decoration:none;
+  display:block;color:#fff;text-decoration:none;
   padding:12px 14px;border-radius:10px;
   opacity:.95;
-  text-shadow:0 1px 10px rgba(0,0,0,.35);
+  text-shadow:0 1px 8px rgba(0,0,0,.35);      /* keep text crisp over the blurred background */
   transition: background .2s ease, opacity .2s ease, color .2s ease;
 }
 .brand-dd a:hover{background:rgba(255,255,255,.10);opacity:1}
 .brand-logo.open + .brand-dd{display:block}
 
-/* backdrop for dropdown — NO BLUR (so only the dropdown glass blurs) */
+/* dropdown page overlay — NO BLUR (just a faint dimmer) */
 .dd-backdrop{
   position:fixed; inset:0; z-index:34; display:none;
-  background:rgba(0,0,0,.30);
+  background:rgba(0,0,0,.25);                 /* dim the page a touch so menu stands out */
+  backdrop-filter:none !important;            /* ensure the page itself never blurs */
+  -webkit-backdrop-filter:none !important;
 }
 .dd-backdrop.show{display:block}
 
 .mainnav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-left:2px}
 .mainnav a{color:#eaeaf0;text-decoration:none;font-size:.98rem;line-height:1;padding:.4rem 0}
 
-/* >>> ADDED/EXPANDED: nav hover/active color + opacity (matches social hover) <<< */
+/* nav/link polish */
 .header .mainnav a,
-.brand-dd a{
-  opacity:.85;
-  transition: opacity .2s ease, color .2s ease;
-}
+.brand-dd a{ opacity:.85; transition: opacity .2s ease, color .2s ease; }
 .header .mainnav a:hover,
-.brand-dd a:hover{
-  color:#ffffff !important;
-  opacity:1 !important;
-}
+.brand-dd a:hover{ color:#fff !important; opacity:1 !important; }
 .header .mainnav a.active,
-.brand-dd a.active{
-  color:#ffffff !important;
-  opacity:1 !important;
-}
-
-/* keep existing active rule for specificity backup */
-.header .mainnav a.active{ color:#ffffff !important; }
+.brand-dd a.active{ color:#fff !important; opacity:1 !important; }
+.header .mainnav a.active{ color:#fff !important; }
 
 .menu-btn{display:none;align-items:center;justify-content:center;border:1px solid var(--line);background:#1d1d24;color:#eaeaf0;border-radius:10px;padding:8px 10px;font-size:.95rem;line-height:1;cursor:pointer}
 
-/* Right-side social icons (larger, equal edge spacing, small top/bottom inset) */
+/* Right-side social icons */
 .nav-social{
   display:flex; align-items:center;
   gap:16px;
@@ -219,61 +193,33 @@ body{
 }
 .nav-social a:hover{opacity:1; transform:translateY(-1px)}
 .nav-social svg,
-.nav-social img{
-  width:78%; height:78%;
-  display:block; object-fit:contain;
-}
+.nav-social img{ width:78%; height:78%; display:block; object-fit:contain; }
 .nav-social a[aria-label="Facebook"] img,
-.nav-social a[aria-label="Facebook"] svg{
-  transform: translateY(1px);
-}
+.nav-social a[aria-label="Facebook"] svg{ transform: translateY(1px); }
 
 /* ===== Hero ===== */
 .hero{position:relative;isolation:isolate;overflow:hidden;min-height:calc(100vh - var(--header-h))}
 .hero::before{
   content:"";position:absolute;inset:0;
-  background:
-    linear-gradient(120deg, rgba(255,255,255,.10), transparent 30%),
-    url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center center / cover no-repeat;
-  opacity:.62;                             /* brighter than before */
-  filter: brightness(1.18) saturate(1.06); /* gentle boost */
-  z-index:-2;
+  background: linear-gradient(120deg,rgba(255,255,255,.06),transparent 30%), url('https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1920&auto=format&fit=crop') center center / cover no-repeat;
+  opacity:.45;z-index:-2;
 }
-.shade{
-  position:absolute;inset:0;
-  background:linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.38));
-  z-index:-1;
-}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.5));z-index:-1}
 .hero-inner{padding:0}
-.hero-wrap{
-  padding-left:var(--hero-gutter-left);
-  padding-right:var(--hero-gutter-right);
-  max-width:1180px;margin:0 auto;height:100%;
-}
+.hero-wrap{ padding-left:var(--hero-gutter-left); padding-right:var(--hero-gutter-right); max-width:1180px;margin:0 auto;height:100%; }
 .hero-grid{
-  display:grid;
-  grid-template-columns: 0.95fr 1.45fr;
-  gap:var(--hero-gap);
-  align-items:center;
-  height:calc(100vh - var(--header-h) - var(--hero-nudge));
-  position:relative;
-  top:var(--hero-nudge);
+  display:grid; grid-template-columns: 0.95fr 1.45fr; gap:var(--hero-gap); align-items:center;
+  height:calc(100vh - var(--header-h) - var(--hero-nudge)); position:relative; top:var(--hero-nudge);
 }
 .hero-left{display:flex;align-items:center;justify-content:flex-start;transform: translateX(var(--pp-shift));}
 .hero-logo{height:clamp(360px,58vh,620px);width:auto;display:block;filter:drop-shadow(0 6px 22px rgba(0,0,0,.35));}
 .hero-right{display:flex;align-items:center;justify-content:flex-start;padding-right:var(--hero-right-extra);}
 .hero-right-inner{width:min(var(--hero-text-max),100%);margin-left:0;}
 .eyebrow{letter-spacing:.35em;text-transform:uppercase;color:#e7e7e9;font-size:.78rem}
-.hero-title{
-  margin:.45rem 0 0;font-weight:700;line-height:1.04;
-  font-size: clamp(2rem, 4.2vw, 3.2rem);max-width:48rem;letter-spacing:.01em;text-wrap:balance;
-}
+.hero-title{ margin:.45rem 0 0;font-weight:700;line-height:1.04; font-size: clamp(2rem, 4.2vw, 3.2rem);max-width:48rem;letter-spacing:.01em;text-wrap:balance; }
 .hero-title .line{display:block; white-space:nowrap;}
 .lead{color:#ececf1;margin-top:.75rem;max-width:60ch}
-.pill{
-  display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);border-radius:999px;
-  padding:.55rem 1rem;background:#1d1d24;color:#e8e8ec;font-size:.95rem;text-decoration:none;transition:.25s;
-}
+.pill{ display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);border-radius:999px; padding:.55rem 1rem;background:#1d1d24;color:#e8e8ec;font-size:.95rem;text-decoration:none;transition:.25s; }
 .pill:hover{transform:translateY(-1px);background:#23232b}
 
 @media (max-width: 960px){
@@ -295,7 +241,7 @@ body{
   #why .list li{ justify-content:center; }
   .pill{ background:#262631; border-color:#2b2b35; }
 
-  /* Mobile: make brand dropdown flush with header (JS will still portal it for proper blur) */
+  /* make brand dropdown flush with header on mobile */
   .brand-dd{
     position:fixed;
     top:var(--header-h);
@@ -303,15 +249,6 @@ body{
     margin-top:0;
     border-top-left-radius:0;
     border-top-right-radius:0;
-  }
-
-  /* Brighter hero on small screens */
-  .hero::before{
-    opacity:.72;
-    filter: brightness(1.28) saturate(1.10);
-  }
-  .shade{
-    background:linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.32));
   }
 }
 
@@ -383,7 +320,7 @@ h2{font-size:1.95rem;margin:0}
 #contact label{font-size:.9rem;color:var(--text);margin-bottom:6px;display:block;}
 #contact .req{color:var(--eaeaf0);margin-left:4px}
 
-/* === UPDATED: unify field backgrounds with dropdowns === */
+/* inputs/selects */
 #contact input,
 #contact textarea,
 #contact select{
@@ -415,25 +352,14 @@ h2{font-size:1.95rem;margin:0}
 }
 #contact .btn-submit:hover{ transform:translateY(-1px); background:#282835; }
 
-/* Legal (disclaimer) — brighten to match button/required */
-#contact .legal{
-  font-size:.85rem;
-  color: var(--text);
-  margin-top:10px;
-}
+/* Legal (disclaimer) */
+#contact .legal{ font-size:.85rem; color: var(--text); margin-top:10px; }
 
-/* Required note block (LEFT under the textarea) */
-#contact .form-meta{
-  display:flex;
-  justify-content:flex-start;
-}
-#contact .form-meta .req-note{
-  font-size:.85rem;
-  color: var(--text);
-  opacity: 1;
-}
+/* Required note block */
+#contact .form-meta{ display:flex; justify-content:flex-start; }
+#contact .form-meta .req-note{ font-size:.85rem; color: var(--text); opacity: 1; }
 
-/* === Native select arrow & list colors (keep, but match lighter bg) === */
+/* native select visuals */
 #contact select{
   appearance:none; -webkit-appearance:none; -moz-appearance:none;
   padding-right:48px;
@@ -448,11 +374,9 @@ h2{font-size:1.95rem;margin:0}
 #contact select:hover{ border-color:#3a3a45; }
 #contact select option{ background:#0f0f12; color:#f2f2f3; }
 #contact select::-ms-expand{ display:none; }
-@media (prefers-reduced-motion: reduce){
-  #contact select{ transition:none; }
-}
+@media (prefers-reduced-motion: reduce){ #contact select{ transition:none; } }
 
-/* === UPDATED: autofill background to match lighter glass === */
+/* autofill */
 #contact input, #contact select, #contact textarea { background-color: rgba(255,255,255,0.03); color:var(--field-text); }
 #contact input:-webkit-autofill,
 #contact select:-webkit-autofill,
@@ -469,7 +393,7 @@ h2{font-size:1.95rem;margin:0}
   color: var(--field-text) !important;
 }
 
-/* Fancy (glass) selects (State, Project Type, Timeframe) */
+/* Fancy (glass) selects */
 .fs-wrap{ position:relative; }
 .fs-hidden{
   position:absolute !important; left:-9999px !important; top:auto !important;
@@ -512,9 +436,7 @@ h2{font-size:1.95rem;margin:0}
   display:none;
 }
 .fs-wrap.open .fs-list{ display:block; }
-.fs-option{
-  padding:10px 12px; border-radius:10px; color:#eaeaf0; cursor:pointer; user-select:none;
-}
+.fs-option{ padding:10px 12px; border-radius:10px; color:#eaeaf0; cursor:pointer; user-select:none; }
 .fs-option:hover, .fs-option[aria-selected="true"]{ background:rgba(255,255,255,0.08); }
 .fs-sr{
   position:absolute !important; left:-10000px !important; top:auto !important;
@@ -526,191 +448,30 @@ h2{font-size:1.95rem;margin:0}
 .fs-list::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.18); border-radius:10px; }
 .fs-list::-webkit-scrollbar-thumb:hover{ background:rgba(255,255,255,0.28); }
 
-/* Footer (centered mark + side text) */
-.footer{
-  border-top:1px solid var(--line);
-  padding:28px 0 32px;
-  color:#bdbdc3;font-size:.95rem;
-}
-.footer .container{
-  display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;
-}
-.footer-brand{
-  display:flex;flex-direction:column;align-items:center;width:100%;
-  margin-top:calc(-1 * var(--footer-above-gap));
-}
-.footer-mark{
-  display:flex;align-items:center;justify-content:center;
-  gap:var(--footer-side-gap);
-  padding:var(--footer-above-gap) 12px 10px;
-  max-width:100%; overflow:hidden;
-}
-.footer-mark .foot-logo{
-  height:var(--footer-mark-size); width:auto; display:block; object-fit:contain;
-  filter:drop-shadow(0 3px 10px rgba(0,0,0,.25));
-  max-width:100%; margin-block:3px;
-}
-.footer-mark .foot-txt{
-  font-size:var(--footer-side-text);
-  letter-spacing:var(--footer-side-tracking);
-  text-transform:uppercase;
-  color:#d9d9dd;
-  white-space:nowrap;
-  opacity:.9; line-height:1.25; padding-bottom:2px;
-}
-.footer-legal{
-  display:flex;flex-direction:column;gap:2px;margin-top:8px;
-  font-size:11px; opacity:.78; letter-spacing:.02em; line-height:1.5;
-}
+/* Footer */
+.footer{ border-top:1px solid var(--line); padding:28px 0 32px; color:#bdbdc3;font-size:.95rem; }
+.footer .container{ display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center; }
+.footer-brand{ display:flex;flex-direction:column;align-items:center;width:100%; margin-top:calc(-1 * var(--footer-above-gap)); }
+.footer-mark{ display:flex;align-items:center;justify-content:center; gap:var(--footer-side-gap); padding:var(--footer-above-gap) 12px 10px; max-width:100%; overflow:hidden; }
+.footer-mark .foot-logo{ height:var(--footer-mark-size); width:auto; display:block; object-fit:contain; filter:drop-shadow(0 3px 10px rgba(0,0,0,.25)); max-width:100%; margin-block:3px; }
+.footer-mark .foot-txt{ font-size:var(--footer-side-text); letter-spacing:var(--footer-side-tracking); text-transform:uppercase; color:#d9d9dd; white-space:nowrap; opacity:.9; line-height:1.25; padding-bottom:2px; }
+.footer-legal{ display:flex;flex-direction:column;gap:2px;margin-top:8px; font-size:11px; opacity:.78; letter-spacing:.02em; line-height:1.5; }
 
-/* extra-small phones */
 @media (max-width: 420px){
-  :root{
-    --footer-mark-size: 44px;
-    --footer-side-gap: 10px;
-    --footer-side-text: 9px;
-  }
+  :root{ --footer-mark-size: 44px; --footer-side-gap: 10px; --footer-side-text: 9px; }
   .footer-mark{ padding-inline:10px; }
 }
 @media (max-width: 640px){
-  .footer-mark{
-    padding-inline:24px;
-    overflow:visible;
-  }
+  .footer-mark{ padding-inline:24px; overflow:visible; }
 }
 
-/* ---------- Mobile-only: page backdrop keeps a light dim, no blur ---------- */
-@media (max-width:960px){
-  .dd-backdrop{
-    background:rgba(0,0,0,.35);
-  }
-}
-
-/* ===== Modal (thank-you) ===== */
-.modal-backdrop{
-  position:fixed; inset:0;
-  background:rgba(0,0,0,.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  opacity:0; pointer-events:none;
-  transition:opacity .25s ease;
-  z-index:1000;
-}
-.modal-backdrop.show{ opacity:1; pointer-events:auto; }
-
-.modal-card{
-  position:fixed; left:50%; top:50%;
-  transform:translate(-50%,-46%) scale(.98);
-  width:min(92vw, 520px);
-  background:rgba(20,20,24,.92);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:20px 18px;
-  box-shadow:0 22px 60px rgba(0,0,0,.5);
-  opacity:0; pointer-events:none;
-  transition:opacity .25s ease, transform .25s ease;
-  z-index:1001; text-align:center;
-}
-.modal-card.show{
-  opacity:1; pointer-events:auto;
-  transform:translate(-50%,-50%) scale(1);
-}
-.modal-card h3{
-  margin:0 0 .35rem 0;
-  font-size:1.25rem;
-  line-height:1.25;
-  color: var(--text);
-}
-.modal-card .sub{ color:#c9c9cf; margin:0; }
-.modal-actions{ margin-top:14px; display:flex; justify-content:center; }
-.btn-close{
-  border:1px solid var(--line);
-  background:#21212a; color:#eaeaf0;
-  border-radius:999px; padding:.55rem 1.1rem;
-  font-size:.95rem; cursor:pointer;
-  transition:background .2s, transform .2s;
-}
-.btn-close:hover{ background:#2a2a35; transform:translateY(-1px); }
-
-@media (max-width:420px){
-  .modal-card{ width:92vw; padding:16px; }
-  .modal-card h3{ font-size:1.1rem; }
-}
-
-/* Reveal animation */
-.reveal{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
-.reveal.show{opacity:1;transform:none}
-
-/* Hide call FAB by default (desktop/tablet) */
-.call-fab{ display:none; }
-@media (max-width: 640px){
-  .call-fab{
-    position: fixed; right: 16px; bottom: 18px; z-index: 40;
-    display:flex; align-items:center; justify-content:center;
-    width:56px; height:56px; border-radius:12px;
-    background: rgba(255,255,255,0.10);
-    border:1px solid var(--line);
-    backdrop-filter: blur(10px) saturate(140%);
-    -webkit-backdrop-filter: blur(10px) saturate(140%);
-    color:#eaeaf0; text-decoration:none; font-weight:600;
-    box-shadow:0 8px 20px rgba(0,0,0,.32);
-    transition: transform .2s, background .2s, box-shadow .2s;
-    touch-action: none; user-select: none; cursor: grab;
-  }
-  .call-fab:active{ cursor: grabbing; }
-  .call-fab:hover{
-    transform: translateY(-1px);
-    background: rgba(255,255,255,0.16);
-    box-shadow:0 12px 26px rgba(0,0,0,.42);
-  }
-  .call-fab svg{ width:28px; height:28px; display:block; }
-}
-
-/* ---------- ADDED: card that “fits the words” (applied to the first Services card only) ---------- */
-.auto-fit-card{
-  display:inline-block;
-  width:fit-content;
-  max-width:min(100%, 36rem);
-  padding:18px;
-  text-align:left;
-}
-@media (max-width:640px){
-  .auto-fit-card{
-    display:block;
-    width:100%;
-    max-width:100%;
-    text-align:center;
-    margin-left:auto;
-    margin-right:auto;
-  }
-}
-
-/* === Tweaks: Facebook closer + slightly larger; keep Instagram unchanged === */
-.nav-social{ gap:4px; }
-
-.nav-social a[aria-label="Facebook"] img,
-.nav-social a[aria-label="Facebook"] svg{
-  width:88%;
-  height:88%;
-  transform:none;
-}
-
-/* bring Facebook slightly closer to Instagram */
-.nav-social{ gap:4px; }
-
-/* ===== FAQ (scoped styles so nothing else is touched) ===== */
-#faq details{ text-align:center; }           /* centered Q&A */
-#faq details summary{
-  list-style:none;
-  cursor:pointer;
-  outline:none;
-  display:block;                              /* center the question text */
-  text-align:center;
-}
+/* FAQ */
+#faq details{ text-align:center; }
+#faq details summary{ list-style:none; cursor:pointer; outline:none; display:block; text-align:center; }
 #faq details summary::-webkit-details-marker{ display:none; }
 #faq details summary strong{ font-weight:700; }
 #faq details .sub{ margin-top:8px; }
-#faq details.card{ padding:16px 18px; text-align:center; }  /* ensure card centers */
+#faq details.card{ padding:16px 18px; text-align:center; }
 @media (max-width: 960px){
   #faq .grid{ grid-template-columns:1fr; }
   #faq .container{ text-align:center; }
@@ -718,47 +479,23 @@ h2{font-size:1.95rem;margin:0}
   #faq details.card{ margin-left:auto; margin-right:auto; }
 }
 
-/* Make FAQ links match contact link styling */
-#faq a{
-  color:#eaeaf0;
-  text-decoration:none;
-  border-bottom:1px dotted rgba(255,255,255,.25);
-}
-#faq a:hover{ border-bottom-color:rgba(255,255,255,.55); }
-
-/* ===== NEW: Bright white for phone/email/form links (GLOBAL), with professional hover ===== */
-a[href^="tel:"],
-a[href^="mailto:"],
-a[href*="#contact"]{
+/* Global bright white for phone/email/form links */
+a[href^="tel:"], a[href^="mailto:"], a[href*="#contact"]{
   color: var(--text) !important;
   border-bottom:1px dotted rgba(255,255,255,.45);
   text-decoration:none;
   transition: border-color .2s ease, text-shadow .2s ease;
 }
-a[href^="tel:"]:hover,
-a[href^="mailto:"]:hover,
-a[href*="#contact"]:hover{
+a[href^="tel:"]:hover, a[href^="mailto:"]:hover, a[href*="#contact"]:hover{
   border-bottom-color: rgba(255,255,255,.95);
   text-shadow: 0 0 12px rgba(255,255,255,.22);
 }
 
-/* Remove dotted underline from the CTA button only */
-a.pill,
-a.pill:hover {
-  border-bottom: none !important;
-  text-decoration: none !important;
-  text-shadow: none !important;
-}
-
-/* === IMPORTANT: Never underline links in the NAV (top nav + brand dropdown) === */
+/* Never underline links in the NAV */
 .header .mainnav a,
 .header .mainnav a:hover,
 .brand-dd a,
-.brand-dd a:hover{
-  border-bottom:none !important;
-  text-decoration:none !important;
-  text-shadow:none !important;
-}
+.brand-dd a:hover{ border-bottom:none !important; text-decoration:none !important; text-shadow:none !important; }
   </style>
 </head>
 <body>
@@ -796,12 +533,9 @@ a.pill:hover {
 
       <!-- Social icons, right side -->
       <div class="nav-social" aria-label="Social links">
-        <!-- Facebook -->
         <a href="https://www.facebook.com/profile.php?id=61579078334234" aria-label="Facebook" target="_blank" rel="noopener">
           <img class="nav-icon" src="assets/icons/facebook-f-white.svg" alt="Facebook">
         </a>
-
-        <!-- Instagram -->
         <a href="https://www.instagram.com/primepaintllc" aria-label="Instagram" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="5" stroke="#eaeaf0" stroke-width="2"/>
@@ -813,7 +547,7 @@ a.pill:hover {
     </div>
   </header>
 
-  <!-- dropdown page-blur backdrop -->
+  <!-- dropdown page overlay (no blur) -->
   <div id="dd-backdrop" class="dd-backdrop" aria-hidden="true"></div>
 
   <!-- ===== Hero ===== -->
@@ -852,7 +586,6 @@ a.pill:hover {
       </div>
 
       <div class="grid g-4 reveal" style="margin-top:16px">
-        <!-- First card uses auto-fit so it hugs the text nicely -->
         <article class="card auto-fit-card"><h3>Interior Painting</h3><p class="sub">Walls, ceilings, trim, feature walls, staircases. Low-VOC options available.</p></article>
         <article class="card"><h3>Exterior Painting</h3><p class="sub">Stucco/wood exteriors, entry doors, shutters, pool decks, lanai ceilings.</p></article>
         <article class="card"><h3>Cabinet Painting</h3><p class="sub">Factory-smooth finishes for kitchens &amp; bathrooms with durable 2K coatings.</p></article>
@@ -951,7 +684,6 @@ a.pill:hover {
         </p>
 
         <div class="contact-grid">
-          <!-- First + Last + Phone on the same row (desktop) -->
           <div class="span-2">
             <div style="display:grid; gap:14px; grid-template-columns:repeat(3,1fr)">
               <div>
@@ -979,7 +711,6 @@ a.pill:hover {
             <input id="address" name="address" placeholder="Street Address" autocomplete="street-address">
           </div>
 
-          <!-- City + State + Zip row -->
           <div class="span-2">
             <div style="display:grid; gap:14px; grid-template-columns:repeat(3,1fr)">
               <div>
@@ -987,7 +718,6 @@ a.pill:hover {
                 <input id="city" name="city" placeholder="City" autocomplete="address-level2">
               </div>
 
-              <!-- Fancy Select: State -->
               <div>
                 <label for="state">State</label>
                 <div class="fs-wrap" data-fancy-select="state">
@@ -1024,7 +754,6 @@ a.pill:hover {
             </div>
           </div>
 
-          <!-- Fancy Select: Project Type -->
           <div>
             <label for="projectType">Project Type</label>
             <div class="fs-wrap" data-fancy-select="projectType">
@@ -1042,7 +771,6 @@ a.pill:hover {
             </div>
           </div>
 
-          <!-- Fancy Select: Preferred Timeframe -->
           <div>
             <label for="timeframe">Preferred Timeframe</label>
             <div class="fs-wrap" data-fancy-select="timeframe">
@@ -1065,12 +793,10 @@ a.pill:hover {
           </div>
         </div>
 
-        <!-- required note LEFT under textarea -->
         <div class="form-meta">
           <div class="req-note"><span class="req" aria-hidden="true">*</span> Required field</div>
         </div>
 
-        <!-- actions on the RIGHT -->
         <div class="contact-actions">
           <button class="btn-submit" type="submit">Get My Quote</button>
         </div>
@@ -1151,86 +877,16 @@ a.pill:hover {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Which areas do you serve?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "We’re based in Sarasota and serve the surrounding areas (Siesta Key, Lakewood Ranch, Venice, Osprey, Bradenton, Anna Maria Island, Longboat Key, Lido Key, Casey Key, Nokomis, Myakka). If you’re nearby, we’ll make it work—just ask."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do you offer free estimates?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes. Submit the form or call (941) 222-1890 and we’ll schedule a free, no-obligation estimate at your home."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What paint brands and finishes do you use?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "We recommend premium, low-VOC coatings and select finishes based on the surface and traffic (washable matte for walls, satin/semi-gloss for trim, 2K systems for cabinets)."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How soon can you start?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Availability varies with season and project size. Typical lead time is 1–3 weeks. Tell us your ideal timeframe and we’ll do our best to accommodate."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How long will my project take?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Most interior rooms are 1–2 days; whole-home interiors or exteriors vary by size and scope. We’ll give you a clear schedule with your written quote."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do you protect furniture and floors?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Absolutely. We move/cover furniture, mask floors and fixtures, and keep a clean, organized jobsite from prep to final walkthrough."
-        }
-      },
-      {
-        "@type": "Question",
-          "name": "Can you match existing colors?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes—bring a sample or let us scan a wall/cabinet door. We can also provide color guidance and samples."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do you repair drywall and caulk before painting?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes. Surface prep is a core part of our process: patching, sanding, priming, and caulking for crisp lines and durable results."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Are you licensed and insured?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes—licensed & insured in Florida. Documentation is available with your quote upon request."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What guarantees do you provide?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "We stand behind our workmanship. Your written quote will outline coverage specifics for your project and products used."
-        }
-      }
+      {"@type": "Question","name": "Which areas do you serve?","acceptedAnswer": {"@type": "Answer","text": "We’re based in Sarasota and serve the surrounding areas (Siesta Key, Lakewood Ranch, Venice, Osprey, Bradenton, Anna Maria Island, Longboat Key, Lido Key, Casey Key, Nokomis, Myakka). If you’re nearby, we’ll make it work—just ask."}},
+      {"@type": "Question","name": "Do you offer free estimates?","acceptedAnswer": {"@type": "Answer","text": "Yes. Submit the form or call (941) 222-1890 and we’ll schedule a free, no-obligation estimate at your home."}},
+      {"@type": "Question","name": "What paint brands and finishes do you use?","acceptedAnswer": {"@type": "Answer","text": "We recommend premium, low-VOC coatings and select finishes based on the surface and traffic (washable matte for walls, satin/semi-gloss for trim, 2K systems for cabinets)."}},
+      {"@type": "Question","name": "How soon can you start?","acceptedAnswer": {"@type": "Answer","text": "Availability varies with season and project size. Typical lead time is 1–3 weeks. Tell us your ideal timeframe and we’ll do our best to accommodate."}},
+      {"@type": "Question","name": "How long will my project take?","acceptedAnswer": {"@type": "Answer","text": "Most interior rooms are 1–2 days; whole-home interiors or exteriors vary by size and scope. We’ll give you a clear schedule with your written quote."}},
+      {"@type": "Question","name": "Do you protect furniture and floors?","acceptedAnswer": {"@type": "Answer","text": "Absolutely. We move/cover furniture, mask floors and fixtures, and keep a clean, organized jobsite from prep to final walkthrough."}},
+      {"@type": "Question","name": "Can you match existing colors?","acceptedAnswer": {"@type": "Answer","text": "Yes—bring a sample or let us scan a wall/cabinet door. We can also provide color guidance and samples."}},
+      {"@type": "Question","name": "Do you repair drywall and caulk before painting?","acceptedAnswer": {"@type": "Answer","text": "Yes. Surface prep is a core part of our process: patching, sanding, priming, and caulking for crisp lines and durable results."}},
+      {"@type": "Question","name": "Are you licensed and insured?","acceptedAnswer": {"@type": "Answer","text": "Yes—licensed & insured in Florida. Documentation is available with your quote upon request."}},
+      {"@type": "Question","name": "What guarantees do you provide?","acceptedAnswer": {"@type": "Answer","text": "We stand behind our workmanship. Your written quote will outline coverage specifics for your project and products used."}}
     ]
   }
   </script>
@@ -1300,7 +956,6 @@ a.pill:hover {
       thanksBackdrop.classList.add('show');
       thanksCard.classList.add('show');
 
-      // Fire GA4 conversion event
       try { gtag('event', 'generate_lead', { method: 'Netlify Form' }); } catch(e){}
     }
     function hideThanks(){
@@ -1321,7 +976,6 @@ a.pill:hover {
       e.preventDefault();
       const fd = new FormData(form);
 
-      // Required validation (First, Last, Phone, Message)
       if(!fd.get('firstName')?.trim() || !fd.get('lastName')?.trim() || !fd.get('phone')?.trim() || !fd.get('message')?.trim()){
         alert('Please fill in First Name, Last Name, Phone, and Message.');
         return;
@@ -1338,7 +992,6 @@ a.pill:hover {
         });
 
         if ((res.status >= 200 && res.status < 300) || (res.status >= 300 && res.status < 400)){
-          // personalize thank-you with first name
           const first = (fd.get('firstName') || '').toString().trim();
           if(first){
             thanksTitle.textContent = `Thank you; ${first}!`;
@@ -1370,39 +1023,34 @@ a.pill:hover {
     }
   })();
 
-  /* Simple ScrollSpy for active nav (bright white + full opacity) */
+  // Simple ScrollSpy
   (function(){
-    var header = document.querySelector('.header');
     var mainNav = document.getElementById('primary-nav');
     var dd = document.querySelector('.brand-dd');
 
-    // Combine links from main nav and brand dropdown (mobile)
     var linkSelector = 'a[href^="#"]';
     var links = Array.from((mainNav ? mainNav.querySelectorAll(linkSelector) : []))
       .concat(Array.from(dd ? dd.querySelectorAll(linkSelector) : []));
 
     if(!links.length) return;
 
-    // Map of id -> section element
     var sections = links
       .map(function(a){ return (a.getAttribute('href') || '').slice(1); })
       .filter(Boolean)
       .map(function(id){ return document.getElementById(id); })
       .filter(Boolean);
 
-    // Helper to get numeric header height from CSS var
     function headerH(){
       var h = getComputedStyle(document.documentElement).getPropertyValue('--header-h') || '0';
       var n = parseInt(h.replace('px','').trim(), 10);
       return isNaN(n) ? 0 : n;
     }
 
-    // Cache of section top offsets (account for header)
     var offsets = {};
     function recalc(){
       var hh = headerH();
       sections.forEach(function(sec){
-        offsets[sec.id] = sec.getBoundingClientRect().top + window.scrollY - hh - 12; // 12px buffer
+        offsets[sec.id] = sec.getBoundingClientRect().top + window.scrollY - hh - 12;
       });
     }
 
@@ -1413,14 +1061,13 @@ a.pill:hover {
       });
     }
 
-    // Choose the current section based on scroll position
     var ticking = false;
     function onScroll(){
       if(ticking) return;
       ticking = true;
       requestAnimationFrame(function(){
         var hh = headerH();
-        var pos = window.scrollY + hh + 20; // point slightly below header
+        var pos = window.scrollY + hh + 20;
         var current = sections[0] ? sections[0].id : null;
         for(var i=0;i<sections.length;i++){
           var id = sections[i].id;
@@ -1431,132 +1078,50 @@ a.pill:hover {
       });
     }
 
-    // Initialize
-    recalc();
-    onScroll();
-
-    // Recalc on load/resize/orientation/font swap
+    recalc(); onScroll();
     window.addEventListener('load', recalc);
     window.addEventListener('resize', function(){ recalc(); onScroll(); });
     window.addEventListener('orientationchange', function(){ recalc(); onScroll(); });
-
-    // Scroll listener
     window.addEventListener('scroll', onScroll, {passive:true});
 
-    // Smooth scroll (works for both top nav and brand dropdown). Also closes the dropdown.
-    function smoothScrollTo(id){
-      var target = document.getElementById(id);
-      if(!target) return;
-      var top = target.getBoundingClientRect().top + window.scrollY - headerH() - 8;
-      window.scrollTo({ top: top, behavior: 'smooth' });
-      try { history.replaceState(null, '', '#' + id); } catch(e){}
-      setActive(id);
-    }
-
     links.forEach(function(a){
-      a.addEventListener('click', function(ev){
-        var href = a.getAttribute('href') || '';
-        if(href.startsWith('#') && href.length > 1){
-          ev.preventDefault();
-          ev.stopPropagation(); // ensure our navigation runs before any click-away close
-          var id = href.slice(1);
-          smoothScrollTo(id);
-          // close dropdown if open (do it after we kick off scrolling)
-          setTimeout(function(){
-            document.querySelector('.brand-logo')?.classList.remove('open');
-            var ddel = document.querySelector('.brand-dd');
-            if(ddel && ddel.style) ddel.style.display = 'none';
-            document.getElementById('dd-backdrop')?.classList.remove('show');
-          }, 0);
-        }
+      a.addEventListener('click', function(){
+        var id = (a.getAttribute('href') || '').slice(1);
+        if(id){ setActive(id); }
       });
     });
   })();
 
-  // brand dropdown (mobile & desktop) — portal to <body> while open so the blur samples the page behind
+  // brand dropdown (mobile)
   (function(){
     var brand = document.querySelector('.brand-logo');
     var dd = document.querySelector('.brand-dd');
     var backdrop = document.getElementById('dd-backdrop');
     if(brand && dd && backdrop){
-      var originalParent = dd.parentNode;
-      var placeholder = document.createComment('brand-dd-placeholder'); // to restore position
-
       function isMobile(){ return window.matchMedia('(max-width: 960px)').matches; }
-
-      function positionDropdown(){
-        // position next to/under the logo regardless of scroll
-        var rect = brand.getBoundingClientRect();
-        dd.style.position = 'fixed';
-        dd.style.top = (rect.bottom + 10) + 'px';
-        dd.style.left = rect.left + 'px';
-        dd.style.right = 'auto';
-      }
-
-      function openDD(){
-        // move to body so backdrop-filter blurs the actual page (not header background)
-        if (dd.parentNode !== document.body){
-          originalParent.insertBefore(placeholder, dd);
-          document.body.appendChild(dd);
-        }
-        positionDropdown();
-        brand.classList.add('open');
-        dd.style.display = 'block';
-        backdrop.classList.add('show');
-        window.addEventListener('resize', positionDropdown);
-        window.addEventListener('scroll', positionDropdown, {passive:true});
-      }
-
-      function closeDD(){
-        brand.classList.remove('open');
-        dd.style.display = 'none';
-        backdrop.classList.remove('show');
-        window.removeEventListener('resize', positionDropdown);
-        window.removeEventListener('scroll', positionDropdown);
-
-        // restore to original parent/flow
-        if (placeholder.parentNode){
-          originalParent.insertBefore(dd, placeholder);
-          placeholder.remove();
-        }
-        // remove inline positioning so your responsive CSS still applies when closed
-        dd.style.position = '';
-        dd.style.top = '';
-        dd.style.left = '';
-        dd.style.right = '';
-      }
-
+      function openDD(){ brand.classList.add('open'); dd.style.display = 'block'; backdrop.classList.add('show'); }
+      function closeDD(){ brand.classList.remove('open'); dd.style.display = 'none'; backdrop.classList.remove('show'); }
       function toggleDD(){ if(brand.classList.contains('open')) closeDD(); else openDD(); }
 
       brand.addEventListener('click', function(ev){
-        ev.preventDefault();
-        toggleDD();
+        if(isMobile()){ ev.preventDefault(); toggleDD(); }
       });
 
-      // Click-away
       document.addEventListener('click', function(e){
         if(!brand.contains(e.target) && !dd.contains(e.target)) closeDD();
       });
-
-      // Any key press closes
       document.addEventListener('keydown', function(){ closeDD(); });
-
-      // Hide on scroll / wheel / touchmove (we still reposition while open, but close on intentional page moves)
-      ['wheel','touchmove'].forEach(function(evt){
+      ['scroll','wheel','touchmove'].forEach(evt => {
         window.addEventListener(evt, function(){ closeDD(); }, {passive:true});
       });
-
-      // Close when choosing a link (navigation handled in smooth scroll above)
-      dd.querySelectorAll('a').forEach(function(a){
+      dd.querySelectorAll('a').forEach(a=>{
         a.addEventListener('click', function(){ closeDD(); });
       });
-
-      // Close when backdrop clicked
       backdrop.addEventListener('click', closeDD);
     }
   })();
 
-  // ===== Phone input formatter ( (###) ###-#### ) =====
+  // Phone input formatter
   (function(){
     const phone = document.getElementById('phone');
     if(!phone) return;
@@ -1583,7 +1148,7 @@ a.pill:hover {
     phone.addEventListener('blur', ()=>{ phone.value = format(phone.value); });
   })();
 
-  // ===== Fancy (glass) select initializer =====
+  // Fancy select initializer
   (function(){
     function buildFancy(wrapper){
       var hidden = wrapper.querySelector('select');
@@ -1591,7 +1156,6 @@ a.pill:hover {
       var list = wrapper.querySelector('.fs-list');
       var sr = wrapper.querySelector('.fs-sr');
 
-      // Build options
       list.innerHTML = '';
       Array.from(hidden.options).forEach(function(opt, idx){
         var div = document.createElement('div');
@@ -1600,7 +1164,7 @@ a.pill:hover {
         div.setAttribute('role','option');
         div.setAttribute('data-value', opt.value);
         if (opt.selected) div.setAttribute('aria-selected','true');
-        if (idx === 0) div.setAttribute('data-placeholder','true'); // placeholder
+        if (idx === 0) div.setAttribute('data-placeholder','true');
         list.appendChild(div);
       });
 
@@ -1613,12 +1177,10 @@ a.pill:hover {
         btn.textContent = label || 'Select…';
         sr.textContent = 'Selected: ' + btn.textContent;
 
-        // mark placeholder state for color
         var isPlaceholder = (hidden.selectedIndex === 0) || !hidden.value;
         btn.classList.toggle('is-placeholder', isPlaceholder);
       }
 
-      // Initialize label
       setFromValue(hidden.value || '');
 
       function open(){ wrapper.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
@@ -1632,17 +1194,13 @@ a.pill:hover {
         var item = e.target.closest('.fs-option');
         if (!item) return;
         var val = item.getAttribute('data-value');
-        if (item.hasAttribute('data-placeholder')) {
-          hidden.value = '';
-        } else {
-          hidden.value = val;
-        }
+        if (item.hasAttribute('data-placeholder')) { hidden.value = ''; }
+        else { hidden.value = val; }
         setFromValue(hidden.value || '');
         close();
         hidden.dispatchEvent(new Event('change', {bubbles:true}));
       });
 
-      // keyboard
       btn.addEventListener('keydown', function(e){
         if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' '){
           e.preventDefault(); open();
@@ -1653,21 +1211,19 @@ a.pill:hover {
         if(!wrapper.contains(e.target)) close();
       });
 
-      // Sync if value changes programmatically
       hidden.addEventListener('change', function(){ setFromValue(hidden.value || ''); });
     }
 
     document.querySelectorAll('.fs-wrap').forEach(buildFancy);
   })();
 
-  /* ===== Draggable phone FAB (mobile & desktop). Remembers position. ===== */
+  // Draggable phone FAB
   (function(){
     const fab = document.querySelector('.call-fab');
     if(!fab) return;
 
     const KEY = 'pp_fab_pos';
 
-    // load position if available
     try{
       const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
       if(saved && typeof saved.x === 'number' && typeof saved.y === 'number'){
@@ -1676,7 +1232,7 @@ a.pill:hover {
         fab.style.left = saved.x + 'px';
         fab.style.top = saved.y + 'px';
       }
-    }catch(e){ /* ignore */ }
+    }catch(e){}
 
     let startX=0, startY=0, elX=0, elY=0, dragging=false;
 
@@ -1684,12 +1240,9 @@ a.pill:hover {
       dragging = true;
       const pt = getPoint(e);
       const rect = fab.getBoundingClientRect();
-      startX = pt.x;
-      startY = pt.y;
-      elX = rect.left + window.scrollX;
-      elY = rect.top + window.scrollY;
-      fab.style.right = 'auto';
-      fab.style.bottom = 'auto';
+      startX = pt.x; startY = pt.y;
+      elX = rect.left + window.scrollX; elY = rect.top + window.scrollY;
+      fab.style.right = 'auto'; fab.style.bottom = 'auto';
     };
     const onMove = (e) => {
       if(!dragging) return;
@@ -1697,15 +1250,13 @@ a.pill:hover {
       const pt = getPoint(e);
       let nx = elX + (pt.x - startX);
       let ny = elY + (pt.y - startY);
-      // keep inside viewport
       const vw = document.documentElement.clientWidth;
       const vh = window.innerHeight;
       const r = fab.getBoundingClientRect();
       const w = r.width, h = r.height;
       nx = Math.max(6, Math.min(nx, vw - w - 6));
       ny = Math.max(6 + window.scrollY, Math.min(ny, window.scrollY + vh - h - 6));
-      fab.style.left = nx + 'px';
-      fab.style.top = ny + 'px';
+      fab.style.left = nx + 'px'; fab.style.top = ny + 'px';
     };
     const onEnd = () => {
       if(!dragging) return;
@@ -1728,9 +1279,5 @@ a.pill:hover {
     window.addEventListener('mouseup', onEnd);
   })();
   </script>
-
-  <!-- If Netlify Forms isn't available in the deploy context, you can instead POST the same FormData to a serverless function:
-       fetch('/api/send', { method:'POST', body:new URLSearchParams(fd) })
-       // Implement /api/send on your host to forward the message. -->
 </body>
 </html>
