@@ -140,9 +140,10 @@ body{
   display:none;
   min-width:220px;
   box-shadow:0 14px 28px rgba(0,0,0,.5);
-  backdrop-filter: blur(22px) saturate(160%);
-  -webkit-backdrop-filter: blur(22px) saturate(160%);
-  overflow:hidden;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  overflow:hidden;                        /* clip the blur to the rounded panel */
+  clip-path: inset(0 round 14px);         /* iOS/Safari: ensure blur is clipped to radius */
   will-change: transform;
 }
 .brand-dd::before{
